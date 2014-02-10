@@ -1,0 +1,1322 @@
+
+<html>
+ <head>
+
+<script type="text/javascript" src="/static/js/analytics.js" ></script>
+<link type="text/css" rel="stylesheet" href="/static/css/banner-styles.css"/>
+
+
+
+
+  <title>Mathematical Preliminaries</title>
+ </head>
+ <body bgcolor="purple">
+<!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script> if (window.archive_analytics) { window.archive_analytics.values['server_name']="wwwb-app19.us.archive.org";}; </script>
+
+<script type="text/javascript" src="/static/js/disclaim-element.js" ></script>
+<script type="text/javascript" src="/static/js/graph-calc.js" ></script>
+<script type="text/javascript" src="/static/jflot/jquery.min.js" ></script>
+<script type="text/javascript">
+//<![CDATA[
+var firstDate = 820454400000;
+var lastDate = 1420070399999;
+var wbPrefix = "/web/";
+var wbCurrentUrl = "http:\/\/ynot2day.com\/TEMPLATES\/PROJECTS\/MATHEMATICS\/THEORY\/NOTATION";
+
+var curYear = -1;
+var curMonth = -1;
+var yearCount = 18;
+var firstYear = 1996;
+var imgWidth = 475;
+var yearImgWidth = 25;
+var monthImgWidth = 2;
+var trackerVal = "none";
+var displayDay = "1";
+var displayMonth = "Jan";
+var displayYear = "2005";
+var prettyMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+function showTrackers(val) {
+	if(val == trackerVal) {
+		return;
+	}
+	if(val == "inline") {
+		document.getElementById("displayYearEl").style.color = "#ec008c";
+		document.getElementById("displayMonthEl").style.color = "#ec008c";
+		document.getElementById("displayDayEl").style.color = "#ec008c";		
+	} else {
+		document.getElementById("displayYearEl").innerHTML = displayYear;
+		document.getElementById("displayYearEl").style.color = "#ff0";
+		document.getElementById("displayMonthEl").innerHTML = displayMonth;
+		document.getElementById("displayMonthEl").style.color = "#ff0";
+		document.getElementById("displayDayEl").innerHTML = displayDay;
+		document.getElementById("displayDayEl").style.color = "#ff0";
+	}
+   document.getElementById("wbMouseTrackYearImg").style.display = val;
+   document.getElementById("wbMouseTrackMonthImg").style.display = val;
+   trackerVal = val;
+}
+function getElementX2(obj) {
+	var thing = jQuery(obj);
+	if((thing == undefined) 
+			|| (typeof thing == "undefined") 
+			|| (typeof thing.offset == "undefined")) {
+		return getElementX(obj);
+	}
+	return Math.round(thing.offset().left);
+}
+function trackMouseMove(event,element) {
+
+   var eventX = getEventX(event);
+   var elementX = getElementX2(element);
+   var xOff = eventX - elementX;
+	if(xOff < 0) {
+		xOff = 0;
+	} else if(xOff > imgWidth) {
+		xOff = imgWidth;
+	}
+   var monthOff = xOff % yearImgWidth;
+
+   var year = Math.floor(xOff / yearImgWidth);
+	var yearStart = year * yearImgWidth;
+   var monthOfYear = Math.floor(monthOff / monthImgWidth);
+   if(monthOfYear > 11) {
+       monthOfYear = 11;
+   }
+   // 1 extra border pixel at the left edge of the year:
+   var month = (year * 12) + monthOfYear;
+   var day = 1;
+	if(monthOff % 2 == 1) {
+		day = 15;
+	}
+	var dateString = 
+		zeroPad(year + firstYear) + 
+		zeroPad(monthOfYear+1,2) +
+		zeroPad(day,2) + "000000";
+
+	var monthString = prettyMonths[monthOfYear];
+	document.getElementById("displayYearEl").innerHTML = year + 1996;
+	document.getElementById("displayMonthEl").innerHTML = monthString;
+	// looks too jarring when it changes..
+	//document.getElementById("displayDayEl").innerHTML = zeroPad(day,2);
+
+	var url = wbPrefix + dateString + '/' +  wbCurrentUrl;
+	document.getElementById('wm-graph-anchor').href = url;
+
+   //document.getElementById("wmtbURL").value="evX("+eventX+") elX("+elementX+") xO("+xOff+") y("+year+") m("+month+") monthOff("+monthOff+") DS("+dateString+") Moy("+monthOfYear+") ms("+monthString+")";
+   if(curYear != year) {
+       var yrOff = year * yearImgWidth;
+       document.getElementById("wbMouseTrackYearImg").style.left = yrOff + "px";
+       curYear = year;
+   }
+   if(curMonth != month) {
+       var mtOff = year + (month * monthImgWidth) + 1;
+       document.getElementById("wbMouseTrackMonthImg").style.left = mtOff + "px";
+       curMonth = month;
+   }
+}
+//]]>
+</script>
+
+<style type="text/css">body{margin-top:0!important;padding-top:0!important;min-width:800px!important;}#wm-ipp a:hover{text-decoration:underline!important;}</style>
+<div id="wm-ipp" lang="en" class="__wb_banner_div" style="display:none; position:relative;padding:0 5px;min-height:70px;min-width:800px">
+
+
+<div id="wm-ipp-inside" class="__wb_banner_div" style="position:fixed;padding:0!important;margin:0!important;width:97%;min-width:780px;border:5px solid #000;border-top:none;background-image:url(/static/images/toolbar/wm_tb_bk_trns.png);text-align:center;-moz-box-shadow:1px 1px 3px #333;-webkit-box-shadow:1px 1px 3px #333;box-shadow:1px 1px 3px #333;font-size:11px!important;font-family:'Lucida Grande','Arial',sans-serif!important;">
+   <table style="border-collapse:collapse;margin:0;padding:0;width:100%;"><tbody><tr>
+   <td style="padding:10px;vertical-align:top;min-width:110px;">
+   <a href="/web/" title="Wayback Machine home page" style="background-color:transparent;border:none;"><img src="/static/images/toolbar/wayback-toolbar-logo.png" alt="Wayback Machine" width="110" height="39" border="0"/></a>
+   </td>
+   <td style="padding:0!important;text-align:center;vertical-align:top;width:100%;">
+
+       <table style="border-collapse:collapse;margin:0 auto;padding:0;width:570px;"><tbody><tr>
+       <td style="padding:3px 0;" colspan="2">
+       <form target="_top" method="get" action="/web/form-submit.jsp" name="wmtb" id="wmtb" style="margin:0!important;padding:0!important;"><input type="text" name="url" id="wmtbURL" value="http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY/NOTATION" style="width:400px;font-size:11px;font-family:'Lucida Grande','Arial',sans-serif;" onfocus="javascript:this.focus();this.select();" /><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20050101044904" /><input type="submit" value="Go" style="font-size:11px;font-family:'Lucida Grande','Arial',sans-serif;margin-left:5px;width: inherit !important" /><span id="wm_tb_options" style="display:block;"></span></form>
+       </td>
+       <td style="vertical-align:bottom;padding:5px 0 0 0!important;" rowspan="2">
+           <table style="border-collapse:collapse;width:110px;color:#99a;font-family:'Helvetica','Lucida Grande','Arial',sans-serif;"><tbody>
+			
+           <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+           <tr style="width:110px;height:16px;font-size:10px!important;">
+           	<td style="padding-right:9px;font-size:11px!important;font-weight:bold;text-transform:uppercase;text-align:right;white-space:nowrap;overflow:visible;" nowrap="nowrap">
+               
+		                <a href="/web/20040708053446/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY/NOTATION" style="text-decoration:none;color:#33f;font-weight:bold;background-color:transparent;border:none;" title="8 Jul 2004"><strong>JUL</strong></a>
+		                
+               </td>
+               <td id="displayMonthEl" style="background:#000;color:#ff0;font-size:11px!important;font-weight:bold;text-transform:uppercase;width:34px;height:15px;padding-top:1px;text-align:center;" title="You are here: 4:49:04 Jan 1, 2005">JAN</td>
+				<td style="padding-left:9px;font-size:11px!important;font-weight:bold;text-transform:uppercase;white-space:nowrap;overflow:visible;" nowrap="nowrap">
+               
+                       Feb
+                       
+               </td>
+           </tr>
+
+           <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+           <tr>
+               <td style="padding-right:9px;white-space:nowrap;overflow:visible;text-align:right!important;vertical-align:middle!important;" nowrap="nowrap">
+               
+		                <a href="/web/20040708053446/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY/NOTATION" title="5:34:46 Jul 8, 2004" style="background-color:transparent;border:none;"><img src="/static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a>
+		                
+               </td>
+               <td id="displayDayEl" style="background:#000;color:#ff0;width:34px;height:24px;padding:2px 0 0 0;text-align:center;font-size:24px;font-weight: bold;" title="You are here: 4:49:04 Jan 1, 2005">1</td>
+				<td style="padding-left:9px;white-space:nowrap;overflow:visible;text-align:left!important;vertical-align:middle!important;" nowrap="nowrap">
+               
+                       <img src="/static/images/toolbar/wm_tb_nxt_off.png" alt="Next capture" width="14" height="16" border="0"/>
+                       
+			    </td>
+           </tr>
+
+           <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+           <tr style="width:110px;height:13px;font-size:9px!important;">
+				<td style="padding-right:9px;font-size:11px!important;font-weight: bold;text-align:right;white-space:nowrap;overflow:visible;" nowrap="nowrap">
+               
+		                <a href="/web/20031110233205/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY/NOTATION" style="text-decoration:none;color:#33f;font-weight:bold;background-color:transparent;border:none;" title="10 Nov 2003"><strong>2003</strong></a>
+		                
+               </td>
+               <td id="displayYearEl" style="background:#000;color:#ff0;font-size:11px!important;font-weight: bold;padding-top:1px;width:34px;height:13px;text-align:center;" title="You are here: 4:49:04 Jan 1, 2005">2005</td>
+				<td style="padding-left:9px;font-size:11px!important;font-weight: bold;white-space:nowrap;overflow:visible;" nowrap="nowrap">
+               
+                       2006
+                       
+				</td>
+           </tr>
+           </tbody></table>
+       </td>
+
+       </tr>
+       <tr>
+       <td style="vertical-align:middle;padding:0!important;">
+           <a href="/web/20050101044904*/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY/NOTATION" style="color:#33f;font-size:11px;font-weight:bold;background-color:transparent;border:none;" title="See a list of every capture for this URL"><strong>7 captures</strong></a>
+           <div class="__wb_banner_div" style="margin:0!important;padding:0!important;color:#666;font-size:9px;padding-top:2px!important;white-space:nowrap;" title="Timespan for captures of this URL">8 Jun 03 - 1 Jan 05</div>
+       </td>
+       <td style="padding:0!important;">
+       <a style="position:relative; white-space:nowrap; width:475px;height:27px;" href="" id="wm-graph-anchor">
+       <div class="__wb_banner_div" id="wm-ipp-sparkline" style="position:relative; white-space:nowrap; width:475px;height:27px;background-color:#fff;cursor:pointer;border-right:1px solid #ccc;" title="Explore captures for this URL">
+			<img id="sparklineImgId" style="position:absolute; z-index:9012; top:0px; left:0px;"
+				onmouseover="showTrackers('inline');" 
+				onmouseout="showTrackers('none');"
+				onmousemove="trackMouseMove(event,this)"
+				alt="sparklines"
+				width="475"
+				height="27"
+				border="0"
+				src="/web/jsp/graph.jsp?graphdata=475_27_1996:-1:000000000000_1997:-1:000000000000_1998:-1:000000000000_1999:-1:000000000000_2000:-1:000000000000_2001:-1:000000000000_2002:-1:000000000000_2003:-1:000002000010_2004:-1:100100100000_2005:0:100000000000_2006:-1:000000000000_2007:-1:000000000000_2008:-1:000000000000_2009:-1:000000000000_2010:-1:000000000000_2011:-1:000000000000_2012:-1:000000000000_2013:-1:000000000000_2014:-1:000000000000"></img>
+			<img id="wbMouseTrackYearImg" 
+				style="display:none; position:absolute; z-index:9010;"
+				width="25" 
+				height="27"
+				border="0"
+				src="/static/images/toolbar/transp-yellow-pixel.png"></img>
+			<img id="wbMouseTrackMonthImg"
+				style="display:none; position:absolute; z-index:9011; " 
+				width="2"
+				height="27" 
+				border="0"
+				src="/static/images/toolbar/transp-red-pixel.png"></img>
+       </div>
+		</a>
+
+       </td>
+       </tr></tbody></table>
+   </td>
+   <td style="text-align:right;padding:5px;width:65px;font-size:11px!important;">
+       <a href="javascript:;" onclick="document.getElementById('wm-ipp').style.display='none';" style="display:block;padding-right:18px;background:url(/static/images/toolbar/wm_tb_close.png) no-repeat 100% 0;color:#33f;font-family:'Lucida Grande','Arial',sans-serif;margin-bottom:23px;background-color:transparent;border:none;" title="Close the toolbar">Close</a>
+       <a href="http://faq.web.archive.org/" style="display:block;padding-right:18px;background:url(/static/images/toolbar/wm_tb_help.png) no-repeat 100% 0;color:#33f;font-family:'Lucida Grande','Arial',sans-serif;background-color:transparent;border:none;" title="Get some help using the Wayback Machine">Help</a>
+   </td>
+   </tr></tbody></table>
+
+</div>
+</div>
+<script type="text/javascript">
+ var wmDisclaimBanner = document.getElementById("wm-ipp");
+ if(wmDisclaimBanner != null) {
+   disclaimElement(wmDisclaimBanner);
+ }
+</script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+
+  <table width="100%" height="100%" border="0" bgcolor="white" cellpadding="10" cellspacing="0">
+   <tr height="100" bgcolor="darkblue">
+	<td valign="center" align="center">
+		<img src="/web/20050101044904im_/http://ynot2day.com/images/jpg/connie_small.jpg" height="80" width="80">
+	</td>
+	<td align="left">
+		<font color="white">
+		<h1>www.YNot2Day.com</h1>
+		<h4>Mathematical Preliminaries</h4>
+		</font>
+        </td>
+   </tr>
+   <tr height="400">
+	<td width="100" valign="top" align="left" bgcolor="lightblue" rowspan="2">
+		<font color="darkblue">
+			<a href="/web/20050101044904/http://ynot2day.com/TEMPLATES/SITE.MAP">Site Map</a><br>
+			<a href="/web/20050101044904/http://ynot2day.com/webstats/index.html">Webstats</a><br>
+			<a href="/web/20050101044904/http://ynot2day.com/">Home</a><br>
+			<hr>
+			<A HREF="/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY/GODEL">GODEL</A><BR>
+<B>
+<A HREF="/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY/NOTATION">NOTATION</A><BR>
+</B>
+<HR>
+<B>
+<A HREF="/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY">THEORY</A><BR>
+</B>
+<A HREF="/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/APPLIED">APPLIED</A><BR>
+<HR>
+<A HREF="/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/PROGRAMMING">PROGRAMMING</A><BR>
+<A HREF="/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/GAMES">GAMES</A><BR>
+<A HREF="/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/FINANCIAL">FINANCIAL</A><BR>
+<B>
+<A HREF="/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS">MATHEMATICS</A><BR>
+</B>
+<A HREF="/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/PHILOSOPHY">PHILOSOPHY</A><BR>
+<HR>
+
+			<a href="/web/20050101044904/http://ynot2day.com/TEMPLATES//PROJECTS/MATHEMATICS/THEORY/NOTATION?.TEMPLATE=print_friendly">Print Friendly</a>
+		</font>
+        </td>
+	<td align="center" valign="top">
+		<table border="0" bgcolor="white" cellpadding="10" cellspacing="0">
+		<tr bgcolor="lightblue"><td align="center" valign="center">
+			<b>A notation translation of John M. Howie's <BR> _Automata_ _and_ _Languages_ first chapter</b>
+		</td></tr>
+		<tr><td>
+	 		<H2> Introduction </H2>
+
+<P>
+Note:
+</P>
+<P>
+This notation is an attempt to write mathematics in simple ASC text.
+The notation purposely ommits &amp;, &gt;, and &lt;
+so as to avoid the need to escape them within an html (xml) document.
+Context is used in the notation and operarators are overloaded.
+</P>
+<P>
+Current list of operators:
+<PRE>
+	<b>%</b>	division
+
+	<b>*</b>	multiplication, ...
+
+	<b>=/</b>	"contains", "is greater than (or equal)", "is implied by", "when", "if"
+
+	<b>\=</b>	"is contained by", "is less than (or equal)", "implies"
+
+	<b>=</b>	"is equal to", "equals", "is equivalent to", "means", "if and only if"
+
+
+	<b>+</b>	"or", "union", "addition"
+
+	<b>:</b>	"such that"
+
+	<b>.</b>	"and", used to compound functions, "intersection"
+
+	<b>...</b>	used to intuit some meaning into a definition
+
+Some reserved tokens
+
+	<b>N</b>	Natural numbers
+
+	<b>R</b>	Real numbers
+
+	<b>I[]</b>	Identity function
+
+</PRE>
+</P>
+
+<P>
+"A{a}(statement)" means "For all a in A, statement",
+"A{a}:(statement)" means "There exists an 'a' in 'A' such that statement", and
+"A{a}.(statement)" means "'a' is an element of 'A' and statement".
+</P>
+
+<P>
+Persitance of properties:
+If it is noted that an Object has some property,
+that property remains known as one goes down the logical chain.
+For example,
+in Y[A{a}]=B{a#a}, one avoids writing Y[A{a}]=B{A{a}#A{a}}, although
+one may include the redundancy for clarity.
+That 'a' is an element of 'A' needs only to be stated once
+since 'a' remains known as belonging to 'A' even after the equal sign.
+</P>
+
+<P>
+Defaultion of properties:
+If a function is defined to take objects of certain properties,
+then an object is assumed to have these propeties when in context with the function.
+For example,
+in Y[A]\B.Y[a]=a#a, one avoids writing Y[A]\B.Y[A{a}]=B{a#a}, although
+one may include the redundancy for clarity.
+That 'a' is an element of 'A' is inferred from the definition of 'Y' and
+that 'Y' is taking on 'a'.
+</P>
+
+<P>
+<PRE>
+<H2> Precedence </H2>
+
+	0. (), {}, []	bonds content to object on the left.
+	2. !		bonds to object on the right.
+	1. .		bonds objects on the left and right
+	2. +		''
+	3. = / \ \= =/
+	5. ,		''
+	6. Left to right
+</PRE>
+</P>
+
+<P>
+<PRE>
+Operator Bonding:
+Operators can only bond objects of the same type, and
+take on its meaning in that context.
+For example,
+A{a,b}A{a#b}=A{#[(a,b)]}=#[A*A]\=A
+is read as
+(A{a,b}A{a#b})=A{#[(a,b)]}=(#[A*A]\=A)
+Note that this is equivalent to
+A{a,b}(A{a#b}=A{#[(a,b)]}=(#[A*A]\=A))
+This is read as
+"For all 'a' and 'b' in 'A', a#b is also in 'A' and
+is equivalent to a function '#' that takes an ordered pair (a,b) into 'A', and
+'#' is said to be a map from A*A to A.
+</PRE>
+</P>
+
+<PRE>
+</P>
+Promotion/Demotion of objects:
+A{a,b}(A{a#b}=A{#[(a,b)]}=(#[A*A]\=A))
+can be transform to
+A{a,b}( (A{a#b}=A{#[(a,b)]}=#[A*A]) \=A )
+by interpreting the statement A{a#b} as 
+the element represented by a#b, and then
+interpeting element a#b as the singleton set {a#b}.
+Thus A{a#b}=({a#b}\=A), meaning that
+" 'a#b is an elment of A' is equivalent to 'the singleton {a#b} is a subset of A' " 
+Nonetheless, parenthesis can be used to group for clarity.
+</PRE>
+</P>
+
+<P>
+<PRE>
+Current Problems:
+N{i}+A[i] is currently interpreted as A[0]+A[1]+...
+But does this make N{i}+{j:A[i]{j}} ambiguous?
+We say 0+N={0,1,2,3...}, or {0}+N={0}+{1,2,3,...}={0,1,2,3,...},
+which is not interpreted as a series.
+Also, to describe a sequence like 1,2,3,...
+one could say "N{n},n".
+Another note, is (a,b,c) being interpeted as an ordered set {a,b,c}?
+</PRE>
+</P>
+
+<P>
+<PRE>
+Last  Added:
+
+How to do differentiation and integration?
+The Ruby language gives the right idea, I believe, for my notation.
+Cosider sin(u(x)):
+
+In operator mode...
+	Dx[ Sin[u[x]] ] = Cos[u[x]]*Dx[u[x]]
+Then, consider the following for the integral...
+	Ix[ Cos[u]*Dx[u] ] = Sin[u]
+
+In funtional mode...
+	Dx[a]{ Sin[u[x]] } = Cos[u[a]]*Dx[a]{ u[x] }
+	Ix[a,b]{ Cos[u[x]]*Dx[u[x]] } = Sin[u[a]] - Sin[u[b]]
+
+In Ruby, this is termed passing a procedure to a function.
+I think it works great for my notation!
+</PRE>
+</P>
+
+<H2> Sets </H2>
+<P>
+
+<PRE>
+	(a=b) = (b=a)
+		a property of equality,
+		a equals b means b equals a
+		object equals object whereas statement means statement
+
+	A{a} = ( A={ ..., a, ... } )
+		a is element of A.
+
+	!A{b} = A{a}(a!=b)
+		b is not an element of A means that
+		for all elements a of A, a is not equal to b.
+		Also, no element of A is b.
+		"for all" is implied in the juxposition of "A{a}" to "(a!=b)"
+
+	A=B = (A{a}=B{a})
+		A is equal to B means that
+		a is an element of A if and only if a is an element of B
+		A and B contain the same elements if and only if A and B are equal.
+		How about "(A=B)=(A{a}B{a}).(B{b}A{b})" ?
+
+	A{a}.B{a} = (A.B){a}
+		a is an element of A and B
+		The dot will also be use to compound function.
+
+	A{a}+B{a} = (A+B){a}
+		a is an element of A or B
+
+	N = {1,2,3,...}
+		N is the set of Natural numbers
+
+	A+B = { a : A{a}+B{a} }
+		A+B is the union of A and B
+
+	A.B = { a : A{a}.B{a} }
+		A.B is the intersection of A and B
+
+	(A=B) = (A+B=A.B)
+		To be equal means for the union to be the intersection.
+		
+	(A!=B) = (A+B!=A.B\A+B) = !(A+B=A.B) = !(A=B) = !(A{a}=B{a})
+		To be unequal is for the union to be greater than the intersection.
+		In !(A{a}=B{a}) an implied "for all a" is found, since
+		(A.B){a} \ A{a}.B{a} means "there may exist an a such that A[a].B[a]".
+		But the existance of (A.B)[a] is not enough for A=B.
+
+	a = {a}
+		An element can be interpreted as a singleton set
+		containing the element.
+
+	N+a = N+{a} = {a,1,2,3,...}
+		N+a is the set of Natural numbers and a
+
+	N+0 = {0,1,2,3,...}
+		N+0  is the set of non negative integers
+
+	(A\=B) = (!A=/!B)
+		or if "A implies B" then "not B implies not A"
+	(a\b) = (-a/-b)
+		like (1&lt;2) implies and is implied by (-1&gt;-2)
+
+	Z = { -n, n : N+0{n} } = { ...,-3,-2,-1,0,1,2,3,...}
+		Z is the set of all integers
+
+	D[m] = { n : N{n}.N{m%n} }
+		D[m] is the set of natural numbers that divide m
+
+	EVEN = { 2*n : N{n} }
+		Set of even numbers, {2,4,6,...}
+
+	ODD  = { 2*n-1 : N{n} } = { n : N{n}.!EVEN{n} }
+		Set of odd numbers, {1,3,5,...}
+
+	{}
+		The empty set
+
+	{ n : n!=n } = {}
+		objects always equal to themselves
+
+	N{i}+A[i]
+		union of all indexed sets, A[i]
+
+	N{i}.A[i]
+		intersection of all indexed sets, A[i]
+
+	(A+B)+C = A+(B+C)
+		associative law
+
+	A+(B.C) = (A+B).(A+C)
+		distributive law
+
+	(A=/B) = (A{a}=/B{a})
+		if and only if A contains B does it mean that
+		a is an element of A when a is an element of B.
+
+	(A\=B) = (A{b}\=B{b}) = (B{b}=/A{b})
+		"A is contained by B"
+		means that
+		if b is an element of A, then it is also an element of B
+		just as it means that
+		b is an element of B if b is an element of A.
+
+	(S=/A).(S=/B)
+	S=/A+B
+		Let S contain (the union of) A and B...
+
+		Here we introduce the context of the "Univese", S,
+		to which objects belong.
+
+	S+!A = S
+		The union of a set and a subset is just the set itself.
+
+	S.!A = {a: S{a}.!A{a} }
+		The set of elements in S not in A, 
+		complement of A relative to S
+
+
+	S.!(A+B) = (S!A).(S!B)
+		elements in S not in A or B
+		are (the intersection of)
+		elements in S not in A and
+		elements in S not in B
+			This one is easily misread.
+			Consider
+				S{s}:!(A+B){s},
+				S{a}:A{a}.!B{a},
+				S{b}:!A{b}.B{b},
+				S{c}:(A+B){c},
+				\=
+				(S.!(A+B)){s} .
+				!(S.!(A+B)){a,b,c}
+				=
+				((S!A).(S!B)){s} .
+				!((S!A).(S!B)){a,b,c}
+					Here, S{a,b,c} are in A or B
+
+	S.!(A.B) = (S.!A)+(S.!B)
+		elements in S not in A and B
+		are
+		elements in S not in A or
+		elements in S not in B
+			Consider
+				S{s}:!(A+B){s},
+				S{a}:A{a}.!B{a},
+				S{b}:!A{b}.B{b},
+				S{c}:(A+B){c},
+				\=
+				(S.!(A.B)){s,a,b} .
+				!(S.!(A.B)){c}
+				=
+				((S.!A)+(S.!B)){s,a,b} .
+				!((S.!A)+(S.!B)){c} 
+					Here, S{c} is in A and B
+
+	A*B = {(a,b) : A{a}.B{b} }
+		The cartesian product of A and B
+
+	{1,2,3}*{a,b,c} = {(1,a), (1,b), (1,c), (2,a), (2,b), (2,c), (3,a), (3,b), (3,c)}
+		An example of a cartesian product of two sets
+
+	N{i,n}.(i\=n).N{i}*A[i] = { (a[1],a[2],...,a[n]): A[1]{a[1]}.A[2]{a[2]}. ... .A[n]{a[n]} } = N{i\=n}*A[i]
+		Let context make it clear that N{i,n}.(i\=n).N{i}*A[i] = N{i\=n}*A[i] --
+		N{i,n} just means that i and n are Natural numbers, integers greater than zero.
+		N{i\=n} means that where taking integers 1 through n.
+		Juxpositioning N{i\=n} to the operator * means that
+		we are about do a series with the operator.
+		Thus N{i\n}*A[i] does a cross product over the indexed sets A[i] from i=1 to i=n.
+
+	{i:N{i\=n}}| = n
+		The number of elements operator.
+		
+	{1,2,3}| = {a,b,c}| = 3
+		An example of the use of the unary operator.
+
+	A*B| = A|*B|
+	{ j: N{j\=m} }*{ i: N{i\=n} }| = { j: N{j\=m} }|*{ i: N{i\=n} }| = m * n
+		More examples of the number of element operator
+
+	A*A = A^2
+	A*A*A = A^3
+	N{i\=n}*A = A^n
+		Defining operator ^ as a special case of a series * operation
+	R^2 = {(a,b):R{a}.R{b}} = {(a,b):R{a,b}}
+		The cartesian plane R^2, where R is the set of real numbers.
+
+	P[A] = {B:B\=A}
+		The power set of A,
+		is the set of sets subset of A.
+
+	(A={a[i]:N{i\=n}}) \= (P[A]|=2^A|=2^n)
+		A={a[i]:N{i\=n}} = A|=n
+		\=
+		p: p = P[A]| = {B:B\=A}| = {B:B\={a[i]:N{i\=n}}}| =
+		B[N{b\=p}]\=A:B[b]\{a[i]:N{i\=n}}
+			This says that there must be a way to enumerate B from 1 to p.
+		B[1] = {a[1]}		like   1
+		B[2] = {a[2]}		like  10
+		B[3] = {a[1],a[2]}	like  11
+		B[4] = {a[3]}		like 100
+		B[5] = {a[1],a[3]}	like 101
+		....
+		B[p] = {a[1],a[2],a[3],...,a[n]} like 111...1
+		thus p is like 111...1 = 2^n
+</PRE>
+
+<H2> Functions </H2>
+
+<PRE>
+
+	RELATION{P} = ( (P\=A*B) = (P{(a,b)}\=A*B{(a,b)}) )
+		A relation P from A to B relates a to b if (a,b) is an element of P.
+		Example, (a=b) = (={(a,b)})
+
+	FUNCTION{Y}  =  ( RELATION{Y} . Y{(a,b)}.Y{(a,c)} \= a=c )
+		A function relates (maps) an element from one set to a unique element in another set
+	FUNCTION = MAPPING = MAP
+		Synonyms for function
+
+	( DOMAIN[Y]=A ).( (RANGE[Y]={Y[a]:A{a}})\=B ) = FUNCTION{Y}.(Y\=A*B) = FUNCTION{Y\=A*B}
+		Definition of the domain and range of a function
+	RANGE = IMAGE
+		Synonym for range
+
+	FUNTION{Y\=A*B}
+		Let Y be a function, then...
+	Y[A]\=B
+		Normally denoted as Y:A-&gt;B
+	sin[R]={r:R{r}.(-1)\r\1}\=R
+		example, the sin function 
+	squareroot[{q:R{q}.q=/0}]={p:R{p}.p=/0}\R
+		another example
+
+	INJECTION{Y} = FUNCTION{Y}. (Y[a]=Y[b])\=(a=b)
+		definition of an injection, ie. injective function, one-one function
+	INJECTION{Y} = FUNCTION{Y}. (a!=b)\(Y[a]!=Y[b])
+		algrebra of the contrapositive
+			!(Y[a]=Y[b] \= a=b) =
+				( !(Y[a]=Y[b]) =/ !(a=b) ) =
+					( Y[a]!=Y[b] =/ a!=b ) =
+						a!=b \= Y[a]!=Y[b]
+	INJECTION=INJECTIVE=ONE-ONE=ONE_TO_ONE
+		Synonyms of injective functions
+		how about making PARALLEL a synonym?
+
+	(sin[0]=sin[pi]).(pi!=0) \= !INJECTIVE{sin}
+		The sin function is not injective
+
+	k[p]=p^3 \=
+	( (k[p]-k[q]=0) = (k[p]=k[q]) ) \= 
+	p^3 - q^3 = 0 \=
+	(p-q)*(p^2+p*q+q^2)=0 \=
+	p=q \=
+	INJECTION{k}
+		An example of an injective function
+
+	(Y[A]=B) = B{b}(A{a}:Y[a]=b)
+		That Y maps A completely to B means
+		that for all elements, b, in B
+		there exist an element, a, in A
+		such that Y maps a to b.
+
+	ONTO{Y} = (Y[A]=B)
+		 for all B{b} there exist A{a} such that Y[a]=b
+	ONTO = SURJECTIVE = SURJECTION
+		synonyms of "ONTO"
+
+
+	ONE-ONE_ONTO{Y} = INJECTIVE{Y}.SURJECTIVE{Y}
+		= FUNCTION{Y[A]\=B}.(A{a,b}.(Y[a]=Y[b]\a=b)).(Y[A]=B)
+	ONE-ONE_ONTO=BIJECTIVE=BIJECTION
+
+	R.!0{p}.(square[p]=p^2) \=
+		(p!=-p).(square[p]=p*p=p*(-1)*(-1)*p=(-p)*(-p)=(-p)^2) \=
+		(p!=-p).(square[p]=square[-p]) \=
+		!ONE-ONE_ONTO{square[R.!0]\=R}
+
+	Algebra
+	!!A = A, cancelation
+	!(A=/B) = (!A\=!B), reversal
+	!(a!=b) = !(!={(a,b)}) = (!!={(a,b)}) = (={(a,b)}) = (a=b)
+
+	R{p,q}.cube[p]=cube[q]	\=
+		p*p*p=q*q*q	\=
+		p*p*p-q*q*q = 0	\=
+		p*p*p + ( 0 ) - q*q*q = 0	\=
+		p*p*p + ( p*p*q + p*q*q - p*p*q - p*q*q ) - q*q*q = 0	\= 
+		p*p*p + ( p*p*q + p*q*q - q*p*p - q*p*q ) - q*q*q = 0	\= 
+		(p-q)*(p*p+p*q+q*q) = 0	\=
+		p=q	\=
+		INJECTIVE{cube[R]\=R}
+
+	R{s}(R{p}:s=p*p*p)
+		s/1 = p/1
+		s=1 = p=1
+		0\s\1 = 0\p\1
+		s=0 = p=0
+		0/s/-1 = 0/p/-1
+		s=-1 = p=-1
+		s\-1 = p\-1
+		...
+			The proof of the above statement probably requires
+			properties of continuity, or use cuberoot as an inverse
+		...
+		cube[R]=R \=
+		SURJECTIVE{cube[R]\=R}
+
+	Anticipating O.O.P. ...
+	OBJECT{A} = { {A{a}:DATA{a}} + {A{a}:METHODS{a}} }	.
+        f[x] = {f[B,x]:METHODS{f[B,x]}}	=/
+	A.f[x] = f[A,x]
+
+	Towards Compounding Functions ...
+	(A+B)\S.A{a} \= a={(a,b):B{b}}
+		just as an element can be interpreted as a singleton,
+		so can an element be interpreted as a set of pair values.
+		Then...
+	FUNTION{Y[A]\=B} \= Y={(A{x},B{y}):Y[x]=y} \=
+	A{a}( Y.a = Y.{(a,b):B{b}} = {(A{x},B{y}):Y[x]=y}.{(a,b):B{b}} =
+	{(a,Y[a])} = (a,Y[a]) = Y[a] )
+
+	So we have a choice...
+	(R[A]=B).(S[B]=C).(T[C]=D) = (T[S[R[A]]]=D) = (T.S.R[A]=D) = (A.R[].S[].T[]=D)
+		This is also true for sets
+		(A.R=B).(B.S=C).(C.T=D) = (A.R.S.T=D)
+
+	(I[A]=A.A{a}.I[a]=a) = (IDENTITY{I[A]=A})
+		The Identity Function
+	Y[A]\=B.A{a}.Y[IY[a]]=Y[a] \= IY[A]=A.A{a}.IY[a]=a
+	Y[A]\=B.A{a}.IB[Y[a]]=Y[a] \= IB[B]=B.B{b}.IB[b]=b
+	Y[A]\=B.A{a}.IB[Y[a]]=Y[IA[a]] \=
+		(IA[A]=A.A{a}.IA[a]=a).(IB[B]=B.B{b}.IB[b]=b)
+
+	Anticipating Equivalences...
+	(Y[A]\=B).(Y={(a,b):Y[a]=b}) \ (a.Y=Y[a]).(Y.b=Y^-1[b])
+		It may be necesary to state that x.Y!=Y.x,
+		and than x.Y=Y[x] whereas Y.x=Y^-1[x].
+		We'll see...
+		Otherwise, the context of Y[A]\=B.B{b}.A{a}
+		may allow for b.Y=Y.b=Y^-1[b] and
+		a.Y=Y.a=Y[a]
+
+
+	IDENTITY{IA[A]=A}.
+	IDENTITY{IB[B]=B}.
+	((T[A]\=B).(S[B]\=A).(T.S=IA).(S.T=IB)) = (INVERSE{(T,S)}.INVERSE{(S,T)})
+		Note that this creates a relation on the funtion plane
+		relating one function to another.
+		(INVERSE \= FUNCTION*FUNCTION) = RELATION[INVERSE]
+		Also note the use of statement.statament and function.function,
+		dot is being used in two different context here.
+			Review of dot contexts
+				logic(and): (statement).(statement)
+					A{a}.B{b}
+				O.O.P: (object).(method)
+					f[A,x] = A.f[x] 
+				Set(intersection): (set).(set)
+					A.B = {a:A{a}.B{B}} = {a:(A.B){a}}
+				composition:	(function).(function)
+					f.g[x] = f[g[x]]
+
+	INVERSE{(T,S)}.INVERSE{(T,R)} = S=R
+		(T.S=IA).(T.R=IA) = T.S=T.R = T.S[b]=T.R[b]=T[a] = S[b]=a=R[b] = S=R
+
+Theorem 1.2.6
+	INVERSE{(S,T)} = BIJECTIVE{S} = ONE-ONE_ONTO{S}
+		BIJECTIVE{S[A]=C} =
+		FUNCTION{S[A]=C}.(S[A{a}]=S[B{b}]\=a=b) =
+		C{c}(A{a}:S[a]=c.(S[A{b}]=c \= a=b)) =
+			... which seems obvious that the following follows?
+		FUNCTION{T[C]\=A}:A{a}(T.S[a]=a) =
+		(T[C]=A.S[A]=C.(T.S[a]=a).(S.T[c]=c) =
+		(T[C]=A.S[A]=C.IDENTITY{T.S[C]=C}.IDENTITY{S.T[A]=A} =
+		INVERSE{(S,T)}
+
+Defining Y^-1
+	INVERSE{(Y,Y^-1)} = Y[A]\B.IDENTITY{I[A]=A}.I=Y[Y^-1]
+		Let Y^-1 be the inverse of Y
+
+	Y[A]\B.C\B.Y^-1[C]={A{a}:C{Y[a]}}
+
+	BIJECTIVE{Y[A]\B}.C\B =
+		Y^-1[C]={A{a}:C{Y[a]}} / Y^-1[{c}]={A{a}:{c}{Y[a]}} /
+		Y^-1[{c}]={A{a}:Y[a]=c}={A{a}:a=Y^-1[c]}={Y^-1[c]} =
+		Y^1-[{c}]={Y^-1[c]}
+			A general definition of Y^-1 does not conflict with
+			INVERSE{(Y,Y^-1)} when Y is bijective since a
+			singleton is alowed to be interpreted as an element, c={c}.
+			Y^1-[{c}]={Y^-1[c]} = Y^-1[c]={a} = a=a when Y(a)=c
+
+	Y[R]\R:R{r}(Y[r]=r^2-2*r) /
+		Y^-1[y] = {R{r}: r^2-2*r=y.R{y}} /
+		Y^-1[y] = {R{r}: r^2-2*r-y=0.R{y}} /
+		Y^-1[y] = {R{r}: ((r=1+SQRT[y+1])+(r=1-SQRT[y+1])).R{y}} /
+		Y^-1[y] = { 1+SQRT[y+1], 1-SQRT[y+1] }.R{y} /
+		(Y^-1[-1] = {1}) . (Y^-1[3] = {3,-1})
+</PRE>
+<H2>Equivalence Relations</H2>
+<PRE>
+
+	EQUIVALENCE{P\=A*A} = 
+		A{a}(P{(a,a)}).
+		A{a,b}(P{(a,b)}=P{(b,a)]}).
+		A{a,b,c}(P{(a,b)}.P{(b,c)}/P{(a,c)})
+			An equivalence has reflexive, symmetric, and transitive properties
+
+	EQUALITY={(a,b):A{a,b}.a=b} \
+		EQUALITY={(a,a):A{a}} \
+		A{a}(EQUALITY{(a,a)}) \
+		EQUIVALENCE{EQUALITY\A*A} 
+			An obvious equivalence relation '=', where a=b=c.
+			EQUALITY is said to be the "diagonal relation".
+
+	EQUALITY{A}={(a,b):A{a,b}.a=b}={(a,a):A{a}}\A*A
+			If context requires it, we supply the set the relation is on.
+
+	A{a}Y[a]...
+		Note that this says "For all a in A, Y[a]...
+		whereas
+	Y[A{a}]... = A{a}.Y[a]
+		says "a is an element of A and Y[a]...
+		These two statements are not equivalent.
+		Note that
+	A{b}(Y[b]=expresion1).(Y[A{a}]=expresion2) = A{a}.Y[a]=expresion1.Y[a]=expresion2
+
+	( K[Z{n}] = {(a,b):Z{a,b}.Z{(b-a)%n}}\Z ) \
+		( K[n]{(Z{p},Z{q})} \ Z{m}:(p-q)%n=m ) \
+		( p-q=n*m \ q=p-n*m \ (p=q \ m=Z{0}) )
+			Found an m that allows p=q.
+			This shows the first property of an equivalence,
+			that Z{p}K{(p,p)}
+		K[n]{(p,q)} \ q-p=n*m \ Z{o}:n=(q-p)%m=(p-q)%(o) \ o=-m \ K[n]{(q,p)}
+			Found an Z{o} such that (p-q)%o=n
+			showing that K{(p,q)} implies K{(q,p)},
+			the second property of an equivalence
+		K[n]{(a,b)}.K[n]{(b,c)} \
+		Z{l}:((a-b)=n*l).Z{k}:((b-c)=n*k) \
+		a-c = (n*l+b)-(b-n*k) \
+		a-c = n*l+n*k \
+		(a-c)%n = Z{l+k} \
+		K[n]{(a,c)}
+			Which shows the third property of an equivalence
+			that "K[n]{(a,b),(b,c)}" implies "K{(a,c)}".
+			Thus...
+		EQUIVALENCE{K[n]}
+
+	EQUIVALENCE{P\=A*A} = ( (P[a]=A).(P[b]{(b,a)}).(P[c]{(c,a)})  \= (P[b]=P[c]) )
+		Are some of the parenthesis used above redundant?
+		P[a]=A.P[b]{(b,a)}.P[c]{(c,a)}  \= P[b]=P[c]
+		is still correct.
+		P[a] is a set by virtue of P\=A*A and P[a]=(a.P), thus
+		P[a]=A is a single token by the time we get to the logical "and", '.'.
+		'.' is interpreted as a logical "and" as it is preceeded by a
+		logical statement and goes on to bind to it another statement.
+		By the time we get to '\=', we have a single token of
+		'.' bound statements.
+		The first '=' is interpreted as "set P[a] is equal to set A"
+		whereas the '\=' is interpreted as "preceding statement implies following statement"-
+		so '\=' does not have the "is contained by" meaning it has in set context.
+		By the time we get to the last '=', we essentially have
+		"statement \= set = P[c]".
+		We can't bind "statement \= set" as a token, so we go on.
+		We can't bind "set=P" because [c] binds to P first, by precedence rules.
+		Thus we have "statement \= set = set" - P[c] is a set.
+		"set=set" binds to form a statement, and so we have finally
+		"statement \= statement" or "statement implies statement".
+		So the parenthesis were entirely redundant.
+
+	Z{m\N{n}}+K[n][m]=Z . (K[n][Z{i\n}].K[n][Z{j\n}]={})=(i!=j)
+		K[5][0] = Z{j}+{i=5*j+0} = {0,+/-5,+/-10,+/-15...}
+		K[5][1] = Z{j}+{i=5*j+1} = {1,6,11,...}+{-4,-9,-14,...}
+		K[5][2] = Z{j}+{i=5*j+2} = {2,7,12,...}+{-3,-8,-13,...}
+		K[5][3] = Z{j}+{i=5*j+3} = {3,8,13,...}+{-2,-7,-12,...}
+		K[5][4] = Z{j}+{i=5*j+4} = {4,9,14,...}+{-2,-7,-11,...}
+		Note that K[5][5] = K[5][0]
+		In general, K[n][m] = Z{j}+{i=n*j+m}
+		Z{m\N{n}}+K[n][m] = N{m\n}+Z{j}+{i=n*j+m} =
+			Z{j}+{i=n*j+0} +
+			Z{j}+{i=n*j+1} +
+			...
+			Z{j}+{i=n*j+(n-1)} =
+			Z{j}+{i: (i=n*j+0) + (i=n*j+1) + ... + (i=n*j+(n-1)) }
+		Assume Z{k}:!(N{m\n}+K[n][m]){k}
+			=/ Z{k}(Z{j}(N{m\n}(k!=n*j+m)))
+			=/ N{m\n}(Z{j}(j!=(k-m)/n))
+			=/ N{m\n}(!Z{(k-m)/n})
+			=/ N{m\n}(Z{l}((k-m)/n!=l))
+			=/ N{m\n}(Z{l}(k-m != nl))
+			=/ N{m\n}(Z{l}(k != nl+m))
+			=/ N{m\n}(Z{l}(k != nl+m))
+			=/ N{m\n}(Z{l}(k != nl+m))
+			=/ Z{l}(k != 1l+0)
+			=/ Z{l}(k != l)
+				but for Z{l=k}, k!=k is a contradiction.
+				Therefore the assumption was wrong, so
+		Z{k}(Z{m\n}:K[n][m]{k}) = Z{m\n}+K[n][m]=Z
+
+
+		Z%K[n] = {K[5][0], K[5][1], ..., K[5][4]}
+			K partitions Z
+			so if I[A]=A then
+			Z%K[n]{A}+I[A]=Z
+
+		Z{a,b,c}.K[n]{(b,a)}.K[m]{(c,a)}=(K[n]=K[m])=(K[n].K[m]=K[n]=K[m])=(n=m)
+			How do I know this?
+			K[n]{(b,a)}.K[m]{(c,a)} =/ K[n]{(a,a)}.K[m]{(a,a)}
+			but if K[n] and K[m] contain (a,a), n=m
+
+		FUNCTION{Y[A]\=A} = KERNEL[Y]={A*A{(a,a')}:Y[a]=Y[a']}
+		DIAGONAL{KERNEL[Y]} = ONE-ONE{FUNCTION{Y[A]\=A}}
+
+	BINARY{#[A*A]\=A}
+		Binary operator # on set A
+	BINARY{+[N*N]\=N}
+		Binary operator + of "addition" on the N of "natural numbers"
+		+[(N{a},N{b})]	= N{a}+N{b}
+		+[(a,b)]	= a+b
+	BINARY{*[R*R]\=R}
+		Binary operator * of "multiplication" on the R of "real numbers"
+		*[(R{a},R{b})]	= R{a}*R{b}
+		*[(a,b)]	= a*b
+
+	SEMIGROUP{(A,#)} = A{a,b}(A{#[(a,b)]}=#[(b,a)])
+		SEMIGROUP{A}
+		A semigroup is a set with a closed associative binary operator
+			Closed means that the operator does not map out of the set
+
+	MONOID{(A,#,1)} = SEMIGROUP{(A,#)}.A{1}:A{a}(#[a,1]=a)
+		MONOID{A}
+		A set is a monoid if there exist an element 1 in the set such that
+		for all elements in the set
+		the element and 1 resolves back to the element.
+
+	(A+B\S).SEMIGROUP{(S,#)} \= A#B={a#b:A{a,b}}
+
+	(A+B+C\S).SEMIGROUP{(S,#)} \= (A#B)#C=A#(B#C)
+
+	S{s}.(A\S).SEMIGROUP{(S,#)} \= s#A = A#s = {a#s:A{a}}
+
+	SUBSEMIGROUP{(T\=S,#)}	= SEMIGROUP{(S,#)}.(T\=S).(T{a,b}(T{a#b}))=(T#T\=T)
+	
+	SUBMONOID{(T\=S,#,1)}	= MONOID{(S,#,1)}.SUBSEMIGROUP{(T\=S,#)}.T{1}
+
+	Note that 
+		MONOID{(T\=S,#,T1)} = SEMIGROUP{(T\=S,#)}.T{T1}:T{t}(t#T1=t)
+		and
+		MONOID{(S,#,1)} = SEMIGROUP{(S,#)}.S{1}:S{s}(s#1=s)
+		does NOT imply that T1=1
+		and thus
+		MONOID{(T\=S,#,T1)} does NOT imply SUBMONOID{(T\=S,#,1)}
+
+	MONOID{(T\=S,#,T1)}.SUBMONOID{(T\=S,#,1)} = (T1=1)
+
+	GROUP{(G,#,1)} = MONOID{(G,#,1)}: G{a}(G{x}:a#x=x#a=1)
+		A group G is monoid such that every element a in G
+		as an inverse x in G such that a#x=1
+
+	IDEMPOTENT{(e,SEMIGROUP{(S,#)})} = (e#e=e)
+		IDEMPOTENT{e}
+		An element in a semigroup is an idempotent if and only if e#e=e.
+
+	IDEMPOTENT{ (e,SEMIGROUP{(S,#)}) } 
+		H[e] = { S{a}: (a#e=e#a=a) . S{b}:(a#b=b#a=e) }
+
+	H[e]{e}
+		S{e}.e#e=e satisfies the conditions of membership in H[e]
+
+	SUBSEMIGROUP{(H[e]\S,#)}.GROUP{(H[e],#,e)}
+		H[e]{a,b} \=
+		(a#b)#e=a#(b#e)=a#b, e#(a#b)=(e#a)#b=a#b,
+		(a#b)(b'#a')=a#(b#b')a'=aea'=aa'=e,
+		(b'#a')#(a#b)=b'#(a'#a)#b=b'#e#b=b'#b=e	\=
+		H[e]{a#b} \= SUBSEMIGROUP{H[e]\S,#}
+			Have shown # to also be a closed associative operator in H[e]
+
+		H[e]{a}(H[e]{a'}:(a#a'=a'#a=e)) \= GROUP{H,#,e}
+
+	a^ = { a^i: N{i} }
+
+	ORDERED{S} = S{a!=b}(((a\b)+(a/b)).!((a\b).(a/b)))
+		For each element of an ordered set, S,
+		one can determine its relative "rank" against
+		each other element in the set.
+
+	MIN[ORDERED{S}] = S{a}:S{b!=a}(a\b)
+	MAX[ORDERED{S}] = S{a}:S{b!=a}(a/b)
+
+	ORDERED{S*Y} =
+		(ORDERED{S}{a,c}.ORDERED{Y}{b,d})( (a,b)\(c,d) = (a\c)+((a=c).(b\d)) ) 
+
+	SEMIGROUP{(S,#)}|=N{n} . S{a}(N{i\=j}#a=a^j)
+	\=
+	N*N{(m,r)}: (m,r)=MIN[ { (m,r): N{k}(a^m=a^(m+k*r)) } ]
+		since S is finite then the sequence "N{n},a^n" must repeat
+	\=
+	a^ = {a^N{i}: i\(m+r)} = { a, a^2, a^3, ..., a^(m+r-1) }
+	\=
+	SUBSEMIGROUP{(H\=a^,#)} = {a^i: (m-1)\i\(m+r)} = { a^m, ..., a^(m+r-1) }
+	\=
+	SUBGROUP{(H\=a^,#,a^(m+p))} =/ p = MIN[{N{q}: N{(m+q)%r}}]
+		Note that this make p like (m+p)%r = 1 so r=m+p.
+		So we have an idempotent: a^(m+p)#a^(m+p)=a^(m+p+m+p)=a^(m+p+r)
+		but a^(m+r)=a^m \= a^(m+p+r)=a^(m+p)
+		so a^(m+p)#a^(m+p)=a^(m+p)
+		Also, for every N{r} there exist N{s} such that a^r#a^s=a^(m+p)
+
+	SEMIGROUP{(S,#)}|=N{n} \= S{a}(N{p}:((a^p)^2=a^p)=IDEMPOTENT{a^p})
+
+	MIN[U]=U{S}:U{R}(S\=R)	=/ U{T!=V}(((T\=V)+(V=/T)).!((T\=V).(T=/V)))
+		is (T\=V).(T=/V).(T!=V) possible?
+
+	X\=SEMIGROUP{S}
+	\=
+	X^ = MIN[ { SUBSEMIGROUP{Y\S}: X\Y } ]
+		Note then that X\=X^
+
+	X^=Y \= GENERATOR{(X,Y)}
+		if Y is known from context, one can just say GENERATORS{X}
+
+	SEMIGROUPS{(S,#),(T,#)} \=
+	( MORPHISM{(Y[S]=T,#)} =/ S{a,b} (Y[a#b]=Y[a]#Y[b]) )
+		MORPHISM = HOMOMORPHISM
+
+	MONOIDS{(S,#,IS),(T,#,IT)} \=
+	( MORPHISM{(Y[S]=T,#)} =/ S{a,b} (Y[a#b]=Y[a]#Y[b]) . Y[IS]=IT )
+
+	MORPHISM{(Y[S]=T,#)}:ONE-ONE_ONTO{Y} \= ISOMORPHISM{(Y,#)}
+		remeber that ONE-ONE=INJECTIVE and ONTO=SURJECTIVE and ONE-ONE_ONTO=BIJECTIVE
+
+	BIJECTIVE{Y[S]=T} \= BIJECTIVE{Y^-1[T]=S}:INVERSE{Y,Y^-1}
+
+	ISOMORPHISM{(Y,#)}.INVERSE{(Y,Y^-1)} =/ ISOMORPHISM{(Y^-1,#)}
+
+	CONGRUENCE{P\=SEMIGROUP{S,#}*S} =
+	EQUIVALENCE{P\=SEMIGROUP{(S,#)}*S} . 
+	( P{(a,b),(c,d)} =/ P{a#c,b#d} ) = 
+	( P{(a,b)}.S{c} =/ P{(c#a,c#b)} )
+
+	CONGRUENCE{P\=MONOID{S,#,1}*S} =
+	EQUIVALENCE{P\=MONOID{(S,#,1)}*S} . 
+	( P{(a,b),(c,d)} =/ P{a#c,b#d} ) = 
+	( P{(a,b)} . S{c} =/ P{(c#a,c#b)} )
+
+	KERNEL[Y[S]\=S] = {(S{a,b}):Y[a]=Y[b]} = EQUIVALENCE{Y\S*S}
+
+	EQUIVALENCE{P\=S*S} \=
+	P[S]\=S:( P[S{a}] = { (S{b,c}): P{(a,b),(a,c)} } ) . 
+	KERNEL[P[S]\=S]=EQUIVALENCE{P\=S*S}
+
+	CONGRUENCE{(P\=S*S,#)}: S{a,b}(P[a]#P[b]=P[a#b])
+	\=
+	SEMIGROUP{(S%P,#)}
+
+	CONGRUENCE{(P\S*S,#,1)}: S{a,b}(P[a]#P[b]=P[a#b])
+	\=
+	MONOID{(S%P,#,1)}
+
+	KERNEL[P[S]\=S%P\=S,#] = CONGRUENCE{(P\=S*S,#)}
+	KERNEL[P[S]\=S%P\=S,#,1] = CONGRUENCE{(P\=S*S,#,1)}
+
+	MORPHISM{(Y[S]=T,#)}
+	\=
+	KERNEL[(Y,#)]=CONGRUENCE{(Y\S*S,#)}
+
+	MONOIDS{(S,#,1),(T,#,1)} . MORPHISM{(Y[S]=T,#,1)} . P=KERNEL[(Y,#,1)]
+	\=
+	MORPHISM{(ONE-ONE_ONTO{Q[S%P]=T},#,1)}: IMAGE[Q]=IMAGE[Y] . S{a}(Q[P[a]]=Y[a])
+
+		Q[S%P[S{p}]] = {T{t}: t=Y[q] . Y[q]=Y[p] } \=
+		S{p}+Q[S%P[S{p}]] = S{p}+{T{t}: t=Y[S{q}] . Y[q]=Y[p]} =
+		{T{t}: t=Y[q] . Y[q]=Y[S{p}]} =
+		{T{t}: T{t}} = T /
+		IMAGE[Q]=T=IMAGE[Y]
+
+		Q[S%P[p]] = {t: t=Y[q] . Y[q]=Y[p] } =
+		{t: t=Y[p]} = Y[p]
+			since Y[q]=Y[p] means q=p.
+
+
+	MONOIDS{S,T,U} . MORPHISMS{ Y[S]=T, P[S]=U }: KERNEL[Y]=/KERNEL[P]
+	\=
+	MORPHISM{B[T]=U}: IMAGE[B]=IMAGE[P] . S{s}(B[Y[s]]=P[s])
+		Proof:
+		SURJECTIVE{Y} \= T{t}(S{s}:Y[s]=t \= B[T]\=U:B[t]=P[s])
+		KERNEL[Y]=/KERNEL[P] \=
+			S{s,s'}:Y[s]=Y[s'] ( KERNEL[P]{KERNEL[Y]{(s,s')}} )
+		Y[s]=t . Y[s']=T{t'} \= Y[s#s']=Y[s]#Y[s']=t#t' \=
+			B[t#t'] = P[s#s'] = P[s]#P[s'] = B[t]#B[t'] \=
+				MORPHISM{B[T]=U}
+
+		Y[S{IS}] = T{IT} \= B[IT]=Y[IS]=U{IU}
+
+		IMAGE[B]\=IMAGE[P] . IMAGE[P]{U{u}=P[s]} =/
+			IMAGE[B]{u=B[Y[s]]} =/
+			IMAGE[B] = IMAGE[P]
+
+		B[Y[s]]=P[s]
+
+	CONGRUENCE{ ((p,s)\=MONOID{(S,#,1)}*S) }: p\=s \=
+		CONGRUENCE{s%p\=MONOID{S%p}*S%p}: S%s=(S%p)%(s%p)
+		Proof:
+		p[S]\=S%p . s[S]=\S%s : KERNEL[p[]]=p . KERNEL[s[]]=s \=
+			a[(S%p)%(s%p)]\=S%s
+
+	DIVIDES[MONOID{T}]{MONOID{S}} =
+		SUBMONOID{U\=T}.MORPHISM{Y[U]=S,#}
+
+</PRE>
+<H2>1.6 Transformation Monoids </H2>
+<PRE>
+
+	FINITE{Q} = Q|=N{n}
+
+	ACTION{ @[FINITE{Q}*MONOID{S,#,1}]\=Q } =
+		FUNCTION{@[FINITE{Q}*MONOID{(S,#,1)}]\=Q}:
+			Q{q}( @[(q,1)]=q . S{s,t}(@[(q,s#t)]=@[(@[q,s],t)]))
+
+	ACTION{ Q@S\=Q } =
+		FINITE{Q}{q}( q@1=q . MONOID{(S,#,1)}{s,t}(q@(s#t)=(q@s)@t) )
+
+	RELATION{(T\S*S,Q,@)} =
+		T={S*S{(s,s')}: Q{q}(q@s=q@s')}
+
+	ACTION{FINITE{Q}@MONOID{S,#,1}\=Q} . RELATION{(T\S*S,Q,@)} = CONGRUENCE{T\=S*S}
+		Proof:
+		(
+		ACTION{Q@S\=Q} = Q*S{(q,s)}(Q{q@s}) = T{(s,s)}
+			it's reflexive
+		ACTION{Q@S\=Q} = Q*S{(q,{s,t})}(Q{q@s}.Q{q@t}) = T{(s,t)}
+		ACTION{Q@S\=Q} = Q*S{(q,{t,s})}(Q{q@t}.Q{q@s}) = T{(t,s)}
+			it'symetric
+		ACTION{Q@S\=Q} = Q*S{(q,{v,t,s})}(Q{q@v}.Q{q@t}.Q{q@s}) = S{v,t,s}(T{(v,t)}.T{(t,s)}.T{(v,s)})
+			obviously transitive
+		)
+		= EQUIVALENCE{T\=S*S}
+		.
+		T{(a,b)} . S{c} \= Q{a@c} . Q{b@c} \= T{(a@c,b@c)}
+		= CONGRUENCE{T\S*S}
+
+	ACTION{FINITE{Q}@MONOID{S,#,1}} =
+	FUNCTION{r[s]}: Q*S{(q,s)} ( r[s][q]=q@s} ) =
+	T{(S{a},S{b})} = r[a]=r[b] = Q{q}(r[a][q]=r[b][q])
+
+	DIAGONAL{T} = TRANFORMATION_MONOID{(Q,S)}
+		Q{q}.S{a,b}( q@a=q@b =/ a=b )
+		Q|=n =/ S|\=n^n
+
+	Rememeber that
+	ISOMORPHIC{(A,B)} =/ BIJECTION{f[A]=B}:A{a,a'}(f[a#a']=f[a]#f[a'])
+
+	ISOMORPHIC{ TRANSFORMATION_MONOID{((Q,S),(R,T))} } =/
+		BIJECTION{B[Q]=R,D[S]=T}:Q*S{(q,s)}(B[q@s]=B[q]@D[s])
+
+	LET ISOMORPHIC_TRANSFORMATION_MONOID{((Q,S),(R,T))} = ISOMORPHIC{ TRANSFORMATION_MONOID{((Q,S),(R,T))} }
+	LET ITM = ISOMORPHIC_TRANSFORMATION_MONOID
+
+	Note that
+		ITM{((Q,S),(R,T))} =/ ISOMORPHIC{(S,T)}
+
+	Example:
+		(
+		Q={1,2} . R={1,2,3,4} .
+		MONOID{S,#,1s} = {1s,s}: s#s=1s .
+		MONOID{T,#,1t} = {1t,t}: t#t=1t .
+		@[Q*S]=\Q : 1@s=2, 2@s=1,
+		.
+		@[R*T]=\R : 1@t=2, 2@t=1, 3@t=4, 4@t=3
+		)
+		=/
+		(
+		TRANSFORMATION_MONOID{((Q,S),(R,T))} .
+		ISOMORPHIC{(S,T)} .
+		!ITM{((Q,S),(R,T))}
+		)
+</PRE>
+
+<H2>1.7 Free Semigroups and Monoids</H2>
+
+<PRE>
+	ALPHABET{A} = FINITE{A}!={}
+	WORDS[A] = { N{l}.FUNCTIONS{a[N]=A} (a[1],...,a[l]) }
+	A|=N{n} =/ { WORDS[a]{W}: W|=N{l} } |= n^l
+	WORDS[A]{a,b} (a#b) = (a[1],...,a[n])#(b[1],...,b[m]) = (a[1],...,a[n],b[1],...,b[m]) = WORDS[A]{ a#b }
+	N{i\=l}#(a[i]) = (a[1])#(a[2])#...#(a[l]) = (a[1],a[2],...,a[l])
+	Note that WORDDS[A]{a,b,c}( (a#b)#c=a#(b#c) )
+	=/
+	SEMIGROUP{WORDS[A]}
+
+	note that (a,a,a)=(a)#(a)#(a)=(a)^3	
+
+	FREE_SEMIGROUP[ALPHABET{A}]=WORDS[A]
+
+	FREE_MONOID[ALPHABET{A}] = WORDS[A]+() = words[A]
+	LET FM=FREE_MONOID
+		Note that WORDS[A]{a}(()#a=a), MONOID{(FM[A],#,())}, and ()|=N{0}
+
+	a=b = a|=b| . N{i\=a|}a[i]=b[i]
+
+	Theorem 1.7.3
+	ALPHABET{A} . MONOID{(S,#,1)} . T[A]=S
+	=/
+	{ MORPHISM{Y[words[A]]=S}: = A{a} ( Y[(a)]=T[a] ) } |= N{1}
+
+		Let Y[()]=1 . Y[(a1,a2,...,al)#(b1,b2,...,bm)] = Y[(a1,a2,...,al,b1,b2,...,bm)]
+			= T[a1]#T[a2]...#T[al]#T[b1]#T[b2]...#T[bm]
+			= Y[(a1,...,al)]#Y[(b1,...,bm)]
+		=
+		A{a}(Y[(a)]=T[a])
+
+		Y'[(a1,...,al)]=Y'[(a1)#...#(al)]=Y'[(a1)]#...#Y'[(al)]
+		= T[a1]#...#T[al] = Y[(a1,...,al)]
+		=
+		Y'=Y
+
+		A\=WORDS[A].A{a}(Y[(a)]=T[a])  /= Y|A=T	
+
+	Theorem 1.74
+	MONOID{(FINITE{S},#,1)}
+	=/ FINITE{A}.CONGRUENCE{P\=WORDS[A]^2}: MORPHISM{(WORDS[A]/P,S)}
+
+	Proof:
+	Let A=S^\=S
+	=/ FUNCTION{Y}: Y[WORDS[A]]=S
+	Let P=KERNEL[(Y,#,1)]
+	=/ MORPHISM{(WORDS[A]/P,S)}
+
+	WORDS[ALPHABET{A}]{w}(N{w|=legth[w]})
+	words[ALPHABET{A}]{w}(0+N{w|=legth[w]})
+	w=(a1,a2,a3)=/w|=3=length[w]
+	w=(a1,...,an)=/w|=n=length[w]
+	w=() =/ 0=()|=w|=length[w]
+	words{a,b}(a#b|=a|+b|)
+	words[A]{w}.A{a}(0+N{w|a}=0+N{i\w|}+(a=w[i]))
+		w|=A{a}+(w|a)
+		words[A{a}]{w,z}(w#z|a=w|a+z|a)
+
+	words[A]{u,w} =/
+	LEFT_FACTOR{(u,w)} = words[A]{v}:u#v=w
+	WORDS[A]{u,w} =/
+	PROPER_LEFT_FACTOR{(v,w)} = WORDS[A]{v}:u#v=w
+
+	CONTENT[w]={A{a}:w|a>0}
+
+	Cancellative Property of Words
+	words{a,b,c} =/ ( c#a=c#b = a=b ).(a#c=b#c = a=b)
+
+	Equidivisibilily of Words
+	words{a,b,c,d} =/ ( a#b=c#d = words{u}: (c=a#u.d=u#b)+(a=c#u.b=u#d)
+</PRE>
+
+		</td></tr>
+		</table>
+	</td>
+   </tr>
+   <tr height="25" bgcolor="lightblue">
+	<td valign="bottom" align="center">
+		<font color="darkblue">
+		|
+		contact: <A HREF="/web/20050101044904/http://ynot2day.com/TEMPLATES/CONTACT">CarlosJHR64</A>
+		|
+		<A HREF="/web/20050101044904/http://one-eyed-monkey.ynot2day.com/">One Eyed Monkey at YNot2Day</A>
+		|
+		</font>
+	</td>
+   </tr>
+  </table>
+ </body>
+</html>
+
+
+
+
+
+<!--
+     FILE ARCHIVED ON 4:49:04 Jan 1, 2005 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 3:46:02 Feb 10, 2014.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
