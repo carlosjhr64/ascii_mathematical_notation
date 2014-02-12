@@ -40,7 +40,6 @@ not so much so that the computer may do mathematics but
 to ensure the statement is meaninful.
 For instance "N{z}" to the computer might mean "z = 1 + rand(1000)".
 That is, it picks some number to assign to z, and
-proceeds to see it can make sense of the rest of the statement.
+proceeds to see if it can make sense of the rest of the statement.
 The problem is that it's easy to write nonsense and 
 fall under the illusion that one has written something.
-
