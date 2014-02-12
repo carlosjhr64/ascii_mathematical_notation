@@ -1,12 +1,12 @@
 ## Mathematical Notation in ASCII
 
-This is a continuation of the work started by YNot2Day's NOTATION
-[http://web.archive.org/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY/NOTATION],
+This is a continuation of the work started by
+[YNot2Day's NOTATION](http://web.archive.org/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY/NOTATION),
 the last snapshot found in the Internet Archive Wayback Machine copied here as Notation.html.
 
 ## Motivation
 
-Consider Weierstrass[http://en.wikipedia.org/wiki/Karl_Weierstrass]
+Consider [Weierstrass](http://en.wikipedia.org/wiki/Karl_Weierstrass)
 formal definition of continuity written in the notation described in YNot2Day:
 
     CONTINOUS{f(x=x0)} = {e=/0}({d=/0}: f{x}(|x-x0|\=d =/ |f(x)-f(x0)|\=e)
