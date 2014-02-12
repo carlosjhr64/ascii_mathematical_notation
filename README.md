@@ -43,3 +43,5 @@ That is, it picks some number to assign to z, and
 proceeds to see if it can make sense of the rest of the statement.
 The problem is that it's easy to write nonsense and 
 fall under the illusion that one has written something.
+
+See also [ASCIIMathML](http://www1.chapman.edu/~jipsen/mathml/asciimath.html).
