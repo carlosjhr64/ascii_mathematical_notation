@@ -41,6 +41,12 @@ to ensure the statement is meaninful.
 For instance "N{z}" to the computer might mean "z = 1 + rand(1000)".
 That is, it picks some number to assign to z, and
 proceeds to see if it can make sense of the rest of the statement.
+Or we could try a direct translation to into Ruby code:
+
+    # For all intergers greater than zero, twice that integer is greater.
+    # Z{n>0}(2*n>n)
+    (Z=[-3,-2,-1,0,1,2,3]).select{|n| n>0}.inject(true){|b, n| b and (2*n > n)} #=> true
+
 The problem is that it's easy to write nonsense and 
 fall under the illusion that one has written something.
 
