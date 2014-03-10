@@ -18,7 +18,7 @@ like automatically performing simple logical steps.
 
 I may use conventions found in Ruby and CoffeeScript.
 I realize there may be languages better suited for this project, but
-I'm not familiar with these other languages, such as Haskel.
+I'm not familiar with these other languages, such as Haskell.
 
 I will try to match as much as possible the first and second order logic described in Wikipedia.
 
