@@ -7,6 +7,10 @@
 * [First-order logic](http://en.wikipedia.org/wiki/First-order_logic)
 * [Second-order logic](http://en.wikipedia.org/wiki/Second-order_logic)
 
+Markdown makes really nice documents from good looking raw text.
+I like the Chromium extension
+[Markdown Preview Plus](https://chrome.google.com/webstore/detail/markdown-preview-plus/febilkbfcbhebfnokafefeacimjdckgl).
+
 ## Valid characters
 
 Only ASCII characters allowed, here in order:
@@ -96,3 +100,4 @@ Note that with an ordered set [a,b,c,d,e], the following makes sense:
 ## Examples
 
 * [Complex Numbers](examples/ComplexNumbers.md)
+* [Space Vectors](examples/SpaceVectors.md)
