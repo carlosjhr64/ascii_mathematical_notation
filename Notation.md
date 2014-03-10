@@ -3,7 +3,7 @@
 ## Preferences and influences
 
 * [Markdown](http://en.wikipedia.org/wiki/Markdown)
-* [Vim Editory](http://www.vim.org)
+* [Vim Editor](http://www.vim.org)
 * [Ruby Programing Language](http://www.ruby-lang.org)
 * [First-order logic](http://en.wikipedia.org/wiki/First-order_logic)
 * [Second-order logic](http://en.wikipedia.org/wiki/Second-order_logic)
@@ -20,7 +20,7 @@ I may use conventions found in Ruby and CoffeeScript.
 I realize there may be languages better suited for this project, but
 I'm not familiar with these other languages, such as Haskel.
 
-I will try to math a much as posible the first and second order logic described in Wikipedia.
+I will try to match as much as posible the first and second order logic described in Wikipedia.
 
 ## Valid characters
 
