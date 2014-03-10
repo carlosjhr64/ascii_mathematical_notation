@@ -3,6 +3,7 @@
 ## Preferences and influences
 
 * [Markdown](http://en.wikipedia.org/wiki/Markdown)
+* [Vim Editory](http://www.vim.org)
 * [Ruby Programing Language](http://www.ruby-lang.org)
 * [First-order logic](http://en.wikipedia.org/wiki/First-order_logic)
 * [Second-order logic](http://en.wikipedia.org/wiki/Second-order_logic)
@@ -10,6 +11,16 @@
 Markdown makes really nice documents from good looking raw text.
 I like the Chromium extension
 [Markdown Preview Plus](https://chrome.google.com/webstore/detail/markdown-preview-plus/febilkbfcbhebfnokafefeacimjdckgl).
+
+Vim is the "grand piano" of text editors.
+Its scripting feature presents some very interesting possibilities,
+like automatically performing simple logical steps.
+
+I may use conventions found in Ruby and CoffeeScript.
+I realize there may be languages better suited for this project, but
+I'm not familiar with these other languages, such as Haskel.
+
+I will try to math a much as posible the first and second order logic described in Wikipedia.
 
 ## Valid characters
 
@@ -80,7 +91,6 @@ For all `a` in `A`, `a` is also in `B`:
 There exists `a` in `A` such that `a` is also in `B`:
 
     A{a}:(B{a})
-
 
 I think anything else can be defined as need be.  For example:
 
