@@ -21,25 +21,30 @@ Only ASCII characters allowed, here in order:
 
 ## Meanings
 
-| Code          | Meaning                | Binds  |
-|:-------------:|:-----------------------|:-------|
-| #             | Comment                | Right  |
-| !             | Not                    | Right  |
-| ::            | Definition             |        |
-| ==>           | Implication            |        |
-| <=>           | Biconditional          |        |
-| :=            | Assignment (Let...)    | Binary |
-| :             | Such that              |        |
-| =             | Equal                  | Binary |
-| !=            | Not Equal              | Binary |
-| >             | Greater than           | Binary |
-| >=            | Greater than or equal  | Binary |
-| <             | Less than              | Binary |
-| <=            | Less than or equal     | Binary |
-| ,             | And                    |        |
-| ...           | Intuitive continuation |        |
-| {...}         | A set of ...           | Left   |
-| (...)         | Grouping               | Left   |
+| Code          | Meaning                  | Binds  |
+|:-------------:|:-------------------------|:-------|
+| #             | Comment                  | Right  |
+| ;             | End of statement         |        |
+| \n            | End of statement         |        |
+| !             | Not                      | Right  |
+| ::            | Definition               |        |
+| ==>           | Implication              |        |
+| ?=>           | Assumed, find conclusion |        |
+| <=>           | Biconditional            |        |
+| :=            | Assignment (Let...)      | Binary |
+| :             | Such that                |        |
+| =             | Equal                    | Binary |
+| =?            | Asssumed, find when      | Binary |
+| !=            | Not Equal                | Binary |
+| >             | Greater than             | Binary |
+| >=            | Greater than or equal    | Binary |
+| <             | Less than                | Binary |
+| <=            | Less than or equal       | Binary |
+| ,             | And                      |        |
+| ...           | Intuitive continuation   |        |
+| {...}         | A set of ...             | Left   |
+| [...]         | Ordered set of ...       | Left   |
+| (...)         | Grouping                 | Left   |
 
 ## Context
 
@@ -78,6 +83,15 @@ I think anything else can be defined as need be.  For example:
     N :: {1,2,3,...}
     Z+ :: {0,1,2,3,...}
     Q{q} :: N{m,n}:(q=m/n)
+
+Note that a function takes an ordered set of parameters, arguments, variables...
+A function of f of x is most apropriately written as:
+
+    F[x] = Ax^2 + Bx + c # For example
+
+Note that with an ordered set [a,b,c,d,e], the following makes sense:
+
+    [a,b,c,d,e][2] = b # b is the second element
 
 ## Examples
 
