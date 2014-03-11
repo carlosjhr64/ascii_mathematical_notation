@@ -21,8 +21,8 @@
        v*w :: (vywz-vzwy, vxwz-vzwx, vywz-vzwy)
 
     H{p,q} # Given Quaternions p,q.
-      p := (pt, pv) := (pt, px, py, pz) # Notice Rubism here.
-      q := (qt, qv) := (qt, qx, qy, qz)
+      (pt, px, py, pz) := (pt, pv) := p # Notice Rubism here.
+      (qt, qx, qy, qz) := (qt, qv) := q
       ###################################################
       p+q :: (pt+qt,pv+qv) = (pt+qt, px+qx, py+qy, pz+qz)
       ###################################################
