@@ -111,3 +111,4 @@ Note that with an ordered set [a,b,c,d,e], the following makes sense:
 
 * [Complex Numbers](examples/ComplexNumbers.md)
 * [Space Vectors](examples/SpaceVectors.md)
+* [Quaternions](examples/Quaternions.md)
