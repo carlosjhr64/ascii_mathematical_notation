@@ -1,4 +1,4 @@
-# ASCII Mathematial Notation
+# ASCII Mathematical Notation
 
 ## Preferences and influences
 
@@ -15,6 +15,8 @@ I like the Chromium extension
 Vim is the "grand piano" of text editors.
 Its scripting feature presents some very interesting possibilities,
 like automatically performing simple logical steps.
+I have an example script file, [lib/script.rb](lib/script.rb).
+And I document its use in [Script.md](Script.md).
 
 I may use conventions found in Ruby and CoffeeScript.
 I realize there may be languages better suited for this project, but
