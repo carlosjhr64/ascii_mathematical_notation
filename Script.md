@@ -14,7 +14,7 @@ Add the following line your file:
 
     rubyfile /path/to/script.rb
 
-My script has the followin methods:
+My script has the following methods:
 
 * greek
 * a2x
@@ -26,7 +26,7 @@ My script has the followin methods:
 
 ## greek
 
-The greek method will swap the names of greek letters to their greek letters of the current
+The greek method will swap the names of greek letters to their greek letters in the current line
 and append it to the next line.
 
     This is PI, Pi, OMEGA, Omega, THETA, and Theta!
@@ -64,7 +64,7 @@ Then `:ruby by :mult` will perform that action.
     AB # by :mult
 
 Notice that `define` will append a line with the new definition, and
-`by` will appned the tranformed line tagged with the action taken.
+`by` will append the tranformed line tagged with the action taken.
 
 ## wolframize
 
