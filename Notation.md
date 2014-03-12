@@ -62,6 +62,13 @@ Only ASCII characters allowed, here in order:
 | {...}         | A set of ...             | Left   |
 | [...]         | Ordered set of ...       | Left   |
 | (...)         | Grouping                 | Left   |
+| "Word"  ?     | Ex: Q{a} = "Rational"{a} |        |
+| :Word:  ?     | Ex: Q{a} = :Rational:{a} |        |
+| :Word   ?     | Ex: Q{a} = :Rational{a}  |        |
+
+I haven't made up my mind on how to handle `Word`.
+I'm already using `:` in several ways, but
+using it for `Word` fits well with how `Ruby` uses `:` for symbols.
 
 ## Context
 

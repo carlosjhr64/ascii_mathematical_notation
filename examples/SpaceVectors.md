@@ -1,5 +1,4 @@
 # FamousMathProbs13b
-
 ## The rotation problem and Hamilton's discovery of quaternions (II)
 
 Notes from njwildberger's YouTube
