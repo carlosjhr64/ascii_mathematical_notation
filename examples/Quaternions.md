@@ -19,7 +19,7 @@ Notes on njwildberger's [video](http://www.youtube.com/watch?v=g22jAtg3QAk).
     V{v,w}
        (vx,vy,vz):=v; (wx,wy,wz):=w
        v.w :: vxwx + vywy + vzwz
-       v*w :: (vywz-vzwy, vxwz-vzwx, vxwy-vywx)
+       v*w :: (vywz-wyvz, vzwx-wzvx, vxwy-wxvy)
 
     H{p,q} # Given Quaternions p,q.
       (pt, px, py, pz) := (pt, pv) := p # Notice Rubism here.
@@ -28,24 +28,21 @@ Notes on njwildberger's [video](http://www.youtube.com/watch?v=g22jAtg3QAk).
       p+q :: (pt+qt,pv+qv) = (pt+qt, px+qx, py+qy, pz+qz)
       ###################################################
       ptqv+qtpv+pv*qv # Consider this expression
-        ptqv+qtpv+(pv*qv)
-        pt(qv)+qt(pv)+(pyqz-pzqy, pxqz-pzqx, pxqy-pyqx)
-        pt(qx,qy,qz)+qt(px,py,pz)+(pyqz-pzqy, pxqz-pzqx, pxqy-pyqx)
-        (ptqx,ptqy,ptqz)+(qtpx,qtpy,qtpz)+(pyqz-pzqy, pxqz-pzqx, pxqy-pyqx)
-        (ptqx+qtpx+pyqz-pzqy, ptqy+qtpy+pxqz-pzqx, ptqz+qtpz+pxqy-pyqx)
-      ptqv+qtpv+pv*qv = (ptqx+qtpx+pyqz-pzqy, ptqy+qtpy+pxqz-pzqx, ptqz+qtpz+pxqy-pyqx)
+        (ptqv)+(qtpv)+(pv*qv)
+        (pt(qx,qy,qz))+(qt(px,py,pz))+(pyqz-qypz,pzqx-qzpx,pxqy-qxpy)
+        (ptqx,ptqy,ptqz)+(qtpx,qtpy,qtpz))+(pyqz-qypz,pzqx-qzpx,pxqy-qxpy)
+        (ptqx+qtpx+pyqz-qypz, ptqy+qtpy+pzqx-qzpx, ptqz+qtpz+pxqy-qxpy)
+      ptqv+qtpv+pv*qv = (ptqx+qtpx+pyqz-qypz, ptqy+qtpy+pzqx-qzpx, ptqz+qtpz+pxqy-qxpy)
       ####################################################################################
       p*q :: (ptqt-pv.qv, ptqv+qtpv+pv*qv) = # Rubist continuation here.
-      (ptqt-pxqx-pyqy-pzqz, ptqx+qtpx+pyqz-pzqy, ptqy+qtpy+pxqz-pzqx, ptqz+qtpz+pxqy-pyqx)
+      (ptqt-pxqx-pyqy-pzqz, ptqx+qtpx+pyqz-qypz, ptqy+qtpy+pzqx-qzpx, ptqz+qtpz+pxqy-qxpy)
       ####################################################################################
 
-I'm currently not matching one of the videos terms:
+OK, I can show I'm matching the video's formula:
 
     # :dwwd (\d)([a-z])(\d)([a-z]) -> \2\1\4\3
-    (ptqt-pxqx-pyqy-pzqz, ptqx+qtpx+pyqz-pzqy, ptqy+qtpy+pxqz-pzqx, ptqz+qtpz+pxqy-pyqx)
-    (1t2t-1x2x-1y2y-1z2z, 1t2x+2t1x+1y2z-1z2y, 1t2y+2t1y+1x2z-1z2x, 1t2z+2t1z+1x2y-1y2x) # tr pq 12
-    (t1t2-x1x2-y1y2-z1z2, t1x2+t2x1+y1z2-z1y2, t1y2+t2y1+x1z2-z1x2, t1z2+t2z1+x1y2-y1x2) # by :dwwd
-    (t1t2-x1x2-y1y2-z1z2, t1x2+t2x1+y1z2-y2z1, t1y2+t2y1+z2x1-x2z1, t1z2+t2z1+x1y2-x2y1) # commutes
-    (t1t2-x1x2-y1y2-z1z2, t1x2+t2x1+y1z2-y2z1, t1y2+t2y1+(z2x1-x2z1), t1z2+t2z1+x1y2-x2y1) # :-??
+    (ptqt-pxqx-pyqy-pzqz, ptqx+qtpx+pyqz-qypz, ptqy+qtpy+pzqx-qzpx, ptqz+qtpz+pxqy-qxpy)
+    (1t2t-1x2x-1y2y-1z2z, 1t2x+2t1x+1y2z-2y1z, 1t2y+2t1y+1z2x-2z1x, 1t2z+2t1z+1x2y-2x1y) # tr pq 12
+    (t1t2-x1x2-y1y2-z1z2, t1x2+t2x1+y1z2-y2z1, t1y2+t2y1+z1x2-z2x1, t1z2+t2z1+x1y2-x2y1) # by :dwwd
 
 See [Notation](../Notation.md).
