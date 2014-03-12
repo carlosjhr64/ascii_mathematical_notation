@@ -23,6 +23,7 @@ My script has the following methods:
 * digest
 * greek
 * list
+* tr
 * wsort and csort
 * wolframize
 
@@ -113,6 +114,14 @@ But greek letters is a really nice feature for an aside.
     a2b1c3
     a3b2c1
     a1b3c2
+
+## tr
+
+`tr` works a lot like the linux command.
+
+    x1y2z3
+    xaybzc # tr 123 abc
+
 
 ## wsort and cwort
 
