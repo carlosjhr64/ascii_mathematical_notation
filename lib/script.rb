@@ -132,14 +132,19 @@ def x2a
 end
 
 DEFINE ||= {}
-VIMDEF ||= File.join(ENV['HOME'], '.vimdef')
+VIMDEF0 ||= './script.json'
+VIMDEF1 ||= File.join(ENV['HOME'], '.vim', 'script.json')
 
 def save
-  File.open(VIMDEF, 'w'){|f| f.puts DEFINE.to_json}
+  File.open(VIMDEF1, 'w'){|f| f.puts DEFINE.to_json}
 end
 
 def read
-  JSON.parse(File.read(VIMDEF)).each{|k,v| DEFINE[k.to_sym]=v}
+  [VIMDEF0, VIMDEF1].each do |fn|
+    if File.exist?(fn)
+      JSON.parse(File.read(fn)).each{|k,v| DEFINE[k.to_sym]=v}
+    end
+  end
 end
 
 def by(key)
@@ -179,6 +184,7 @@ end
 def digest
   n = $curbuf.line_number
   line = String.new($curbuf[n])
+  line.uncomment!
   indentation = line.indentation
   d = Digest::RMD160.base64digest(line.strip)
   $curbuf.append(n, indentation+"# #{d}")
@@ -262,6 +268,20 @@ def tr(set1, set2)
   $curbuf.append(n, indentation+line)
 end
 
+def pm
+  n = $curbuf.line_number
+  line = String.new($curbuf[n])
+  line.uncomment!
+  indentation = line.indentation
+  line.strip!
+  line.gsub!(/\s*([+-])?\s*(\w+)\b/) do |m|
+    m.gsub!(/\s+/,'')
+    (m=~/^[+-]/)? ' '+m : ' +'+m
+  end
+  line.comment!
+  $curbuf.append(n, indentation+line)
+end
+
 def squeeze
   n = $curbuf.line_number
   line = String.new($curbuf[n])
@@ -269,6 +289,80 @@ def squeeze
   indentation = line.indentation
   line.strip!
   line.gsub!(/\s+/,'')
+  line.comment!
+  $curbuf.append(n, indentation+line)
+end
+
+def spread
+  n = $curbuf.line_number
+  line = String.new($curbuf[n])
+  line.uncomment!
+  indentation = line.indentation
+  line.strip!
+  line.gsub!(/\b(\W)/,' \1')
+  line.gsub!(/(\W)\b/,'\1 ')
+  line.comment!
+  $curbuf.append(n, indentation+line)
+end
+
+def ungroup
+  n = $curbuf.line_number
+  line = String.new($curbuf[n])
+  line.uncomment!
+  indentation = line.indentation
+  line.strip!
+  line.gsub!(/(.?)\(([^()]*)\)/) do |m|
+    a,b = $1,$2
+    case a
+    when nil
+      b
+    when '-'
+      b.gsub!(/[-+]/){|s| (s=='+')? '-' : '+'}
+      a+b
+    else
+      a+b
+    end
+  end
+  line.comment!
+  $curbuf.append(n, indentation+line)
+end
+
+def associative
+  n = $curbuf.line_number
+  line = String.new($curbuf[n])
+  line.uncomment!
+  indentation = line.indentation
+  line.strip!
+  line.gsub!(/(\([^()]+\))\((\w)\)/) do |m|
+    a,b = $1,$2
+    a.gsub(/(\w)\b/,"\\1#{b}")
+  end
+  line.gsub!(/\((\w)\)(\([^()]+\))/) do |m|
+    a,b = $1,$2
+    b.gsub(/\b(\w)/,"#{a}\\1")
+  end
+  line.comment!
+  $curbuf.append(n, indentation+line)
+end
+
+def gsub(a,b)
+  n = $curbuf.line_number
+  line = String.new($curbuf[n])
+  line.uncomment!
+  indentation = line.indentation
+  line.strip!
+  line.gsub!(a,b)
+  line.comment!
+  $curbuf.append(n, indentation+line)
+end
+
+def cancels
+  n = $curbuf.line_number
+  line = String.new($curbuf[n])
+  line.uncomment!
+  indentation = line.indentation
+  line.strip!
+  line.gsub!(/(\+(\w+))\b(.*)(\-\2)\b/,'\3')
   line.comment!
   $curbuf.append(n, indentation+line)
 end
