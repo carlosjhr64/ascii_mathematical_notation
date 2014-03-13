@@ -77,15 +77,6 @@ GREEK[n] = ['NU',      'Ν']; n+=1
 GREEK[n] = ['XI',      'Ξ']; n+=1
 GREEK[n] = ['PI',      'Π']; n+=1
 
-def greek(p='([:"]|\b)')
-  n    = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  line.transform!(GREEK,p)
-  line.comment!
-  $curbuf.append(n, line)
-end
-
 A2X ||= Array.new
 n = 0
 # a0,a1,a2,a3,a4 -> i,x,y,z,e
@@ -113,22 +104,61 @@ A2X[n] = ['d2','p']; n+=1
 A2X[n] = ['d3','q']; n+=1
 A2X[n] = ['d4','h']; n+=1
 
-def a2x
+def _nli
   n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  line.transform!(A2X)
-  line.comment!
-  $curbuf.append(n, line)
+  l = String.new($curbuf[n])
+  i = l.indentation
+  l.uncomment!
+  l.strip!
+  return n,l,i
 end
 
-def x2a
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  line.transform!(A2X.map{|a,b| [b,a]})
-  line.comment!
-  $curbuf.append(n, line)
+def _append(c)
+  n,l,i = _nli
+  $curbuf.append(n, i.chop.comment!(c))
+end
+
+def _wut
+  n,l,i = _nli
+  l, c = yield(l)
+  c = caller[0][/`.*'/][1..-2] if c.nil?
+  if l.class == Array
+    $curbuf.append(n, i.dup.comment!(c))
+    l.each{|l| n+=1; $curbuf.append(n, i+l)}
+  else
+    l.comment!(c)
+    $curbuf.append(n, i+l)
+  end
+end
+
+def tr(set1, set2='', i=false)
+  _wut do |line|
+    comment = nil
+    if set1.class == Array
+      set1 = set1.map{|a,b| [b,a]} if i
+      comment = "tr #{set1[0][0]}->#{set1[0][1]},..."
+      line.transform!(set1,set2)
+    else
+      comment = "tr #{set1}->#{set2}"
+      set1,set2=set2,set1 if i
+      # regular tr
+      0.upto(line.length-1) do |n|
+        c = line[n]
+        if i=set1.index(c)
+          if b = set2[i]
+            line[n] = b
+           else
+            line[n] = ' '
+          end
+        end
+      end
+    end
+    [line, comment]
+  end
+end
+
+def rt(set1, set2='')
+  tr(set1, set2, true)
 end
 
 DEFINE ||= {}
@@ -149,220 +179,122 @@ end
 
 def by(key)
   pat, sub = DEFINE[key]
-  rgx = Regexp.new(pat)
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  line.gsub!(rgx, sub)
-  line.comment!("by :#{key}")
-  $curbuf.append(n, line)
+  _wut do |line|
+    if  pat
+      rgx = Regexp.new(pat)
+      line.gsub!(rgx, sub)
+      [line, "by #{key}"]
+    else
+      [line, "Error: #{key} not defined"]
+    end
+  end
 end
 
 def define(key, pat, sub)
   DEFINE[key] = [pat, sub]
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line = line.indentation.chop
-  line.comment!(":#{key} #{pat} -> #{sub}")
-  $curbuf.append(n, line)
+  _append("define(:#{key}, '#{pat}', '#{sub}')")
 end
 
 def wolframize
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  line.gsub!(/\s+/,'')
-  line.gsub!(/\)\(/, ')*(')
-  line.gsub!(/([a-z]\d*)([a-z])/, '\1*\2')
-  line.gsub!(/([a-z]\d*)([a-z])/, '\1*\2')
-  line.comment!
-  $curbuf.append(n, indentation+line)
+  _wut do |line|
+    line.gsub!(/\s+/,'')
+    line.gsub!(/\)\(/, ')*(')
+    line.gsub!(/([a-z]\d*)([a-z])/, '\1*\2')
+    line.gsub!(/([a-z]\d*)([a-z])/, '\1*\2')
+    'wolframize'
+  end
 end
 
 def digest
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  d = Digest::RMD160.base64digest(line.strip)
-  $curbuf.append(n, indentation+"# #{d}")
+  _wut do |line|
+    Digest::RMD160.base64digest(line)
+  end
 end
 
 def cl
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  line = line.split(/\s+/).map{|w| w[1..-1]+w[0]}.join(' ')
-  line.comment!
-  $curbuf.append(n, indentation+line)
+  _wut do |line|
+    line.split(/\s+/).map{|w| w[1..-1]+w[0]}.join(' ')
+  end
 end
 
 def cr
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  line = line.split(/\s+/).map{|w| w[-1]+w[0..-2]}.join(' ')
-  line.comment!
-  $curbuf.append(n, indentation+line)
+  _wut do |line|
+    line.split(/\s+/).map{|w| w[-1]+w[0..-2]}.join(' ')
+  end
 end
 
 def list
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  $curbuf.append(n, indentation+'# list')
-  n+=1
-  line = line.split(/\s+/).each do |word|
-    $curbuf.append(n, indentation+word)
-    n+=1
+  _wut do |line|
+    [line.split(/\s+/), 'list']
   end
 end
 
 def wsort
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  line = line.split(/\s+/).sort.join(' ')
-  line.comment!
-  $curbuf.append(n, indentation+line)
+  _wut do |line|
+    line.split(/\s+/).sort.join(' ')
+  end
 end
 
 def csort
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  line = line.split(/\b/).map{|w| (w=~/^\w/)? w.chars.sort.join : w }.join #(' ')
-  line.comment!
-  $curbuf.append(n, indentation+line)
-end
-
-def tr(set1, set2)
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  0.upto(line.length-1) do |n|
-    c = line[n]
-    if i=set1.index(c)
-      if b = set2[i]
-        line[n] = b
-       else
-        line[n] = ' '
-      end
-    end
+  _wut do |line|
+    line.split(/\b/).map{|w| (w=~/^\w/)? w.chars.sort.join : w }.join
   end
-  line.comment!("tr #{set1} #{set2}")
-  $curbuf.append(n, indentation+line)
 end
 
 def pm
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  line.gsub!(/\s*([+-])?\s*(\w+)\b/) do |m|
-    m.gsub!(/\s+/,'')
-    (m=~/^[+-]/)? ' '+m : ' +'+m
+  _wut do |line|
+    line.gsub!(/\s*([+-])?\s*(\w+)\b/) do |m|
+      m.gsub!(/\s+/,'')
+      (m=~/^[+-]/)? ' '+m : ' +'+m
+    end
   end
-  line.comment!
-  $curbuf.append(n, indentation+line)
 end
 
 def squeeze
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  line.gsub!(/\s+/,'')
-  line.comment!
-  $curbuf.append(n, indentation+line)
+  _wut do |line|
+    line.gsub!(/\s+/,'')
+  end
 end
 
 def spread
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  line.gsub!(/\b(\W)/,' \1')
-  line.gsub!(/(\W)\b/,'\1 ')
-  line.comment!
-  $curbuf.append(n, indentation+line)
+  _wut do |line|
+    line.gsub!(/\b(\W)/,' \1')
+    line.gsub!(/(\W)\b/,'\1 ')
+  end
 end
 
 def ungroup
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  line.gsub!(/(.?)\(([^()]*)\)/) do |m|
-    a,b = $1,$2
-    case a
-    when nil
-      b
-    when '-'
-      b.gsub!(/[-+]/){|s| (s=='+')? '-' : '+'}
-      a+b
-    else
-      a+b
+  _wut do |line|
+    line.gsub!(/(.?)\(([^()]*)\)/) do |m|
+      a,b = $1,$2
+      case a
+      when nil
+        b
+      when '-'
+        b.gsub!(/[-+]/){|s| (s=='+')? '-' : '+'}
+        a+b
+      else
+        a+b
+      end
     end
   end
-  line.comment!
-  $curbuf.append(n, indentation+line)
 end
 
 def associative
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  line.gsub!(/(\([^()]+\))\((\w)\)/) do |m|
-    a,b = $1,$2
-    a.gsub(/(\w)\b/,"\\1#{b}")
+  _wut do |line|
+    line.gsub!(/(\([^()]+\))\((\w)\)/) do |m|
+      a,b = $1,$2
+      a.gsub(/(\w)\b/,"\\1#{b}")
+    end
+    line.gsub!(/\((\w)\)(\([^()]+\))/) do |m|
+      a,b = $1,$2
+      b.gsub(/\b(\w)/,"#{a}\\1")
+    end
   end
-  line.gsub!(/\((\w)\)(\([^()]+\))/) do |m|
-    a,b = $1,$2
-    b.gsub(/\b(\w)/,"#{a}\\1")
-  end
-  line.comment!
-  $curbuf.append(n, indentation+line)
 end
 
 def gsub(a,b)
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  line.gsub!(a,b)
-  line.comment!
-  $curbuf.append(n, indentation+line)
-end
-
-def cancels
-  n = $curbuf.line_number
-  line = String.new($curbuf[n])
-  line.uncomment!
-  indentation = line.indentation
-  line.strip!
-  line.gsub!(/(\+(\w+))\b(.*)(\-\2)\b/,'\3')
-  line.comment!
-  $curbuf.append(n, indentation+line)
+  _wut do |line|
+    line.gsub!(a,b)
+  end
 end
