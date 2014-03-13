@@ -17,36 +17,33 @@ Add the following line your file:
 
 My script has the following methods:
 
-* a3x and x3a
+* a2x
 * cl and cr
 * define, by, save, read
 * digest
 * greek
 * list
+* squeeze
 * tr
 * wsort and csort
 * wolframize
 
-## a3x and x3a
+## a2x
 
-The `a3x` method will swap as follows:
+The `a2x` method will swap as follows:
 
-    a1->x, a2->y, a3->z,
-    b1->u, b2->v, b3->w,
-    c1->r, c2->s, c3->t,
-    d1->o, d2->p, d3->q,
-    e1->l, e2->m, e3->n,
-    f1->i, f2->j, f3->k.
+    a0-> i, a1->x, a2->y, a3->z, a4->e,
+    b0-> j, b1->u, b2->v, b3->w, b4->f,
+    c0-> k, c1->r, c2->s, c3->t, c4->g,
+    d0-> l, d1->o, d2->p, d3->q, d4->h,
 
-The `x3a` reverts.  For example:
+The `x2a` reverts.  For example:
 
     (a1, a2, a3) + (b1, b2, b3) = (a1+b1, a2+b2, a2+b3)
-    (x, y, z) + (u, v, w) = (x+u, y+v, y+w) # a3x
-    (a1, a2, a3) + (b1, b2, b3) = (a1+b1, a2+b2, a2+b3) # x3a
+    (x, y, z) + (u, v, w) = (x+u, y+v, y+w) # a2x
+    (a1, a2, a3) + (b1, b2, b3) = (a1+b1, a2+b2, a2+b3) # x2a
 
 Notice that it adds a comment to the line tagging it with the action performed.
-The `3` in the method's names is due to changing variables from (a1,a2,a3) to (x,y,z).
-I plan a `4` version which may take (a0,a1,a2,a3) to (t,x,y,z).
 
 ## cl and cr
 
@@ -114,6 +111,13 @@ But greek letters is a really nice feature for an aside.
     a2b1c3
     a3b2c1
     a1b3c2
+
+## squeeze
+
+`squeeze` removes spaces:
+
+    a + b + c = d
+    a+b+c=d # squeze
 
 ## tr
 

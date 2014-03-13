@@ -86,47 +86,47 @@ def greek(p='([:"]|\b)')
   $curbuf.append(n, line)
 end
 
-A3X ||= Array.new
+A2X ||= Array.new
 n = 0
-# a1,a2,a3 -> a,b,c
-A3X[n] = ['a1','x']; n+=1
-A3X[n] = ['a2','y']; n+=1
-A3X[n] = ['a3','z']; n+=1
-# b1,b2,b3 -> u,v,w
-A3X[n] = ['b1','u']; n+=1
-A3X[n] = ['b2','v']; n+=1
-A3X[n] = ['b3','w']; n+=1
-# c1,c2,c3 -> r,s,t
-A3X[n] = ['c1','r']; n+=1
-A3X[n] = ['c2','s']; n+=1
-A3X[n] = ['c3','t']; n+=1
-# d1,d2,d3 -> r,s,t
-A3X[n] = ['d1','o']; n+=1
-A3X[n] = ['d2','p']; n+=1
-A3X[n] = ['d3','q']; n+=1
-# e1,e2,e3 -> r,s,t
-A3X[n] = ['e1','l']; n+=1
-A3X[n] = ['e2','m']; n+=1
-A3X[n] = ['e3','n']; n+=1
-# f1,f2,f3 -> j,k,l
-A3X[n] = ['f1','i']; n+=1
-A3X[n] = ['f2','j']; n+=1
-A3X[n] = ['f3','k']; n+=1
+# a0,a1,a2,a3,a4 -> i,x,y,z,e
+A2X[n] = ['a0','i']; n+=1
+A2X[n] = ['a1','x']; n+=1
+A2X[n] = ['a2','y']; n+=1
+A2X[n] = ['a3','z']; n+=1
+A2X[n] = ['a4','e']; n+=1
+# b0,b1,b2,b3,b4 -> j,u,v,w,f
+A2X[n] = ['b0','j']; n+=1
+A2X[n] = ['b1','u']; n+=1
+A2X[n] = ['b2','v']; n+=1
+A2X[n] = ['b3','w']; n+=1
+A2X[n] = ['b4','f']; n+=1
+# c0,c1,c2,c3,c4 -> k,r,s,t,g
+A2X[n] = ['c0','k']; n+=1
+A2X[n] = ['c1','r']; n+=1
+A2X[n] = ['c2','s']; n+=1
+A2X[n] = ['c3','t']; n+=1
+A2X[n] = ['c4','g']; n+=1
+# d0,d1,d2,d3,d4 -> l,r,s,t,h
+A2X[n] = ['d0','l']; n+=1
+A2X[n] = ['d1','o']; n+=1
+A2X[n] = ['d2','p']; n+=1
+A2X[n] = ['d3','q']; n+=1
+A2X[n] = ['d4','h']; n+=1
 
-def a3x
+def a2x
   n = $curbuf.line_number
   line = String.new($curbuf[n])
   line.uncomment!
-  line.transform!(A3X)
+  line.transform!(A2X)
   line.comment!
   $curbuf.append(n, line)
 end
 
-def x3a
+def x2a
   n = $curbuf.line_number
   line = String.new($curbuf[n])
   line.uncomment!
-  line.transform!(A3X.map{|a,b| [b,a]})
+  line.transform!(A2X.map{|a,b| [b,a]})
   line.comment!
   $curbuf.append(n, line)
 end
@@ -237,7 +237,7 @@ def csort
   line.uncomment!
   indentation = line.indentation
   line.strip!
-  line = line.split(/\s+/).map{|w| w.chars.sort.join }.join(' ')
+  line = line.split(/\b/).map{|w| (w=~/^\w/)? w.chars.sort.join : w }.join #(' ')
   line.comment!
   $curbuf.append(n, indentation+line)
 end
@@ -259,5 +259,16 @@ def tr(set1, set2)
     end
   end
   line.comment!("tr #{set1} #{set2}")
+  $curbuf.append(n, indentation+line)
+end
+
+def squeeze
+  n = $curbuf.line_number
+  line = String.new($curbuf[n])
+  line.uncomment!
+  indentation = line.indentation
+  line.strip!
+  line.gsub!(/\s+/,'')
+  line.comment!
   $curbuf.append(n, indentation+line)
 end
