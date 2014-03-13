@@ -45,4 +45,23 @@ OK, I can show I'm matching the video's formula:
     (1t2t-1x2x-1y2y-1z2z, 1t2x+2t1x+1y2z-2y1z, 1t2y+2t1y+1z2x-2z1x, 1t2z+2t1z+1x2y-2x1y) # tr pq 12
     (t1t2-x1x2-y1y2-z1z2, t1x2+t2x1+y1z2-y2z1, t1y2+t2y1+z1x2-z2x1, t1z2+t2z1+x1y2-x2y1) # by :dwwd
 
+Continue...
+
+    H
+      I :: (1,0,0,0)
+      I*q =
+        (1,0,0,0)*(t,x,y,z)
+        (1*t-0x-0y-0z, 1x+0t+0z-0y, 1y+0t+0x-0z, 1z+0z+0qy-0qx)
+        (t, x, y, z)
+        q
+      I*q = q
+      q*I =
+        (t,x,y,z)*(1,0,0,0)
+        (t*1-x*0-y*0-z*0, t*0+1*x+y*0-0*z, t*0+1*y+z*0-0*x, t*0+1*z+x*0-0*y)
+        (t, x, y, z)
+      I*q = q
+      O :: (0,0,0,0)
+      O*q = O
+      q*O = O
+
 See [Notation](../Notation.md).
