@@ -1,8 +1,12 @@
 # My VIM Script
 ## Vim script support for [Notation](Notation.md).
+### WARNING:
+#### THE METHODS PROVIDED ARE NOT FOOL PROOF.
+#### YOU MUST VERIFY THEY DO WHAT YOU NEED THEM TO DO.
 
-For this to work, one needs to have vim compiled to use ruby scripts.
-In vim, the comand to run is:
+For vim ruby scripts to work,
+one needs to have vim compiled to use ruby scripts.
+In vim, the command to run is:
 
     :ruby load '/path/to/script.rb'
 
@@ -11,75 +15,88 @@ If the script can be found in ./lib/script.rb, then the command is:
     :ruby load './lib/script.rb'
 
 One can also have the script load automatically via the `~/.vimrc` file.
-Add the following line your file:
+Add the following line your `~/.vimrc` file:
 
     rubyfile /path/to/script.rb
 
 My script has the following methods:
 
-* a2x
+* associative
 * cl and cr
 * define, by, save, read
 * digest
-* greek
+* gsub
 * list
+* pm
 * squeeze
-* tr
+* spread
+* tr and rt (with GREEK, A2X, ...)
+* ungroup
 * wsort and csort
 * wolframize
 
-## a2x
+Once the script is loaded, one can run a method as follows:
 
-The `a2x` method will swap as follows:
+    :ruby method
+    :ruby method arg1,...
 
-    a0-> i, a1->x, a2->y, a3->z, a4->e,
-    b0-> j, b1->u, b2->v, b3->w, b4->f,
-    c0-> k, c1->r, c2->s, c3->t, c4->g,
-    d0-> l, d1->o, d2->p, d3->q, d4->h,
+## associative
 
-The `x2a` reverts.  For example:
-
-    (a1, a2, a3) + (b1, b2, b3) = (a1+b1, a2+b2, a2+b3)
-    (x, y, z) + (u, v, w) = (x+u, y+v, y+w) # a2x
-    (a1, a2, a3) + (b1, b2, b3) = (a1+b1, a2+b2, a2+b3) # x2a
-
-Notice that it adds a comment to the line tagging it with the action performed.
+    (ij-xu-yv-zw)(k)-(r)(iu+jx+yw-vz)-(iv+jy+zu-wx)(s)-(iw+jz+xv-uy)(t)
+    (ijk-xuk-yvk-zwk)-(riu+rjx+ryw-rvz)-(ivs+jys+zus-wxs)-(iwt+jzt+xvt-uyt) # associative
 
 ## cl and cr
 
-I'm too lazy at the moment to describe what `cl` and `cr` obviously does:
+For each word in the current line,
+`cr` pops the last letter and shifts it back in as the first letter.
+The result is appended on the next line.  For example:
 
     abc xyz ijk
     cab zxy kij # cr
     bca yzx jki # cr
     abc xyz ijk # cr
 
+For each word in the current line,
+`cl` unshifts the first letter and pushes it back in as the last letter.
+The result is appended on the next line.  For example:
+
     abc xyz ijk
     bca yzx jki # cl
     cab zxy kij # cl
     abc xyz ijk # cl
 
-    a = +2x2 -xy +5y2
-    a = 2x2+ xy- 5y2+ # cl
-    a = +2x2 -xy +5y2 # cr
+One possible use for `cr` and `cl` is to sort like terms for cancellation.
+For example:
+
+    abc +bxy -abc -cuv
+    bca bxy+ abc- cuv- # cl
+    abc- bca bxy+ cuv- # wsort
+    -abc abc +bxy -cuv # cr
+    (-abc abc) +bxy -cuv
+    +bxy -cuv
 
 ## define, by, save, and read
 
-The define method takes a symbol, a pattern, and a substitution.
+The `define` method takes a symbol, a pattern, and a substitution.
 This way one can define a `gsub` by a given key name.
-For example, `:ruby define :mcom, '\((\w)\*(\w)\)', '\2*\1'`
-will define :mcom to perform `gsub('\((\w)\*(\w)\)', '\2*\1')` on the line.
-Then `:ruby by :mcom` will perform that action.
+For example, `:ruby define :commute, '\((\w)\*(\w)\)', '\2*\1'`
+will define `:commute` to perform `gsub('\((\w)\*(\w)\)', '\2*\1')` on a line.
+It will append the definition as a comment on the next line.
+Then `:ruby by :commute` will perform that action on the current line, and
+append the results on the next line.
+For example:
 
-    # :mcom \((\w)\*(\w)\) -> \2*\1
+    # Enter the new definition...
+    # define(:commute, '\((\w)\*(\w)\)', '\2*\1')
     X*(A*B)*Y
-    X*B*A*Y # by :mcom
+    X*B*A*Y # by commute
 
-Notice that `define` will append a line with the new definition, and
-`by` will append the tranformed line tagged with the action taken.
+The `save` method will save the current state of your definitions
+into a file in the working diretory, `./script.json`.
+You can also specify the file to save to by giving it the filename.
 
-`save` will save the current definitions into `~/vimdef`.
-`read` will read the definitions store in `~/vimdef`.
+The `read` method will read definitions from `~/.vim/script.json` and `./script.json`.
+You can also specify the file to read from by giving it the filename.
 
 ## digest
 
@@ -87,22 +104,21 @@ The digest method appends the RMD160 digest of the stripped current line.
 This can help in determining if two lines are equal:
 
     dafjkJA fjaskjAF Iasjsdgfjlkjlafri AFJJFF
-    # Jxgi2de/YQF4t6EPW2B+NfgJzRM=
+    Jxgi2de/YQF4t6EPW2B+NfgJzRM= # digest
+
     dafjkJA fjaskjAF 1asjsdgfjlkjlafri AFJJFF
-    # gx1BzZReswQhxWSRjUqmTsyaKOs=
+    gx1BzZReswQhxWSRjUqmTsyaKOs= # digest
+
     dafjkJA fjaskjAF Iasjsdgfjlkjlafri AFJJFF
-    # Jxgi2de/YQF4t6EPW2B+NfgJzRM=
+    Jxgi2de/YQF4t6EPW2B+NfgJzRM= # digest
 
-## greek
+## gsub
 
-The greek method will swap the names of greek letters to their greek letters in the current line
-and append it to the next line.
+`gsub` will run gsub on the current (striped) line with the given arguments.
+For example:
 
-    This is PI, Pi, OMEGA, Omega, THETA, and Theta!
-    This is Π, π, Ω, ω, Θ, and θ! # greek
-
-I know I said in [Notation](Notation.md) that only ASCII characters are allowed.
-But greek letters is a really nice feature for an aside.
+    The rain in spain.
+    The ra*n *n spain. # gsub('in ','*n ')
 
 ## list
 
@@ -112,22 +128,75 @@ But greek letters is a really nice feature for an aside.
     a3b2c1
     a1b3c2
 
+## pm
+
+    a+b-c-d+e f+g-h -i+h
+     +a +b -c -d +e +f +g -h -i +h # pm
+
 ## squeeze
 
 `squeeze` removes spaces:
 
     a + b + c = d
-    a+b+c=d # squeze
+    a+b+c=d # squeeze
 
-## tr
+## spread
+
+    abc(de+f)A[qt]
+    abc ( de + f ) A [ qt ] # spread
+
+## tr and rt
 
 `tr` works a lot like the linux command.
+It takes two strings which describes a map from one letter to another.
+`rt` reverses the operation.
+For example:
 
     x1y2z3
-    xaybzc # tr 123 abc
+    xaybzc # tr('123','abc')
+    x1y2z3 # rt('123','abc')
+
+`tr` can also take an Array as an argument,
+in which case it expects each element to contain a pattern, substitution pair.
+For example, run `:ruby tr [['(\w)(\d)','\2\1'], ['(\d)','\1\1']]`:
+
+    a3  b57
+    33a  55b77 # tr (\w)(\d)->\2\1,...
 
 
-## wsort and cwort
+## tr and rt GREEK
+
+My script has some predefined arrays for `tr`.
+The GREEK array maps the names of greek letters to their greek letters.
+The comman is `:ruby tr GREEK`:
+
+    This is PI, Pi, OMEGA, Omega, THETA, and Theta!
+    This is Π, π, Ω, ω, Θ, and θ! # tr Epsilon->ε,...
+
+When the Array describes a simple string to string mapping,
+as is the case with GREEK, then `rt` will work to revert.
+
+## tr and rt A2X
+
+The `A2X` Array will swap strings as follows:
+
+    a0-> i, a1->x, a2->y, a3->z, a4->e,
+    b0-> j, b1->u, b2->v, b3->w, b4->f,
+    c0-> k, c1->r, c2->s, c3->t, c4->g,
+    d0-> l, d1->o, d2->p, d3->q, d4->h,
+
+For example:
+
+    (a1, a2, a3) + (b1, b2, b3) = (a1+b1, a2+b2, a2+b3)
+    (x, y, z) + (u, v, w) = (x+u, y+v, y+w) # tr a0->i,...
+    (a1, a2, a3) + (b1, b2, b3) = (a1+b1, a2+b2, a2+b3) # rt i->a0,...
+
+## ungroup
+
+    (a+b-c)-(d+f-e)+(g-h-i)-(j-k-l)
+    a+b-c-d-f+e+g-h-i-j+k+l # ungroup
+
+## wsort and csort
 
 `csort` sorts the characters, `wsort` sorts the words:
 

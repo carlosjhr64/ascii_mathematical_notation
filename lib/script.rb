@@ -123,7 +123,7 @@ def _wut
   l, c = yield(l)
   c = caller[0][/`.*'/][1..-2] if c.nil?
   if l.class == Array
-    $curbuf.append(n, i.dup.comment!(c))
+    $curbuf.append(n, i.chop.comment!(c))
     l.each{|l| n+=1; $curbuf.append(n, i+l)}
   else
     l.comment!(c)
@@ -131,15 +131,15 @@ def _wut
   end
 end
 
-def tr(set1, set2='', i=false)
+def tr(set1, set2='', i=false, c='tr')
   _wut do |line|
     comment = nil
     if set1.class == Array
       set1 = set1.map{|a,b| [b,a]} if i
-      comment = "tr #{set1[0][0]}->#{set1[0][1]},..."
+      comment = "#{c} #{set1[0][0]}->#{set1[0][1]},..."
       line.transform!(set1,set2)
     else
-      comment = "tr #{set1}->#{set2}"
+      comment = "#{c}('#{set1}','#{set2}')"
       set1,set2=set2,set1 if i
       # regular tr
       0.upto(line.length-1) do |n|
@@ -158,7 +158,7 @@ def tr(set1, set2='', i=false)
 end
 
 def rt(set1, set2='')
-  tr(set1, set2, true)
+  tr(set1, set2, true, 'rt')
 end
 
 DEFINE ||= {}
@@ -290,11 +290,12 @@ def associative
       a,b = $1,$2
       b.gsub(/\b(\w)/,"#{a}\\1")
     end
+    line
   end
 end
 
 def gsub(a,b)
   _wut do |line|
-    line.gsub!(a,b)
+    [line.gsub!(a,b), "gsub('#{a}','#{b}')"]
   end
 end
