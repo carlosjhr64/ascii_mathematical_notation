@@ -11,9 +11,9 @@ class String
     self.gsub!(/\s+/,'')
   end
 
-  def break!
-    line.gsub!(/\b(\W)/,' \1')
-    line.gsub!(/(\W)\b/,'\1 ')
+  def crack!
+    self.gsub!(/\b(\W)/,' \1')
+    self.gsub!(/(\W)\b/,'\1 ')
   end
 
   def comment!(c=caller[0][/`.*'/][1..-2])
@@ -334,7 +334,7 @@ def read(f=[VIMDEF0, VIMDEF1])
 end
 
 def by(key)
-  pat, sub = DEFINE[key]
+  pat, sub = DEFINE[key.to_sym]
   _wut do |line|
     if  pat
       rgx = Regexp.new(pat)
@@ -347,7 +347,7 @@ def by(key)
 end
 
 def define(key, pat, sub)
-  DEFINE[key] = [pat, sub]
+  DEFINE[key.to_sym] = [pat, sub]
   _append("define(:#{key}, '#{pat}', '#{sub}')")
 end
 
@@ -401,9 +401,9 @@ def fuse
   end
 end
 
-def break
+def crack
   _wut do |line|
-    line.break!
+    line.crack!
   end
 end
 
