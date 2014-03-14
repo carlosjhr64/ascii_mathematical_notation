@@ -7,8 +7,13 @@ class String
     /^\s*/.match(self)[0]
   end
 
-  def fuse
+  def fuse!
     self.gsub!(/\s+/,'')
+  end
+
+  def break!
+    line.gsub!(/\b(\W)/,' \1')
+    line.gsub!(/(\W)\b/,'\1 ')
   end
 
   def comment!(c=caller[0][/`.*'/][1..-2])
@@ -363,18 +368,6 @@ def digest
   end
 end
 
-def cl
-  _wut do |line|
-    line.split(/\s+/).map{|w| w[1..-1]+w[0]}.join(' ')
-  end
-end
-
-def cr
-  _wut do |line|
-    line.split(/\s+/).map{|w| w[-1]+w[0..-2]}.join(' ')
-  end
-end
-
 def list
   _wut do |line|
     [line.split(/\s+/), 'list']
@@ -402,16 +395,15 @@ def pm
   end
 end
 
-def fuse!
+def fuse
   _wut do |line|
-    line.gsub!(/\s+/,'')
+    line.fuse!
   end
 end
 
-def spread
+def break
   _wut do |line|
-    line.gsub!(/\b(\W)/,' \1')
-    line.gsub!(/(\W)\b/,'\1 ')
+    line.break!
   end
 end
 
