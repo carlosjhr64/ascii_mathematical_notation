@@ -298,7 +298,7 @@ Notes from njwildberger's YouTube
             - u3v1w1t3
             - u3v2w2t3
             #######################
-            # The terms matcth.  Therefore:
+            # The terms match.  Therefore:
             (u*v).(w*t) = (u.w)(v.t) - (u.t)(v.w)
             # And we can take it down to the parent block.
           (u*v).(w*t) = (u.w)(v.t) - (u.t)(v.w)
