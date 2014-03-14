@@ -24,7 +24,7 @@ I'm not familiar with these other languages, such as Haskell.
 
 I will try to match as much as possible the first and second order logic described in Wikipedia.
 
-## Valid characters
+## Alphabet
 
 Only ASCII characters allowed, here in order:
 
@@ -36,39 +36,66 @@ Only ASCII characters allowed, here in order:
 -  a b c d e f g h i j k l m n o p q r s t u v w x y z
 -  { | } ~
 
-## Meanings
+This does not mean the raw text can't be transformed to not ASCII characters.
+Just that one can legibly write the text in ASCII.
 
-| Code          | Meaning                  | Binds  |
-|:-------------:|:-------------------------|:-------|
-| #             | Comment                  | Right  |
-| ;             | End of statement         |        |
-| \n            | End of statement         |        |
-| !             | Not                      | Right  |
-| ::            | Definition               |        |
-| ==>           | Implication              |        |
-| ?=>           | Assumed, find conclusion |        |
-| <=>           | Biconditional            |        |
-| :=            | Assignment (Let...)      | Binary |
-| :             | Such that                |        |
-| =             | Equal                    | Binary |
-| =?            | Asssumed, find when      | Binary |
-| !=            | Not Equal                | Binary |
-| >             | Greater than             | Binary |
-| >=            | Greater than or equal    | Binary |
-| <             | Less than                | Binary |
-| <=            | Less than or equal       | Binary |
-| ,             | And                      |        |
-| ...           | Intuitive continuation   |        |
-| {...}         | A set of ...             | Left   |
-| [...]         | Ordered set of ...       | Left   |
-| (...)         | Grouping                 | Left   |
-| "Word"  ?     | Ex: Q{a} = "Rational"{a} |        |
-| :Word:  ?     | Ex: Q{a} = :Rational:{a} |        |
-| :Word   ?     | Ex: Q{a} = :Rational{a}  |        |
+## Words
+
+This list is not yet in order of precedence.
+It's just a tentative listing of a possible alphabet.
+The words I believe will be in the language I've marked with `Y` -
+that is, these are reserved words.
+The rest, I believe should be user definable.
+
+| Code   | Symbol | Meaning                  | Binds | Implemented |
+|:------:|:------:|:-------------------------|:-----:|:-----------:|
+| #      |        | Comment                  | L     | Y
+| ;      |        | End of statement         | L     | Y
+| \n     |        | End of statement         | L     | Y
+| ::     | ≜      | Definition               | B     | Y
+| !      |        | Not                      | R     | ?
+| =      |        | Equal                    | B     | ?
+| !=     | ≠      | Not equal                | B     | ?
+| =?     |        | Asssumed, find when      | B     | ?
+| <      |        | Less than                | B     | ?
+| <=     | ≤      | Less than or equal       | B     | ?
+| >      |        | Greater than             | B     | ?
+| >=     | ≥      | Greater than or equal    | B     | ?
+| ==>    | ⇒      | Implication              | B     | ?
+| <=>    | ⇔      | Biconditional            | B     | ?
+| ?=>    |        | Assumed, find conclusion | B     | ?
+| "Word" |        | Ex: Q{a} = "Rational"{a} | V     | ?
+| :Word: |        | Ex: Q{a} = :Rational:{a} | V     | ?
+| :Word  |        | Ex: Q{a} = :Rational{a}  | V     | ?
+| ...    | ⋯      | Intuitive continuation   | V     | ?
+| {⋯}    |        | A set of ...             | L     | ?
+| [⋯]    |        | Ordered set of ...       | L     | ?
+| (⋯)    |        | Grouping                 | L     | ?
+| <==    | ⇐      |                          | B     |
+| -->    | →      |                          | B     |
+| <--    | ←      |                          | B     |
+| <->    | ↔      |                          | B     |
+| .:     | ∵      | Because                  | ?     |
+| :.     | ∴      | Therefore                | ?     |
+| (0/0)  | ∞      | Infinity                 | V     |
+| !==    | ≢      |                          | B     |
+| ==     | ≡      |                          | B     |
+| ~=     | ≈      |                          | B     |
+| <=<    | ⊆      | Subset                   | B     |
+| <<<    | ⊂      | Proper Subset            | B     |
+| >=>    | ⊇      | Superset                 | B     |
+| >>>    | ⊃      | Proper Superset          | B     |
+| :=     |        | Assignment (Let...)      | B     |
+| :      |        | Such that                | B     |
+| ,      |        | And (listing)            | B     |
+| (+)    | ⊕      |                          | B     |
+| (+-)   | ±      |                          | B     |
+| "'     | ‴      |                          | ?     |
+| ""     | ⁗      |                          | ?     |
 
 I haven't made up my mind on how to handle `Word`.
 I'm already using `:` in several ways, but
-using it for `Word` fits well with how `Ruby` uses `:` for symbols.
+using it for `:Word` fits well with how `Ruby` uses `:` for symbols.
 
 ## Context
 
@@ -94,7 +121,6 @@ Indentation will imply implication:
 For all `a` in `A`, `a` is also in `B`:
 
     A{a}(B{a}) # Expressed as second order logic
-
     A{a} ==> B{a} # Expressed as first order logic
 
 There exists `a` in `A` such that `a` is also in `B`:
@@ -105,12 +131,12 @@ I think anything else can be defined as need be.  For example:
 
     N :: {1,2,3,...}
     Z+ :: {0,1,2,3,...}
-    Q{q} :: N{m,n}:(q=m/n)
+    Q+{q} :: N{m,n}:(q=m/n)
 
 Note that a function takes an ordered set of parameters, arguments, variables...
-A function of f of x is most apropriately written as:
+A function of f of x,y is most apropriately written as:
 
-    F[x] = Ax^2 + Bx + c # For example
+    F[x,y] = Ax^2 + Bxy + c # For example
 
 Note that with an ordered set [a,b,c,d,e], the following makes sense:
 
@@ -121,3 +147,5 @@ Note that with an ordered set [a,b,c,d,e], the following makes sense:
 * [Complex Numbers](examples/ComplexNumbers.md)
 * [Space Vectors](examples/SpaceVectors.md)
 * [Quaternions](examples/Quaternions.md)
+
+Lastly, I want to mention that github supports emoji :heavy_exclamation_mark:
