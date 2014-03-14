@@ -321,24 +321,25 @@ def rt(set1, set2='')
   tr(set1, set2, true, 'rt')
 end
 
-DEFINE ||= {}
+DEFINITIONS ||= {}
 VIMDEF0 ||= './script.json'
 VIMDEF1 ||= File.join(ENV['HOME'], '.vim', 'script.json')
 
-def save(f=VIMDEF1)
-  File.open(f, 'w'){|fh| fh.puts DEFINE.to_json}
+def save(f=VIMDEF0)
+  raise "Empty definitions" if DEFINITIONS.empty?
+  File.open(f, 'w'){|fh| fh.puts JSON.pretty_generate(DEFINITIONS)}
 end
 
 def read(f=[VIMDEF0, VIMDEF1])
   [*f].each do |fn|
     if File.exist?(fn)
-      JSON.parse(File.read(fn)).each{|k,v| DEFINE[k.to_sym]=v}
+      JSON.parse(File.read(fn)).each{|k,v| DEFINITIONS[k.to_sym]=v}
     end
   end
 end
 
 def by(key)
-  pat, sub = DEFINE[key.to_sym]
+  pat, sub = DEFINITIONS[key.to_sym]
   _wut do |line|
     if  pat
       rgx = Regexp.new(pat)
@@ -356,7 +357,7 @@ def define(key=nil, pat=nil, sub=nil)
     dummy, key, pat, sub, nope = _line.strip.split(/\s+/)
   end
   raise "Need key, pat, and sub" unless key and pat and sub and !nope and dummy=='#'
-  DEFINE[key.to_sym] = [pat, sub]
+  DEFINITIONS[key.to_sym] = [pat, sub]
   _append("define(:#{key}, '#{pat}', '#{sub}')")
 end
 
