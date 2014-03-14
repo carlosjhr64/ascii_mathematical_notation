@@ -163,19 +163,6 @@ For example, run `:ruby tr [['(\w)(\d)','\2\1'], ['(\d)','\1\1']]`:
     a3  b57
     33a  55b77 # tr (\w)(\d)->\2\1,...
 
-
-## tr and rt GREEK
-
-My script has some predefined arrays for `tr`.
-The GREEK array maps the names of greek letters to their greek letters.
-The comman is `:ruby tr GREEK`:
-
-    This is PI, Pi, OMEGA, Omega, THETA, and Theta!
-    This is Π, π, Ω, ω, Θ, and θ! # tr Epsilon->ε,...
-
-When the Array describes a simple string to string mapping,
-as is the case with GREEK, then `rt` will work to revert.
-
 ## tr and rt A2X
 
 The `A2X` Array will swap strings as follows:
@@ -188,8 +175,48 @@ The `A2X` Array will swap strings as follows:
 For example:
 
     (a1, a2, a3) + (b1, b2, b3) = (a1+b1, a2+b2, a2+b3)
-    (x, y, z) + (u, v, w) = (x+u, y+v, y+w) # tr a0->i,...
-    (a1, a2, a3) + (b1, b2, b3) = (a1+b1, a2+b2, a2+b3) # rt i->a0,...
+    (x, y, z) + (u, v, w) = (x+u, y+v, y+w) # tr A2X
+    (a1, a2, a3) + (b1, b2, b3) = (a1+b1, a2+b2, a2+b3) # rt A2X
+
+## tr FRACTIONS
+
+For example, run `:ruby tr FRACTIONS`:
+
+    A (1/4) and (3/8)
+    A ¼ and ⅜ # tr FRACTIONS
+
+## tr and rt GREEK
+
+My script has some predefined arrays for `tr`.
+The GREEK array maps the names of greek letters to their greek letters.
+The comman is `:ruby tr GREEK`:
+
+    This is PI, Pi, OMEGA, Omega, THETA, and Theta!
+    This is Π, π, Ω, ω, Θ, and θ! # tr GREEK
+
+When the Array describes a simple string to string mapping,
+as is the case with GREEK, then `rt` will work to revert.
+
+## tr MATH
+
+    A<=>B C-->D .: The World is round :. Blows my mind! To (0/0)
+    A⇔B C→D ∵ The World is round ∴ Blows my mind! To +∞ # tr MATH
+
+## tr SUP and SUB
+
+For example, run `:ruby tr SUB` or `:ruby tr SUP`:
+
+    A0 4_3 a^2 K^r
+    A₀ 4₃ a^2 K^r # tr SUB
+
+    A0 4_3 a^2 K^r
+    A0 4_3 a² Kʳ # tr SUP
+
+You can add arrays like `:ruby tr SUB+SUP`, but
+the script won't be able to figure out the names of the arrays:
+
+    A0 4_3 a^2 K^r
+    A₀ 4₃ a² Kʳ # tr ["\\^2(\\D|\\b)", "\u00B2\\1"]...
 
 ## ungroup
 

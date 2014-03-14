@@ -24,6 +24,147 @@ class String
   end
 end
 
+FRACTIONS ||= Array.new
+n = 0
+FRACTIONS[n] = ['\(1\/4\)', '¼']; n+=1
+FRACTIONS[n] = ['\(1\/2\)', '½']; n+=1
+FRACTIONS[n] = ['\(3\/4\)', '¾']; n+=1
+FRACTIONS[n] = ['\(1\/7\)', '⅐']; n+=1
+FRACTIONS[n] = ['\(1\/9\)', '⅑']; n+=1
+FRACTIONS[n] = ['\(1\/10\)', '⅒']; n+=1
+FRACTIONS[n] = ['\(1\/3\)', '⅓']; n+=1
+FRACTIONS[n] = ['\(2\/3\)', '⅔']; n+=1
+FRACTIONS[n] = ['\(1\/5\)', '⅕']; n+=1
+FRACTIONS[n] = ['\(2\/5\)', '⅖']; n+=1
+FRACTIONS[n] = ['\(3\/5\)', '⅗']; n+=1
+FRACTIONS[n] = ['\(4\/5\)', '⅘']; n+=1
+FRACTIONS[n] = ['\(1\/6\)', '⅙']; n+=1
+FRACTIONS[n] = ['\(5\/6\)', '⅚']; n+=1
+FRACTIONS[n] = ['\(1\/8\)', '⅛']; n+=1
+FRACTIONS[n] = ['\(3\/8\)', '⅜']; n+=1
+FRACTIONS[n] = ['\(5\/8\)', '⅝']; n+=1
+FRACTIONS[n] = ['\(7\/8\)', '⅞']; n+=1
+
+MATH ||= Array.new
+n=0
+MATH[n] = ['<=>', '⇔']; n+=1
+MATH[n] = ['<->', '↔']; n+=1
+MATH[n] = ['==>', '⇒']; n+=1
+MATH[n] = ['-->', '→']; n+=1
+MATH[n] = ['<--', '←']; n+=1
+MATH[n] = ['<==', '⇐']; n+=1
+MATH[n] = [':Therefore:', '∴']; n+=1
+MATH[n] = [':\.', '∴']; n+=1
+MATH[n] = [':Because:', '∵']; n+=1
+MATH[n] = ['\.:', '∵']; n+=1
+MATH[n] = ['\(+?[10]/0\)', '+∞']; n+=1
+MATH[n] = ['\(-[10]/0\)', '-∞']; n+=1
+MATH[n] = ['!==', '≢']; n+=1
+MATH[n] = ['==', '≡']; n+=1
+MATH[n] = ['<=', '≤']; n+=1
+MATH[n] = ['>=', '≥']; n+=1
+MATH[n] = [':=', '≜']; n+=1
+MATH[n] = ['~=', '≈']; n+=1
+MATH[n] = ['!=', '≠']; n+=1
+MATH[n] = ['<=<', '⊆']; n+=1
+MATH[n] = ['<<<', '⊂']; n+=1
+MATH[n] = ['>=>', '⊇']; n+=1
+MATH[n] = ['>>>', '⊃']; n+=1
+MATH[n] = ['\(\+\)', '⊕']; n+=1
+MATH[n] = [':ContourIntegral:', '∮']; n+=1
+MATH[n] = [':Sq(ua)?r(eRroo)?t:', '√']; n+=1
+MATH[n] = ['\(\+\/?\-\)', '±']; n+=1
+MATH[n] = ['\.\.\.', '⋯']; n+=1
+MATH[n] = ['"\'', '‴']; n+=1
+MATH[n] = ['""', '⁗']; n+=1
+MATH[n] = [':Natural:', 'ℕ']; n+=1
+MATH[n] = [':Integer:', 'ℤ']; n+=1
+MATH[n] = [':Rational:', 'ℚ']; n+=1
+MATH[n] = [':Real:', 'ℝ']; n+=1
+MATH[n] = [':Complex:', 'ℂ']; n+=1
+MATH[n] = [':Quaternions:', 'ℍ']; n+=1
+MATH[n] = [':Integral:', '∫']; n+=1
+#MATH[n] = ['=/([\daehijklmnoprstvx])\b', '=_\1']; n+=1
+
+SUP ||= Array.new
+n=0
+SUP[n] = ['\^2(\D|\b)', '²\1']; n+=1
+SUP[n] = ['\^3(\D|\b)', '³\1']; n+=1
+SUP[n] = ['\^0(\D|\b)', '⁰\1']; n+=1
+SUP[n] = ['\^1(\D|\b)', 'ⁱ\1']; n+=1
+SUP[n] = ['\^4(\D|\b)', '⁴\1']; n+=1
+SUP[n] = ['\^5(\D|\b)', '⁵\1']; n+=1
+SUP[n] = ['\^6(\D|\b)', '⁶\1']; n+=1
+SUP[n] = ['\^7(\D|\b)', '⁷\1']; n+=1
+SUP[n] = ['\^8(\D|\b)', '⁸\1']; n+=1
+SUP[n] = ['\^9(\D|\b)', '⁹\1']; n+=1
+SUP[n] = ['\^a', 'ᵃ']; n+=1
+SUP[n] = ['\^b', 'ᵇ']; n+=1
+SUP[n] = ['\^c', 'ᶜ']; n+=1
+SUP[n] = ['\^d', 'ᵈ']; n+=1
+SUP[n] = ['\^e', 'ᵉ']; n+=1
+SUP[n] = ['\^f', 'ᶠ']; n+=1
+SUP[n] = ['\^g', 'ᵍ']; n+=1
+SUP[n] = ['\^h', 'ʰ']; n+=1
+SUP[n] = ['\^i', 'ⁱ']; n+=1
+SUP[n] = ['\^j', 'ʲ']; n+=1
+SUP[n] = ['\^k', 'ᵏ']; n+=1
+SUP[n] = ['\^l', 'ˡ']; n+=1
+SUP[n] = ['\^m', 'ᵐ']; n+=1
+SUP[n] = ['\^n', 'ⁿ']; n+=1
+SUP[n] = ['\^o', 'ᵒ']; n+=1
+SUP[n] = ['\^p', 'ᵖ']; n+=1
+SUP[n] = ['\^r', 'ʳ']; n+=1
+SUP[n] = ['\^s', 'ˢ']; n+=1
+SUP[n] = ['\^t', 'ᵗ']; n+=1
+SUP[n] = ['\^u', 'ᵘ']; n+=1
+SUP[n] = ['\^v', 'ᵛ']; n+=1
+SUP[n] = ['\^w', 'ʷ']; n+=1
+SUP[n] = ['\^x', 'ˣ']; n+=1
+SUP[n] = ['\^y', 'ʸ']; n+=1
+SUP[n] = ['\^z', 'ᶻ']; n+=1
+SUP[n] = ['\^n', 'ⁿ']; n+=1
+SUP[n] = ['\^k', 'ᵏ']; n+=1
+
+SUB ||= Array.new
+n=0
+SUB[n] = ['([A-Z]|[a-z])0', '\1₀']; n+=1
+SUB[n] = ['([A-Z]|[a-z])1', '\1₁']; n+=1
+SUB[n] = ['([A-Z]|[a-z])2', '\1₂']; n+=1
+SUB[n] = ['([A-Z]|[a-z])3', '\1₃']; n+=1
+SUB[n] = ['([A-Z]|[a-z])4', '\1₄']; n+=1
+SUB[n] = ['([A-Z]|[a-z])5', '\1₅']; n+=1
+SUB[n] = ['([A-Z]|[a-z])6', '\1₆']; n+=1
+SUB[n] = ['([A-Z]|[a-z])7', '\1₇']; n+=1
+SUB[n] = ['([A-Z]|[a-z])8', '\1₈']; n+=1
+SUB[n] = ['([A-Z]|[a-z])9', '\1₉']; n+=1
+SUB[n] = ['_0', '₀']; n+=1
+SUB[n] = ['_1', '₁']; n+=1
+SUB[n] = ['_2', '₂']; n+=1
+SUB[n] = ['_3', '₃']; n+=1
+SUB[n] = ['_4', '₄']; n+=1
+SUB[n] = ['_5', '₅']; n+=1
+SUB[n] = ['_6', '₆']; n+=1
+SUB[n] = ['_7', '₇']; n+=1
+SUB[n] = ['_8', '₈']; n+=1
+SUB[n] = ['_9', '₉']; n+=1
+SUB[n] = ['_a', 'ₐ']; n+=1
+SUB[n] = ['_e', 'ₑ']; n+=1
+SUB[n] = ['_h', 'ₕ']; n+=1
+SUB[n] = ['_i', 'ᵢ']; n+=1
+SUB[n] = ['_j', 'ⱼ']; n+=1
+SUB[n] = ['_k', 'ₖ']; n+=1
+SUB[n] = ['_l', 'ₗ']; n+=1
+SUB[n] = ['_m', 'ₘ']; n+=1
+SUB[n] = ['_n', 'ₙ']; n+=1
+SUB[n] = ['_o', 'ₒ']; n+=1
+SUB[n] = ['_p', 'ₚ']; n+=1
+SUB[n] = ['_r', 'ᵣ']; n+=1
+SUB[n] = ['_s', 'ₛ']; n+=1
+SUB[n] = ['_t', 'ᵤ']; n+=1
+SUB[n] = ['_v', 'ᵥ']; n+=1
+SUB[n] = ['_x', 'ₓ']; n+=1
+
 # This allows one to reload the script
 # without definition complaints.
 GREEK ||= Array.new
@@ -104,6 +245,9 @@ A2X[n] = ['d2','p']; n+=1
 A2X[n] = ['d3','q']; n+=1
 A2X[n] = ['d4','h']; n+=1
 
+ARRAY_NAMES ||= Hash.new{|h,k| k.first.to_s+'...'}
+%w(FRACTIONS MATH SUP SUB GREEK A2X).each{|n| ARRAY_NAMES[eval(n)]=n}
+
 def _nli
   n = $curbuf.line_number
   l = String.new($curbuf[n])
@@ -135,8 +279,8 @@ def tr(set1, set2='', i=false, c='tr')
   _wut do |line|
     comment = nil
     if set1.class == Array
+      comment = "#{c} #{ARRAY_NAMES[set1]}"
       set1 = set1.map{|a,b| [b,a]} if i
-      comment = "#{c} #{set1[0][0]}->#{set1[0][1]},..."
       line.transform!(set1,set2)
     else
       comment = "#{c}('#{set1}','#{set2}')"
