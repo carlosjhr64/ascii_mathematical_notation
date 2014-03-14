@@ -235,7 +235,7 @@ The following example shows what it does:
 
 # Included Definitions
 
-I following keys are defined in [script.json](script.json):
+The following keys are defined in [script.json](script.json):
 
 * cl and cr
 * C0, C1, Cr, and Cx
