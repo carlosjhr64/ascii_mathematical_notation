@@ -7,6 +7,10 @@ class String
     /^\s*/.match(self)[0]
   end
 
+  def fuse
+    self.gsub!(/\s+/,'')
+  end
+
   def comment!(c=caller[0][/`.*'/][1..-2])
     self << " # #{c}"
   end
@@ -15,9 +19,9 @@ class String
     self.sub!(/\s*#.*$/, '')
   end
 
-  def transform!(map, p='')
+  def transform!(map, p='', q='')
     map.each do |pat, sub|
-      rgx = Regexp.new(p+pat+p)
+      rgx = Regexp.new(p+pat+q)
       self.gsub!(rgx, sub)
     end
     self
@@ -312,12 +316,12 @@ DEFINE ||= {}
 VIMDEF0 ||= './script.json'
 VIMDEF1 ||= File.join(ENV['HOME'], '.vim', 'script.json')
 
-def save
-  File.open(VIMDEF1, 'w'){|f| f.puts DEFINE.to_json}
+def save(f=VIMDEF1)
+  File.open(f, 'w'){|fh| fh.puts DEFINE.to_json}
 end
 
-def read
-  [VIMDEF0, VIMDEF1].each do |fn|
+def read(f=[VIMDEF0, VIMDEF1])
+  [*f].each do |fn|
     if File.exist?(fn)
       JSON.parse(File.read(fn)).each{|k,v| DEFINE[k.to_sym]=v}
     end
@@ -344,10 +348,11 @@ end
 
 def wolframize
   _wut do |line|
-    line.gsub!(/\s+/,'')
-    line.gsub!(/\)\(/, ')*(')
-    line.gsub!(/([a-z]\d*)([a-z])/, '\1*\2')
-    line.gsub!(/([a-z]\d*)([a-z])/, '\1*\2')
+    line.fuse!
+    2.times do
+      line.gsub!(/\)\(/, ')*(')
+      line.gsub!(/([a-z]\d*)([a-z])/, '\1*\2')
+    end
     'wolframize'
   end
 end
@@ -397,7 +402,7 @@ def pm
   end
 end
 
-def squeeze
+def fuse!
   _wut do |line|
     line.gsub!(/\s+/,'')
   end
