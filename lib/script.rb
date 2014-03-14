@@ -44,6 +44,7 @@ FRACTIONS[n] = ['\(1\/8\)', '⅛']; n+=1
 FRACTIONS[n] = ['\(3\/8\)', '⅜']; n+=1
 FRACTIONS[n] = ['\(5\/8\)', '⅝']; n+=1
 FRACTIONS[n] = ['\(7\/8\)', '⅞']; n+=1
+FRACTIONS.sort!{|a,b| b.first.length<=>a.first.length}
 
 MATH ||= Array.new
 n=0
@@ -82,6 +83,7 @@ MATH[n] = [':Complex:', 'ℂ']; n+=1
 MATH[n] = [':Quaternions:', 'ℍ']; n+=1
 MATH[n] = [':Integral:', '∫']; n+=1
 #MATH[n] = ['=/([\daehijklmnoprstvx])\b', '=_\1']; n+=1
+MATH.sort!{|a,b| b.first.length<=>a.first.length}
 
 SUP ||= Array.new
 n=0
@@ -122,6 +124,7 @@ SUP[n] = ['\^y', 'ʸ']; n+=1
 SUP[n] = ['\^z', 'ᶻ']; n+=1
 SUP[n] = ['\^n', 'ⁿ']; n+=1
 SUP[n] = ['\^k', 'ᵏ']; n+=1
+SUP.sort!{|a,b| b.first.length<=>a.first.length}
 
 SUB ||= Array.new
 n=0
@@ -161,6 +164,7 @@ SUB[n] = ['_s', 'ₛ']; n+=1
 SUB[n] = ['_t', 'ᵤ']; n+=1
 SUB[n] = ['_v', 'ᵥ']; n+=1
 SUB[n] = ['_x', 'ₓ']; n+=1
+SUB.sort!{|a,b| b.first.length<=>a.first.length}
 
 # This allows one to reload the script
 # without definition complaints.
@@ -214,6 +218,7 @@ GREEK[n] = ['MU',      'Μ']; n+=1
 GREEK[n] = ['NU',      'Ν']; n+=1
 GREEK[n] = ['XI',      'Ξ']; n+=1
 GREEK[n] = ['PI',      'Π']; n+=1
+GREEK.sort!{|a,b| b.first.length<=>a.first.length}
 
 A2X ||= Array.new
 n = 0
@@ -241,6 +246,7 @@ A2X[n] = ['d1','o']; n+=1
 A2X[n] = ['d2','p']; n+=1
 A2X[n] = ['d3','q']; n+=1
 A2X[n] = ['d4','h']; n+=1
+A2X.sort!{|a,b| b.first.length<=>a.first.length}
 
 ARRAY_NAMES ||= Hash.new{|h,k| k.first.to_s+'...'}
 %w(FRACTIONS MATH SUP SUB GREEK A2X).each{|n| ARRAY_NAMES[eval(n)]=n}
