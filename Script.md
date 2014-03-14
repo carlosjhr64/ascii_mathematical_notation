@@ -308,8 +308,8 @@ For example:
     (x+u,y+v) # by Cadd
 
     #:ruby by :Cmult
-    ((x,y)(u,v))
-    (xu,yv) # by Cmult
+    ((x,y)*(u,v))
+    (xv-yu,xu+yv) # by Cmult
 
 ## H0, H1, and Ht
 
