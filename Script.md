@@ -328,11 +328,11 @@ For example:
 ## Hmult and Hmult2
 
     #:ruby by :Hmult
-    ((i,x,y,z)(j,u,v,w))
+    ((i,x,y,z)*(j,u,v,w))
     (ij-xu-yv-zw,iu+jx+yw-vz,iv+jy+zu-wx,iw+jz+xv-uy) # by Hmult
 
     #:ruby by :Hmult2
-    ((blah blah, Stuff Here, a+b+c, OK)(Wut, U, Wanna DO, psst))
+    ((blah blah, Stuff Here, a+b+c, OK)*(Wut, U, Wanna DO, psst))
 
     ((blah blah)(Wut)-( Stuff Here)( U)-( a+b+c)( Wanna DO)-( OK)( psst),
     (blah blah)( U)+(Wut)( Stuff Here)+( a+b+c)( psst)-( Wanna DO)( OK),
