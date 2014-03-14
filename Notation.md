@@ -148,4 +148,5 @@ Note that with an ordered set [a,b,c,d,e], the following makes sense:
 * [Space Vectors](examples/SpaceVectors.md)
 * [Quaternions](examples/Quaternions.md)
 
-Lastly, I want to mention that github supports emoji :heavy_exclamation_mark:
+Lastly, I want to mention that github supports
+[emoji](http://www.emoji-cheat-sheet.com):heavy_exclamation_mark:
