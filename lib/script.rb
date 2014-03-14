@@ -367,7 +367,7 @@ def wolframize
       line.gsub!(/\)\(/, ')*(')
       line.gsub!(/([a-z]\d*)([a-z])/, '\1*\2')
     end
-    'wolframize'
+    [line,'wolframize']
   end
 end
 

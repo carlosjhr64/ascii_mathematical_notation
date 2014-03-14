@@ -238,7 +238,7 @@ The following example shows what it does:
 
     #:ruby wolframize
     ab + cde (xyz - ijk)
-    wolframize # wolframize
+    a*b+c*d*e(x*y*z-i*j*k) # wolframize
 
 # Included Definitions
 
