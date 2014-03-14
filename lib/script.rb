@@ -260,6 +260,10 @@ A2X.sort!{|a,b| b.first.length<=>a.first.length}
 ARRAY_NAMES ||= Hash.new{|h,k| k.first.to_s+'...'}
 %w(FRACTIONS MATH SUP SUB GREEK A2X).each{|n| ARRAY_NAMES[eval(n)]=n}
 
+def _line
+  String.new($curbuf[$curbuf.line_number])
+end
+
 def _nli
   n = $curbuf.line_number
   l = String.new($curbuf[n])
@@ -346,7 +350,12 @@ def by(key)
   end
 end
 
-def define(key, pat, sub)
+def define(key=nil, pat=nil, sub=nil)
+  dummy='#'; nope=nil
+  if key.nil? and pat.nil? and sub.nil?
+    dummy, key, pat, sub, nope = _line.strip.split(/\s+/)
+  end
+  raise "Need key, pat, and sub" unless key and pat and sub and !nope and dummy=='#'
   DEFINE[key.to_sym] = [pat, sub]
   _append("define(:#{key}, '#{pat}', '#{sub}')")
 end

@@ -77,6 +77,13 @@ For example:
     X*(A*B)*Y
     X*B*A*Y # by commute
 
+If you don't pass any arguments to `define`,
+the method will look for the arguments in the current line.
+The current line should be a comment with the 3 arguments:
+
+    # MyKey MyPattern MySubstitution
+    # define(:MyKey, 'MyPattern', 'MySubstitution')
+
 The `save` method will save the current state of your definitions
 into a file in the working diretory, `./script.json`.
 You can also specify the file to save to by giving it the filename.
@@ -243,6 +250,7 @@ The following keys are defined in [script.json](script.json):
 * H0, H1, and Ht
 * Hmult and Hmult2
 * V0, V1, and Vx
+* But wait, there's more...
 
 I think defining a set of these keys
 should be enough to create any mathematical system
@@ -338,3 +346,9 @@ For example:
     (blah blah)( U)+(Wut)( Stuff Here)+( a+b+c)( psst)-( Wanna DO)( OK),
     (blah blah)( Wanna DO)+(Wut)( a+b+c)+( OK)( U)-( psst)( Stuff Here),
     (blah blah)( psst)+(Wut)( OK)+( Stuff Here)( Wanna DO)-( U)( a+b+c)) # by Hmult2
+
+## But wait, there's more...
+
+    #:ruby by :M2x2
+    (A)
+    [[A11,A12],[A21,A22]] # by M2x2
