@@ -257,8 +257,21 @@ A2X[n] = ['d3','q']; n+=1
 A2X[n] = ['d4','h']; n+=1
 A2X.sort!{|a,b| b.first.length<=>a.first.length}
 
+M22 ||= Array.new
+n = 0
+M22[n] = ['A11','a']; n+=1
+M22[n] = ['A12','b']; n+=1
+M22[n] = ['A21','c']; n+=1
+M22[n] = ['A22','d']; n+=1
+M22[n] = ['B11','e']; n+=1
+M22[n] = ['B12','f']; n+=1
+M22[n] = ['B21','g']; n+=1
+M22[n] = ['B22','h']; n+=1
+M22.sort!{|a,b| b.first.length<=>a.first.length}
+
 ARRAY_NAMES ||= Hash.new{|h,k| k.first.to_s+'...'}
-%w(FRACTIONS MATH SUP SUB GREEK A2X).each{|n| ARRAY_NAMES[eval(n)]=n}
+
+%w(FRACTIONS MATH SUP SUB GREEK A2X M22).each{|n| ARRAY_NAMES[eval(n)]=n}
 
 def _line
   String.new($curbuf[$curbuf.line_number])

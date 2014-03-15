@@ -1,5 +1,7 @@
 # The Logic Game
 
+You should first see [Script](../Script.md) and [Notation](../Notation.md).
+
 The `Logic Game` is like...
 given a `String`(a sentence), and
 using only a given set of `String` transformations,
@@ -38,4 +40,3 @@ keep in mind that these transforms are supposed to be prexisting in some system.
     (A==>C) # by Hypothetical
     T # by Axiom1
 
-See [Notation](../Notation.md)
