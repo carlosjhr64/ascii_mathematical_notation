@@ -42,7 +42,7 @@ Just that one can legibly write the text in ASCII.
 ## Words
 
 This list is not yet in order of precedence.
-It's just a tentative listing of a possible alphabet.
+It's just a tentative listing of a possible dictionary.
 The words I believe will be in the language I've marked with `Y` -
 that is, these are reserved words.
 The rest, I believe should be user definable.
@@ -144,6 +144,7 @@ Note that with an ordered set [a,b,c,d,e], the following makes sense:
 
 ## Examples
 
+* [The Logic Game](examples/LogicGame.md)
 * [Complex Numbers](examples/ComplexNumbers.md)
 * [Space Vectors](examples/SpaceVectors.md)
 * [Quaternions](examples/Quaternions.md)
