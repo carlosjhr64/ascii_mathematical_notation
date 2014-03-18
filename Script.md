@@ -1,8 +1,7 @@
 # My VIM Script
 ## Vim script support for [Notation](Notation.md).
 ### WARNING:
-#### THE METHODS PROVIDED ARE NOT FOOL PROOF.
-#### YOU MUST VERIFY THEY DO WHAT YOU NEED THEM TO DO.
+#### YOU MUST VERIFY METHODS DO WHAT YOU NEED THEM TO DO.
 
 For vim ruby scripts to work,
 one needs to have vim compiled to use ruby scripts.
@@ -18,6 +17,8 @@ One can also have the script load automatically via the `~/.vimrc` file.
 Add the following line your `~/.vimrc` file:
 
     rubyfile /path/to/script.rb
+
+See also [Extending Vim with Ruby](http://www.linux-mag.com/id/1027/).
 
 # Methods
 
