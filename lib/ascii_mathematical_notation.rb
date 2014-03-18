@@ -1,7 +1,7 @@
 require 'digest/rmd160'
 require 'json'
 
-module VimRuby
+module ASCII_MATHEMATICAL_NOTATION
   class Line < String
     def initialize(*args)
       super(*args)
@@ -71,7 +71,7 @@ module VimRuby
     File.join(DATADIR, key.to_s)+'.json'
   end
   DATADIR     ||= './data' # TODO
-  VIMDEF      ||= VimRuby.filename('definitions')
+  VIMDEF      ||= ASCII_MATHEMATICAL_NOTATION.filename('definitions')
   DEFINITIONS ||= {}
   ARRAYS      ||= {}
 
@@ -95,7 +95,7 @@ module VimRuby
       if map1.class == Symbol
         comment = map1.to_s
         unless array = DEFINITIONS[map1] or array = ARRAYS[map1]
-          fn = VimRuby.filename(map1)
+          fn = ASCII_MATHEMATICAL_NOTATION.filename(map1)
           raise "#{map1} not found." unless File.exist?(fn)
           array = JSON.parse File.read fn
           DEFINITIONS[map1] = array
@@ -125,7 +125,7 @@ module VimRuby
       raise "Array size must be more than just 2!" unless keys.length > 2
       raise "Array name and components must be Symbols." if [key,*keys].detect{|k| k.class!=Symbol}
       keys.each{|k| raise "#{k} not defined." unless DEFINITIONS[k]}
-      fn = VimRuby.filename(key)
+      fn = ASCII_MATHEMATICAL_NOTATION.filename(key)
       raise "Array #{key} exists!" if File.exist?(fn)
       array = keys.inject([]){|a,k| a << DEFINITIONS[k]}
       File.open(fn,'w'){|fh| fh.puts JSON.pretty_generate(array)}
@@ -159,5 +159,5 @@ module VimRuby
     end
   end
 end
-extend VimRuby::Methods
+extend ASCII_MATHEMATICAL_NOTATION::Methods
 read # We start with the default definitions file loaded!
