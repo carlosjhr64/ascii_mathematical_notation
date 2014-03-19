@@ -26,22 +26,22 @@ module ASCII_MATHEMATICAL_NOTATION
         end
         map1 = array
       else
-        comment = "tr '#{map1}' '#{map2}'"
+        if map1.class == String
+          comment = "tr '#{map1}' '#{map2}'"
+        else
+          comment = "tr #{map1}"
+        end
       end
       CurrentLine.new(comment){|line| line.transform!(map1, map2)}
     end
 
     def define(sep=/\s+/)
       CurrentLine.new do |line|
-        key, pat, sub = line.split(sep).map{|s| s.strip}
-        raise "Need key, pat, and sub" unless key and pat and sub
+        key, pat, sub, nope = line.split(sep).map{|s| s.strip}
+        raise "Need key, pat, and sub" unless key and pat and sub and !nope
         DEFINITIONS[key.to_sym] = [pat, sub]
-        "#{key}: #{pat} --> #{sub}"
+        "#{key.to_s}: #{pat} --> #{sub}"
       end
-    end
-    def undefine(key)
-      DEFINITIONS.delete(key)
-      CurrentLine.new("undefine(:#{key})").append
     end
 
     def define_array(key, *keys)
@@ -49,15 +49,21 @@ module ASCII_MATHEMATICAL_NOTATION
       raise "Array name and components must be Symbols." if [key,*keys].detect{|k| k.class!=Symbol}
       keys.each{|k| raise "#{k} not defined." unless DEFINITIONS[k]}
       fn = ASCII_MATHEMATICAL_NOTATION.filename(key)
-      raise "Array #{key} exists!" if File.exist?(fn)
-      array = keys.inject([]){|a,k| a << DEFINITIONS[k]}
+      #raise "Array #{key} file exists!" if File.exist?(fn)
+      raise "#{fn} file exists!" if File.exist?(fn)
+      array = keys.inject([]) do |a,k|
+        b = DEFINITIONS[k]
+        case b.first
+        when String then a<<b
+        when Array then b.each{|c| a<<c}
+        else
+          raise "Don't know how to add #{k} to the array."
+        end
+        a
+      end
       File.open(fn,'w'){|fh| fh.puts JSON.pretty_generate(array)}
-      ARRAYS[k] = array
+      ARRAYS[key] = array
       CurrentLine.new("define_array(:#{key}, :#{keys.join(', :')})").append
-    end
-    def undefine_array(key)
-      ARRAYS.delete(key)
-      CurrentLine.new("undefine_array(:#{key})").append
     end
 
     def digest
