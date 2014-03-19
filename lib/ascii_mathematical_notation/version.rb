@@ -1,0 +1,3 @@
+module ASCII_MATHEMATICAL_NOTATION
+  VERSION = '0.0.0'
+end

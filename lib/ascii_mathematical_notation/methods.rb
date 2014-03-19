@@ -1,82 +1,4 @@
-require 'digest/rmd160'
-require 'json'
-
-require 'user_space'
-
 module ASCII_MATHEMATICAL_NOTATION
-  class Line < String
-    def initialize(*args)
-      super(*args)
-    end
-
-    def grgx!(pat, sub)
-      rgx = Regexp.new(pat)
-      self.gsub!(rgx, sub)
-    end
-
-    def transform!(map1, map2)
-      case map1
-      when Array
-        case map1.first
-        when Array  then map1.each{|pat, sub| grgx!(pat, sub)}
-        when String then grgx!(*map1)
-        else
-          raise "Don't know how to tr array of #{map1.class}."
-        end
-      when String
-        raise "incomplete mapping" unless map1.length==map2.length
-        0.upto(self.length-1) do |n|
-          c = self[n]
-          if i=map1.index(c)
-            self[n] = map2[i]
-          end
-        end
-      else
-        raise "Don't know how to tr #{map1.class}."
-      end
-      self
-    end
-  end
-
-  class CurrentLine
-    def append(line='')
-      $curbuf.append(@line_number, @indentation+line+@comment)
-      @line_number += 1
-      @comment = ''
-    end
-
-    def initialize(comment=caller[1][/`.*'/][1..-2])
-      @comment     = (comment)? '# ' + comment : ''
-      @line_number = $curbuf.line_number
-  
-      line1       = Line.new($curbuf[@line_number])
-      @indentation = /^\s*/.match(line1)[0]
-
-      if block_given?
-        line1.sub!(/#.*$/, '')
-        line1.strip!
-        line2  = yield(line1)
-        case line2
-        when Array
-          append('') # Top Comment Line
-          line2.each{|line| append(line)}
-        when Line, String
-          append(line2)
-        else
-          raise 'Did not get a Line'
-        end
-      end
-    end
-  end
-
-  def self.filename(key)
-    File.join(DATADIR, key.to_s)+'.json'
-  end
-  DATADIR     ||= './data' # TODO
-  VIMDEF      ||= ASCII_MATHEMATICAL_NOTATION.filename('definitions')
-  DEFINITIONS ||= {}
-  ARRAYS      ||= {}
-
   module Methods
     def read(fn=VIMDEF)
       if File.exist?(fn)
@@ -161,5 +83,3 @@ module ASCII_MATHEMATICAL_NOTATION
     end
   end
 end
-extend ASCII_MATHEMATICAL_NOTATION::Methods
-read # We start with the default definitions file loaded!
