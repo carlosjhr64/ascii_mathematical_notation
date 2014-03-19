@@ -7,7 +7,7 @@ module ASCII_MATHEMATICAL_NOTATION
     end
 
     def initialize(comment=caller[1][/`.*'/][1..-2])
-      @comment     = (comment)? '# ' + comment : ''
+      @comment     = (comment)? ' # ' + comment : ''
       @line_number = $curbuf.line_number
   
       line1       = Line.new($curbuf[@line_number])

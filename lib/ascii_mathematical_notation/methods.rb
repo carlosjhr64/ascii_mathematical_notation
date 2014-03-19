@@ -31,14 +31,13 @@ module ASCII_MATHEMATICAL_NOTATION
       CurrentLine.new(comment){|line| line.transform!(map1, map2)}
     end
 
-    def define(key=nil, pat=nil, sub=nil)
-      dummy='#'; nope=nil
-      if key.nil? and pat.nil? and sub.nil?
-        dummy, key, pat, sub, nope = _line.strip.split(/\s+/)
+    def define(sep=/\s+/)
+      CurrentLine.new do |line|
+        key, pat, sub = line.split(sep).map{|s| s.strip}
+        raise "Need key, pat, and sub" unless key and pat and sub
+        DEFINITIONS[key.to_sym] = [pat, sub]
+        "#{key}: #{pat} --> #{sub}"
       end
-      raise "Need key, pat, and sub" unless key and pat and sub and !nope and dummy=='#'
-      DEFINITIONS[key.to_sym] = [pat, sub]
-      CurrentLine.new("define(:#{key}, '#{pat}', '#{sub}')").append
     end
     def undefine(key)
       DEFINITIONS.delete(key)
