@@ -1,13 +1,31 @@
 # Mathematical Notation in ASCII
 
-This is a continuation of the work started by
-[YNot2Day's NOTATION](http://web.archive.org/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY/NOTATION),
-the last snapshot found in the Internet Archive Wayback Machine copied here as Notation.html.
+* github   https://www.github.com/carlosjhr64/ascii_mathematical_notation
+* rubygems https://rubygems.org/gems/ascii_mathematical_notation
 
-### [Current Version](Notation.md)
+## Description
 
+Write your math using plain ASCII text files with Vim-Ruby.
+
+## Dual projects
+
+This project as essentially become two.
+One is to figure out how to easily type out mathematics in a regular kerboard as
+ASCII plain text.
+The other is to write a vim-ruby script to support writting such texts.
+
+* [Notation, current version](Notation.md)
+* [Vim-Ruby Script](Script.md)
+
+## Install
+
+    sudo gem install ascii_mathematical_notation
 
 ## Motivation
+
+This is a continuation of the work I started in
+[YNot2Day's NOTATION](http://web.archive.org/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY/NOTATION),
+the last snapshot found in the Internet Archive Wayback Machine copied here as Notation.html.
 
 Consider [Weierstrass](http://en.wikipedia.org/wiki/Karl_Weierstrass)
 formal definition of continuity written in the notation described in YNot2Day:
@@ -20,8 +38,8 @@ The above has the same meaning as:
     there exists d>0 such that for every x in the domain of f,
     |x-x0|<d implies |f(x)-f(x0)|<e.
 
-We will not worry about html issues and will add semantics,
-so we will write it as:
+I will now not worry about html issues and will add semantics,
+so I'll write it as:
 
     Continous{f(x=x0)} :: {e>0}({d>0}: f{x}(|x-x0|<d ==> |f(x)-f(x0)|<e)
 
@@ -35,22 +53,5 @@ which is read as:
 
     For all positive (and hence non-zero) integers z,
     there is no positive integer n such that 0*n is z.
-
-It's my opinion that the standard mathematical notation is a form of "short hand", and
-that we can do much better.
-And that the notation should be parseable by a computer
-not so much so that the computer may do mathematics but
-to ensure the statement is meaninful.
-For instance "N{z}" to the computer might mean "z = 1 + rand(1000)".
-That is, it picks some number to assign to z, and
-proceeds to see if it can make sense of the rest of the statement.
-Or we could try a direct translation to into Ruby code:
-
-    # For all intergers greater than zero, twice that integer is greater.
-    # Z{n>0}(2*n>n)
-    (Z=[-3,-2,-1,0,1,2,3]).select{|n| n>0}.inject(true){|b, n| b and (2*n > n)} #=> true
-
-The problem is that it's easy to write nonsense and 
-fall under the illusion that one has written something meaningful.
 
 See also [ASCIIMathML](http://www1.chapman.edu/~jipsen/mathml/asciimath.html).
