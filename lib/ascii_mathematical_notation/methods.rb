@@ -1,6 +1,6 @@
 module ASCII_MATHEMATICAL_NOTATION
   module Methods
-    def read(fn=VIMDEF)
+    def def_load(fn=ASCII_MATHEMATICAL_NOTATION.definitions)
       if File.exist?(fn)
          # TODO allow overwritting?
         JSON.parse(File.read(fn)).each{|k,v| DEFINITIONS[k.to_sym]=v}
@@ -9,9 +9,9 @@ module ASCII_MATHEMATICAL_NOTATION
       end
     end
 
-    def save(f=VIMDEF)
+    def def_dump(fn=ASCII_MATHEMATICAL_NOTATION.definitions)
       raise "Empty definitions" if DEFINITIONS.empty?
-      File.open(f, 'w'){|fh| fh.puts JSON.pretty_generate(DEFINITIONS)}
+      File.open(fn, 'w'){|fh| fh.puts JSON.pretty_generate(DEFINITIONS)}
     end
 
     def tr(map1, map2='')
