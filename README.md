@@ -12,7 +12,7 @@ Write your math using plain ASCII text files with Vim-Ruby.
 ## Dual projects
 
 This project as essentially become two.
-One is to figure out how to easily type out mathematics in a regular kerboard as
+One is to figure out how to easily type out mathematics in a regular keyboard as
 ASCII plain text.
 The other is to write a vim-ruby script to support writting such texts.
 
