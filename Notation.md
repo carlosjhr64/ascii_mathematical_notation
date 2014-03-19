@@ -15,14 +15,20 @@ I like the Chromium extension
 Vim is the "grand piano" of text editors.
 Its scripting feature presents some very interesting possibilities,
 like automatically performing simple logical steps.
-I have an example script file, [lib/script.rb](lib/script.rb).
-And I document its use in [Script.md](Script.md).
+I have a ruby gem one can load into vim-ruby,
+[ascii_mathematical_notation](https://rubygems.org/gems/ascii_mathematical_notation),
+which I document in [Script.md](Script.md).
 
 I may use conventions found in Ruby and CoffeeScript.
 I realize there may be languages better suited for this project, but
 I'm not familiar with these other languages, such as Haskell.
 
-I will try to match as much as possible the first and second order logic described in Wikipedia.
+I will try to match as much as I can the first and second order logic described in Wikipedia.
+
+In any case, my `vim-ruby` [script](Script.md) only acts a line at a time,
+treats anything to the right of `#` as a comment, and
+spaces from the left margin as indentation.
+So treat anything else as suggestions.
 
 ## Alphabet
 
@@ -36,7 +42,7 @@ Only ASCII characters allowed, here in order:
 -  a b c d e f g h i j k l m n o p q r s t u v w x y z
 -  { | } ~
 
-This does not mean the raw text can't be transformed to not ASCII characters.
+This does not mean the raw text can't be transformed to non ASCII characters.
 Just that one can legibly write the text in ASCII.
 
 ## Words
@@ -47,51 +53,51 @@ The words I believe will be in the language I've marked with `Y` -
 that is, these are reserved words.
 The rest, I believe should be user definable.
 
-| Code   | Symbol | Meaning                  | Binds | Implemented |
-|:------:|:------:|:-------------------------|:-----:|:-----------:|
-| #      |        | Comment                  | L     | Y
-| ;      |        | End of statement         | L     | Y
-| \n     |        | End of statement         | L     | Y
-| ::     | ≜      | Definition               | B     | Y
-| !      |        | Not                      | R     | ?
-| =      |        | Equal                    | B     | ?
-| !=     | ≠      | Not equal                | B     | ?
-| =?     |        | Asssumed, find when      | B     | ?
-| <      |        | Less than                | B     | ?
-| <=     | ≤      | Less than or equal       | B     | ?
-| >      |        | Greater than             | B     | ?
-| >=     | ≥      | Greater than or equal    | B     | ?
-| ==>    | ⇒      | Implication              | B     | ?
-| <=>    | ⇔      | Biconditional            | B     | ?
-| ?=>    |        | Assumed, find conclusion | B     | ?
-| "Word" |        | Ex: Q{a} = "Rational"{a} | V     | ?
-| :Word: |        | Ex: Q{a} = :Rational:{a} | V     | ?
-| :Word  |        | Ex: Q{a} = :Rational{a}  | V     | ?
-| ...    | ⋯      | Intuitive continuation   | V     | ?
-| {⋯}    |        | A set of ...             | L     | ?
-| [⋯]    |        | Ordered set of ...       | L     | ?
-| (⋯)    |        | Grouping                 | L     | ?
-| <==    | ⇐      |                          | B     |
-| -->    | →      |                          | B     |
-| <--    | ←      |                          | B     |
-| <->    | ↔      |                          | B     |
-| .:     | ∵      | Because                  | ?     |
-| :.     | ∴      | Therefore                | ?     |
-| (0/0)  | ∞      | Infinity                 | V     |
-| !==    | ≢      |                          | B     |
-| ==     | ≡      |                          | B     |
-| ~=     | ≈      |                          | B     |
-| <=<    | ⊆      | Subset                   | B     |
-| <<<    | ⊂      | Proper Subset            | B     |
-| >=>    | ⊇      | Superset                 | B     |
-| >>>    | ⊃      | Proper Superset          | B     |
-| :=     |        | Assignment (Let...)      | B     |
-| :      |        | Such that                | B     |
-| ,      |        | And (listing)            | B     |
-| (+)    | ⊕      |                          | B     |
-| (+-)   | ±      |                          | B     |
-| "'     | ‴      |                          | ?     |
-| ""     | ⁗      |                          | ?     |
+| Code   | Symbol | Meaning                    | Binds | Implemented |
+|:------:|:------:|:---------------------------|:-----:|:-----------:|
+| #      |        | Comment                    | L     | Y
+| \n     |        | End of completed statement | L     | Y
+| ;      |        | End of statement           | L     | ?
+| ::     | ≜      | Definition                 | B     | ?
+| !      |        | Not                        | R     | ?
+| =      |        | Equal                      | B     | ?
+| !=     | ≠      | Not equal                  | B     | ?
+| =?     |        | Asssumed, find when        | B     | ?
+| <      |        | Less than                  | B     | ?
+| <=     | ≤      | Less than or equal         | B     | ?
+| >      |        | Greater than               | B     | ?
+| >=     | ≥      | Greater than or equal      | B     | ?
+| ==>    | ⇒      | Implication                | B     | ?
+| <=>    | ⇔      | Biconditional              | B     | ?
+| ?=>    |        | Assumed, find conclusion   | B     | ?
+| "Word" |        | Ex: Q{a} = "Rational"{a}   | V     | ?
+| :Word: |        | Ex: Q{a} = :Rational:{a}   | V     | ?
+| :Word  |        | Ex: Q{a} = :Rational{a}    | V     | ?
+| ...    | ⋯      | Intuitive continuation     | V     | ?
+| {⋯}    |        | A set of ...               | L     | ?
+| [⋯]    |        | Ordered set of ...         | L     | ?
+| (⋯)    |        | Grouping                   | L     | ?
+| <==    | ⇐      |                            | B     |
+| -->    | →      |                            | B     |
+| <--    | ←      |                            | B     |
+| <->    | ↔      |                            | B     |
+| .:     | ∵      | Because                    | ?     |
+| :.     | ∴      | Therefore                  | ?     |
+| (0/0)  | ∞      | Infinity                   | V     |
+| !==    | ≢      |                            | B     |
+| ==     | ≡      |                            | B     |
+| ~=     | ≈      |                            | B     |
+| <=<    | ⊆      | Subset                     | B     |
+| <<<    | ⊂      | Proper Subset              | B     |
+| >=>    | ⊇      | Superset                   | B     |
+| >>>    | ⊃      | Proper Superset            | B     |
+| :=     |        | Assignment (Let...)        | B     |
+| :      |        | Such that                  | B     |
+| ,      |        | And (listing)              | B     |
+| (+)    | ⊕      |                            | B     |
+| (+-)   | ±      |                            | B     |
+| "'     | ‴      |                            | ?     |
+| ""     | ⁗      |                            | ?     |
 
 I haven't made up my mind on how to handle `Word`.
 I'm already using `:` in several ways, but
