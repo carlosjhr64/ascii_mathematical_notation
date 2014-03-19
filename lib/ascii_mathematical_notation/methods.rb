@@ -65,8 +65,8 @@ module ASCII_MATHEMATICAL_NOTATION
       CurrentLine.new{|line| Digest::RMD160.base64digest(line)}
     end
 
-    def wsort(s=/\s+/)
-      CurrentLine.new{|line| line.split(s).sort.join(' ')}
+    def wsort(p=/\s+/, s=' ')
+      CurrentLine.new{|line| line.split(p).sort.join(s)}
     end
 
     def csort(type=/^\w/)
