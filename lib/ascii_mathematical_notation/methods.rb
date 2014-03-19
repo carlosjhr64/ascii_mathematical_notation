@@ -2,7 +2,6 @@ module ASCII_MATHEMATICAL_NOTATION
   module Methods
     def def_load(fn=ASCII_MATHEMATICAL_NOTATION.definitions)
       if File.exist?(fn)
-         # TODO allow overwritting?
         JSON.parse(File.read(fn)).each{|k,v| DEFINITIONS[k.to_sym]=v}
       else
         raise "Does not exist: #{fn}"

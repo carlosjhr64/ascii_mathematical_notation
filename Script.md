@@ -1,100 +1,141 @@
-# My VIM Script
+# Vim-Ruby ASCII Mathematical Notation
+
 ## Vim script support for [Notation](Notation.md).
-### WARNING:
-#### YOU MUST VERIFY METHODS DO WHAT YOU NEED THEM TO DO.
 
 For vim ruby scripts to work,
 one needs to have vim compiled to use ruby scripts.
-In vim, the command to run is:
+See [Extending Vim with Ruby](http://www.linux-mag.com/id/1027/).
+In vim, the command to run to load my script is:
 
-    :ruby load '/path/to/script.rb'
+    # TODO
+    :ruby require 'ascii_mathematical_notation'
+    # Currently,
+    :ruby load './lib/ascii_mathematical_notation.rb'
 
-If the script can be found in ./lib/script.rb, then the command is:
+## Methods
 
-    :ruby load './lib/script.rb'
+With my script, all the the `String` methods are available to act on the current line.
+In addintion, my script has the following methods:
 
-One can also have the script load automatically via the `~/.vimrc` file.
-Add the following line your `~/.vimrc` file:
-
-    rubyfile /path/to/script.rb
-
-See also [Extending Vim with Ruby](http://www.linux-mag.com/id/1027/).
-
-# Methods
-
-My script has the following methods:
-
-* associative
-* crack and fuse
-* define, by, save, read
+* tr
+* csort and wsort
 * digest
-* gsub
-* list
-* pm
-* tr and rt (with GREEK, A2X, ...)
-* ungroup
-* wsort and csort
-* wolframize
+* define
+* define_array
+* def_load and def_dump
 
-Once the script is loaded, one can run a method as follows:
+One can run a method as follows:
 
     :ruby method
     :ruby method arg1,...
 
-## associative
+All methods will append to the current line location the transformed string,
+with a comment tag.
 
-    #:ruby associative
-    (ij-xu-yv-zw)(k)-(r)(iu+jx+yw-vz)-(iv+jy+zu-wx)(s)-(iw+jz+xv-uy)(t)
-    (ijk-xuk-yvk-zwk)-(riu+rjx+ryw-rvz)-(ivs+jys+zus-wxs)-(iwt+jzt+xvt-uyt) # associative
+### String methods
 
-## crack and fuse
+Most all of the [String](http://ruby-doc.org/core-2.1.1/String.html)
+methods are available, although maybe not all do anything usefull in our case.
+Here's some examples:
 
-`fuse` removes spaces:
+    #:ruby capitalize
+    hello world
+    Hello world # capitalize('')
+    Hello worl # chop('')
+    HELLO WORL # upcase('')
+    HELO WORL # squeeze('')
+    HELO WORM # succ('')
 
-    #:ruby fuse
-    a + b + c = d
-    a+b+c=d # fuse
+    #:ruby gsub(/[EO]/,'*')
+    HELO WORM
+    H*L* W*RM # gsub('(?-mix:[EO])', '*')
 
-`crack` breaks apart tokens:
+    #:ruby split(/\s+/)
+    H*L* W*RM
+     # split('(?-mix:\s+)')
+    H*L*
+    W*RM
 
-    #:ruby crack
-    a+b+c=d
-    a + b + c = d # crack
+The `gsub` method will probably be your most used.
 
-## by, define, read, and save
+### tr, basic usage
 
-The `define` method takes a symbol, a pattern, and a substitution.
-This way one can define a `gsub` by a given key name.
-For example, `:ruby define :commute, '\((\w)\*(\w)\)', '\2*\1'`
-will define `:commute` to perform `gsub('\((\w)\*(\w)\)', '\2*\1')` on a line.
-It will append the definition as a comment on the next line.
-Then `:ruby by :commute` will perform that action on the current line, and
-append the results on the next line.
+The `tr` method works a lot like the linux command in it simplest form:
+
+    #:ruby tr 'C', 'c'
+    Chocolate
+    chocolate # tr 'C' 'c'
+
+    #:ruby tr 'abcdefg', '1234567'
+    abcdefg
+    1234567 # tr 'abcdefg' '1234567'
+
+    #:ruby tr 'AB', 'BA'
+    A=B
+    B=A # tr 'AB' 'BA'
+
+### tr Symbol usage
+
+The `tr` method will also take a `Symbol` name for a transform.
+For convevience, I packaged some predefined transforms I think are generally usefull:
+
+    #:ruby tr :greek
+    This is PI and Pi, THETA and Theta, and OMEAGA and Omega.
+    This is Π and π, Θ and θ, and OMEAGA and ω. # greek
+
+    #:ruby tr :fractions
+    (3/4) and (1/4) makes one.
+    ¾ and ¼ makes one. # fractions
+
+    #:ruby tr :superscript
+    a^2 + b^3 = 0
+    a² + b³ = 0 # superscript
+
+    #:ruby tr :subscript
+    A1 + A2 = A3
+    A₁ + A₂ = A₃ # subscript
+
+    #:ruby tr :math
+    Rational+{q} :: Natural{n,m}: q=n/m
+    ℚ+{q} :: ℕ{n,m}: q=n/m # math
+
+    # You might want to combine two transforms.
+    # I'll show how to do that later.
+    a := x^2 + y^2
+    a := x² + y² # superscript
+    a ≜ x² + y² # math
+
+## tr Array usage
+
+`tr` can also take an Array as an argument,
+in which case it expects each element to contain a pattern, substitution pair.
 For example:
 
-    #:ruby define :commute, '\((\w)\*(\w)\)', '\2*\1'
-    # define(:commute, '\((\w)\*(\w)\)', '\2*\1')
-    #:ruby by :commute
-    X*(A*B)*Y
-    X*B*A*Y # by commute
+    #:ruby tr [['(\w)(\d)','\2\1'], ['(\d)','\1\1']]
+    a3  b57
+    33a  55b77 # tr [["(\\w)(\\d)", "\\2\\1"], ["(\\d)", "\\1\\1"]]
 
-If you don't pass any arguments to `define`,
-the method will look for the arguments in the current line.
-The current line should be a comment with the 3 arguments:
+The Array can also just be a pattern, substitution pair.
 
-    # MyKey MyPattern MySubstitution
-    # define(:MyKey, 'MyPattern', 'MySubstitution')
+    #:ruby tr ['(\w)(\d)','\2\1']
+    a3  b57
+    3a  5b7 # tr ["(\\w)(\\d)", "\\2\\1"]
 
-The `save` method will save the current state of your definitions
-into a file in the working diretory, `./script.json`.
-You can also specify the file to save to by giving it the filename.
+### csort and wsort
 
-The `read` method will read definitions from `~/.vim/script.json` and `./script.json`.
-You can also specify the file to read from by giving it the filename.
+`csort` sorts the characters, `wsort` sorts the words:
+
+    #:ruby csort
+    zxy bac tqr wvs
+    xyz abc qrt svw # csort
+
+    #:ruby wsort
+    xyz abc qrt svw
+    abc qrt svw xyz # wsort
 
 ## digest
 
-The digest method appends the RMD160 digest of the stripped current line.
+The digest method appends the RMD160 digest of the current line.
 This can help in determining if two lines are equal:
 
     #:ruby digest
@@ -108,248 +149,90 @@ This can help in determining if two lines are equal:
     dafjkJA fjaskjAF Iasjsdgfjlkjlafri AFJJFF
     Jxgi2de/YQF4t6EPW2B+NfgJzRM= # digest
 
-## gsub
+## define
 
-`gsub` will run gsub on the current (striped) line with the given arguments.
-For example:
+The `define` method takes a key name, a pattern, and a substitution from the current line.
+This way one can define a `gsub` by a given key name.
+The key become available for the `tr` method to use.
+`define` will essentially echo back the new defintion.
 
-    #:ruby gsub 'in ', '*n '
-    The rain in spain.
-    The ra*n *n spain. # gsub('in ','*n ')
+    #:ruby define
+    commute \((\w)\*(\w)\) (\2*\1)
+    commute: \((\w)\*(\w)\) --> (\2*\1) # define
 
-## list
+    # Now :commute is available to tr
+    #:ruby tr :commute
+    A*(B*C)*D
+    A*(C*B)*D # commute
 
-    #:ruby list
-    a2b1c3 a3b2c1 a1b3c2
-    # list
-    a2b1c3
-    a3b2c1
-    a1b3c2
+## define_array
 
-## pm
+The `define_array` method takes a key name and a series of key names.
+For example, say you want to use :greek, :subscripts, :superscript, and :math
+all in one step:
 
-    #:ruby pm
-    a+b-c-d+e f+g-h -i+h
-     +a +b -c -d +e +f +g -h -i +h # pm
+    # Note that the predefined arrays are not preloaded and
+    # they they need to be autoloaded first.
 
-## tr and rt
+    #:ruby tr :greek
+     # greek
+    #:ruby tr :subscript
+     # subscript
+    #:ruby tr :superscript
+     # superscript
+    #:ruby tr :math
+     # math
 
-`tr` works a lot like the linux command.
-It takes two strings which describes a map from one letter to another.
-`rt` reverses the operation.
-For example:
+    # Now you can define :all
+    #:ruby define_array :all, :greek, :subscript, :superscript, :math
+     # define_array(:all, :greek, :subscript, :superscript, :math)
 
-    #:ruby tr '123', 'abc'
-    x1y2z3
-    xaybzc # tr('123','abc')
+    #:ruby tr :all
+    A0 = Sqrt Pi r^2
+    A₀ = √ π r² # all
 
-    #:ruby rt '123', 'abc'
-    xaybzc
-    x1y2z3 # rt('123','abc')
+Once you have defined an Array, it will be available in subsequent vim sessions.
+In most `Linux` systems, you should be able to see the Array file for :all in:
 
-`tr` can also take an Array as an argument,
-in which case it expects each element to contain a pattern, substitution pair.
-For example:
+    ~/.local/share/ascii_mathematical_notation/all.json
 
-    #:ruby tr [['(\w)(\d)','\2\1'], ['(\d)','\1\1']]
-    a3  b57
-    33a  55b77 # tr ["(\\w)(\\d)", "\\2\\1"]...
+The vim-ruby script only does the intial creation of the Array files.
+After that, if you want to modify the array, you should edit the Array file.
+The modified Array will be available in a new vim session.
 
-## tr and rt A2X
+## def_load
+## and
+## def_dump
 
-The `A2X` Array will swap as follows:
+The `def_dump` method will save the current state of your definitions
+into a file in the data directory,
+`~/.local/share/ascii_mathematical_notation/definitions.json` for most `Linux` systems.
+You can also specify the file to save to by giving it the filename.
 
-    a0-> i, a1->x, a2->y, a3->z, a4->e,
-    b0-> j, b1->u, b2->v, b3->w, b4->f,
-    c0-> k, c1->r, c2->s, c3->t, c4->g,
-    d0-> l, d1->o, d2->p, d3->q, d4->h,
+The `def_load` method will read definitions, again from
+`~/.local/share/ascii_mathematical_notation/definitions.json`.
+You can also specify the file to read from by giving it the filename.
+The current definitions will be overwritten with those in the file.
 
-For example:
+Note that when `tr` is given a key name (a Symbol),
+it checks first if its in the definitions before checking the Arrays.
+So don't define :greek unless you don't need the :greek Array, for example.
 
-    #:ruby tr A2X
-    (a1, a2, a3) + (b1, b2, b3) = (a1+b1, a2+b2, a2+b3)
-    (x, y, z) + (u, v, w) = (x+u, y+v, y+w) # tr A2X
+## More?
 
-    #:ruby rt A2X
-    (x, y, z) + (u, v, w) = (x+u, y+v, y+w)
-    (a1, a2, a3) + (b1, b2, b3) = (a1+b1, a2+b2, a2+b3) # rt A2X
 
-## tr FRACTIONS
+At times this documentation may not be up to the latest changes.
+To check all methods available and subtleties of their implementations,
+it should be enough to just read:
 
-    :ruby tr FRACTIONS
-    A (1/4) and (3/8)
-    A ¼ and ⅜ # tr FRACTIONS
+* [methods.rb](lib/ascii_mathematical_notation/methods.rb)
 
-## tr and rt GREEK
+To see the complete list of Arrays available, and what they do,
+see the files in the data directory:
 
-    #:ruby tr GREEK
-    This is PI, Pi, OMEGA, Omega, THETA, and Theta!
-    This is Π, π, Ω, ω, Θ, and θ! # tr GREEK
+* [data](data)
 
-    #:ruby rt GREEK
-    This is Π, π, Ω, ω, Θ, and θ!
-    This is PI, Pi, OMEGA, Omega, THETA, and Theta! # rt GREEK
+The `definitions.json` file contains the definitions, of course.
+The `VERSION` file just contains the current version of the software.
+The rest should all be Array files.
 
-## tr MATH
-
-    #:ruby tr MATH
-    A<=>B C-->D .: The World is round :. Blows my mind! To (0/0)
-    A⇔B C→D ∵ The World is round ∴ Blows my mind! To ∞ # tr MATH
-
-## tr SUP and SUB
-
-    #:ruby tr SUB
-    A0 4_3 a^2 K^r
-    A₀ 4₃ a^2 K^r # tr SUB
-
-    #:ruby tr SUP
-    A0 4_3 a^2 K^r
-    A0 4_3 a² Kʳ # tr SUP
-
-You can add arrays like `:ruby tr SUB+SUP`, but
-the script won't be able to figure out the names of the arrays:
-
-    #:ruby tr SUP+SUB
-    A0 4_3 a^2 K^r
-    A₀ 4₃ a² Kʳ # tr ["\\^2(\\D|\\b)", "\u00B2\\1"]...
-
-## ungroup
-
-    #:ruby ungroup
-    (a+b-c)-(d+f-e)+(g-h-i)-(j-k-l)
-    a+b-c-d-f+e+g-h-i-j+k+l # ungroup
-
-## wsort and csort
-
-`csort` sorts the characters, `wsort` sorts the words:
-
-    #:ruby csort
-    zxy bac tqr wvs
-    xyz abc qrt svw # csort
-
-    #:ruby wsort
-    xyz abc qrt svw
-    abc qrt svw xyz # wsort
-
-## wolframize
-
-The wolframize method will cleanup a line to be passed to
-[wolframalpha](http://www.wolframalpha.com).
-The following example shows what it does:
-
-    #:ruby wolframize
-    ab + cde (xyz - ijk)
-    a*b+c*d*e(x*y*z-i*j*k) # wolframize
-
-# Included Definitions
-
-The following keys are defined in [script.json](script.json):
-
-* cl and cr
-* C0, C1, Cr, and Cx
-* Cadd and Cmult
-* H0, H1, and Ht
-* Hmult and Hmult2
-* V0, V1, and Vx
-* But wait, there's more...
-
-I think defining a set of these keys
-should be enough to create any mathematical system
-that can be written down.
-In fact, the methods above could also be written as a series of `by` transformations.
-
-## cl and cr
-
-For each word in the current line,
-`cr` pops the last letter and shifts it back in as the first letter.
-The result is appended on the next line.
-
-    #:ruby by :cr
-    abc xyz ijk
-    cab zxy kij # by cr
-    bca yzx jki # by cr
-    abc xyz ijk # by cr
-
-For each word in the current line,
-`cl` unshifts the first letter and pushes it back in as the last letter.
-The result is appended on the next line.  For example:
-
-    #:ruby by :cl
-    abc xyz ijk
-    bca yzx jki # by cl
-    cab zxy kij # by cl
-    abc xyz ijk # by cl
-
-One possible use for `cr` and `cl` is to sort like terms for cancellation.
-For example:
-
-    abc+bxy-abc-cuv
-    abc +bxy -abc -cuv
-    bca bxy+ abc- cuv- # by cl
-    abc- bca bxy+ cuv- # wsort
-    -abc abc +bxy -cuv # by cr
-    (-abc abc) +bxy -cuv
-    +bxy -cuv
-    +bxy-cuv # fuse
-
-## C0, C1, Cr, and Cx
-
-    #:ruby by :C0
-    (a)
-    (a0,a1) # by C0
-
-    #:ruby by :C1
-    (a)
-    (a1,a2) # by C1
-
-    #:ruby by :Cr
-    (a)
-    (ar,ai) # by Cr
-
-    #:ruby by :Cx
-    (a)
-    (ax,ay) # by Cx
-
-## Cadd and Cmult
-
-    #:ruby by :Cadd
-    ((x,y)+(u,v))
-    (x+u,y+v) # by Cadd
-
-    #:ruby by :Cmult
-    ((x,y)*(u,v))
-    (xv-yu,xu+yv) # by Cmult
-
-## H0, H1, and Ht
-
-    #:ruby by :H0
-    (a)
-    (a0,a1,a2,a3) # by H0
-
-    #:ruby by :H1
-    (a)
-    (a1,a2,a3,a4) # by H1
-
-    #:ruby by :Ht
-    (a)
-    (at,ax,ay,az) # by Ht
-
-## Hmult and Hmult2
-
-    #:ruby by :Hmult
-    ((i,x,y,z)*(j,u,v,w))
-    (ij-xu-yv-zw,iu+jx+yw-vz,iv+jy+zu-wx,iw+jz+xv-uy) # by Hmult
-
-    #:ruby by :Hmult2
-    ((blah blah, Stuff Here, a+b+c, OK)*(Wut, U, Wanna DO, psst))
-
-    ((blah blah)(Wut)-( Stuff Here)( U)-( a+b+c)( Wanna DO)-( OK)( psst),
-    (blah blah)( U)+(Wut)( Stuff Here)+( a+b+c)( psst)-( Wanna DO)( OK),
-    (blah blah)( Wanna DO)+(Wut)( a+b+c)+( OK)( U)-( psst)( Stuff Here),
-    (blah blah)( psst)+(Wut)( OK)+( Stuff Here)( Wanna DO)-( U)( a+b+c)) # by Hmult2
-
-## But wait, there's more...
-
-    #:ruby by :M2x2
-    (A)
-    [[A11,A12],[A21,A22]] # by M2x2

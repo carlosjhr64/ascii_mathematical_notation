@@ -3,6 +3,8 @@
 * github   https://www.github.com/carlosjhr64/ascii_mathematical_notation
 * rubygems https://rubygems.org/gems/ascii_mathematical_notation
 
+TODO: I have not published the gem yet, but it'll be there eventually.
+
 ## Description
 
 Write your math using plain ASCII text files with Vim-Ruby.
