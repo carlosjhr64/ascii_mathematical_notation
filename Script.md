@@ -2,10 +2,10 @@
 
 ## Vim script support for [Notation](Notation.md).
 
-For vim ruby scripts to work,
-one needs to have vim compiled to use ruby scripts.
+For vim-ruby scripts to work,
+one needs to have vim compiled to use ruby.
 See [Extending Vim with Ruby](http://www.linux-mag.com/id/1027/).
-In vim, the command to run to load my script is:
+In vim, the command to run my script is:
 
     # TODO
     :ruby require 'ascii_mathematical_notation'
@@ -15,7 +15,7 @@ In vim, the command to run to load my script is:
 ## Methods
 
 With my script, all the the `String` methods are available to act on the current line.
-In addintion, my script has the following methods:
+In addition, my script has the following methods:
 
 * tr
 * csort and wsort
@@ -58,7 +58,7 @@ Here's some examples:
 
 The `gsub` method will probably be your most used.
 
-### tr, basic usage
+### tr String usage
 
 The `tr` method works a lot like the linux command in it simplest form:
 
@@ -154,7 +154,7 @@ This can help in determining if two lines are equal:
 The `define` method takes a key name, a pattern, and a substitution from the current line.
 This way one can define a `gsub` by a given key name.
 The key become available for the `tr` method to use.
-`define` will essentially echo back the new defintion.
+`define` will essentially echo back the new definition.
 
     #:ruby define
     commute \((\w)\*(\w)\) (\2*\1)
@@ -200,9 +200,7 @@ The vim-ruby script only does the intial creation of the Array files.
 After that, if you want to modify the array, you should edit the Array file.
 The modified Array will be available in a new vim session.
 
-## def_load
-## and
-## def_dump
+## def_load and def_dump
 
 The `def_dump` method will save the current state of your definitions
 into a file in the data directory,
