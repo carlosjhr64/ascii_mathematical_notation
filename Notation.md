@@ -55,49 +55,50 @@ The rest, I believe should be user definable.
 
 | Code   | Symbol | Meaning                    | Binds | Implemented |
 |:------:|:------:|:---------------------------|:-----:|:-----------:|
-| #      |        | Comment                    | L     | Y
-| \n     |        | End of completed statement | L     | Y
-| ;      |        | End of statement           | L     | ?
-| ::     | ≜      | Definition                 | B     | ?
-| !      |        | Not                        | R     | ?
-| =      |        | Equal                      | B     | ?
-| !=     | ≠      | Not equal                  | B     | ?
-| =?     |        | Asssumed, find when        | B     | ?
-| <      |        | Less than                  | B     | ?
-| <=     | ≤      | Less than or equal         | B     | ?
-| >      |        | Greater than               | B     | ?
-| >=     | ≥      | Greater than or equal      | B     | ?
-| ==>    | ⇒      | Implication                | B     | ?
-| <=>    | ⇔      | Biconditional              | B     | ?
-| ?=>    |        | Assumed, find conclusion   | B     | ?
-| "Word" |        | Ex: Q{a} = "Rational"{a}   | V     | ?
-| :Word: |        | Ex: Q{a} = :Rational:{a}   | V     | ?
-| :Word  |        | Ex: Q{a} = :Rational{a}    | V     | ?
-| ...    | ⋯      | Intuitive continuation     | V     | ?
-| {⋯}    |        | A set of ...               | L     | ?
-| [⋯]    |        | Ordered set of ...         | L     | ?
-| (⋯)    |        | Grouping                   | L     | ?
-| <==    | ⇐      |                            | B     |
-| -->    | →      |                            | B     |
-| <--    | ←      |                            | B     |
-| <->    | ↔      |                            | B     |
-| .:     | ∵      | Because                    | ?     |
-| :.     | ∴      | Therefore                  | ?     |
-| (0/0)  | ∞      | Infinity                   | V     |
-| !==    | ≢      |                            | B     |
-| ==     | ≡      |                            | B     |
-| ~=     | ≈      |                            | B     |
-| <=<    | ⊆      | Subset                     | B     |
-| <<<    | ⊂      | Proper Subset              | B     |
-| >=>    | ⊇      | Superset                   | B     |
-| >>>    | ⊃      | Proper Superset            | B     |
-| :=     |        | Assignment (Let...)        | B     |
-| :      |        | Such that                  | B     |
-| ,      |        | And (listing)              | B     |
-| (+)    | ⊕      |                            | B     |
-| (+-)   | ±      |                            | B     |
-| "'     | ‴      |                            | ?     |
-| ""     | ⁗      |                            | ?     |
+| #      |        | Comment                    | L     | Y           |
+| \n     |        | End of completed statement | L     | Y           |
+| ;      |        | End of statement           | L     | ?           |
+| ::     | ≜      | Definition                 | B     | ?           |
+| !      |        | Not                        | R     | ?           |
+| =      |        | Equal                      | B     | ?           |
+| !=     | ≠      | Not equal                  | B     | ?           |
+| =?     |        | Asssumed, find when        | B     | ?           |
+| <      |        | Less than                  | B     | ?           |
+| <=     | ≤      | Less than or equal         | B     | ?           |
+| >      |        | Greater than               | B     | ?           |
+| >=     | ≥      | Greater than or equal      | B     | ?           |
+| ==>    | ⇒      | Implication                | B     | ?           |
+| <=>    | ⇔      | Biconditional              | B     | ?           |
+| ?=>    |        | Assumed, find conclusion   | B     | ?           |
+| "Word" |        | Ex: Q{a} = "Rational"{a}   | V     | ?           |
+| :Word: |        | Ex: Q{a} = :Rational:{a}   | V     | ?           |
+| :Word  |        | Ex: Q{a} = :Rational{a}    | V     | ?           |
+| ...    | ⋯      | Intuitive continuation     | V     | ?           |
+| {⋯}    |        | A set of ...               | L     | ?           |
+| [⋯]    |        | Ordered set of ...         | L     | ?           |
+| (⋯)    |        | Grouping                   | L     | ?           |
+| "      |        | Ditto, previous result     |       | ?           |
+| <==    | ⇐      |                            | B     |             |
+| -->    | →      |                            | B     |             |
+| <--    | ←      |                            | B     |             |
+| <->    | ↔      |                            | B     |             |
+| .:     | ∵      | Because                    | ?     |             |
+| :.     | ∴      | Therefore                  | ?     |             |
+| (0/0)  | ∞      | Infinity                   | V     |             |
+| !==    | ≢      |                            | B     |             |
+| ==     | ≡      |                            | B     |             |
+| ~=     | ≈      |                            | B     |             |
+| <=<    | ⊆      | Subset                     | B     |             |
+| <<<    | ⊂      | Proper Subset              | B     |             |
+| >=>    | ⊇      | Superset                   | B     |             |
+| >>>    | ⊃      | Proper Superset            | B     |             |
+| :=     |        | Assignment (Let...)        | B     |             |
+| :      |        | Such that                  | B     |             |
+| ,      |        | And (listing)              | B     |             |
+| (+)    | ⊕      |                            | B     |             |
+| (+-)   | ±      |                            | B     |             |
+| "'     | ‴      |                            | ?     |             |
+| ""     | ⁗      |                            | ?     |             |
 
 I haven't made up my mind on how to handle `Word`.
 I'm already using `:` in several ways, but
@@ -148,9 +149,19 @@ Note that with an ordered set [a,b,c,d,e], the following makes sense:
 
     [a,b,c,d,e][2] = b # b is the second element
 
+This may look a bit strange, but for emphasis I may write:
+
+    a := A{a} # Let a be an element in A
+    # I see these as being equivalent:
+    A{a} :: a:=A{a} :: {a}:(A{a})
+
+Honestly, I'm just conjuring these sequence of characters and telling you how I read them.
+But does it make sense?  Yes?  No?  And why?
+
 ## Examples
 
 * [The Logic Game](examples/LogicGame.md)
+* [Definitions](examples/Definitions.md)
 * [Complex Numbers](examples/ComplexNumbers.md)
 * [Space Vectors](examples/SpaceVectors.md)
 * [Quaternions](examples/Quaternions.md)

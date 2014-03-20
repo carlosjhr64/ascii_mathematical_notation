@@ -19,4 +19,4 @@ USERSPACE = USER_SPACE::UserSpace.new( {
 USERSPACE.install unless USERSPACE.version == ASCII_MATHEMATICAL_NOTATION::VERSION
 
 extend ASCII_MATHEMATICAL_NOTATION::Methods
-def_load # We start with the default definitions file loaded!
+load # We start with the default definitions file loaded!

@@ -18,11 +18,12 @@ With my script, all the the `String` methods are available to act on the current
 In addition, my script has the following methods:
 
 * tr
-* csort and wsort
+* csort, wsort, and tsort
 * digest
 * define
 * define_array
-* def_load and def_dump
+* load and dump
+* show
 
 One can run a method as follows:
 
@@ -133,6 +134,12 @@ The Array can also just be a pattern, substitution pair.
     xyz abc qrt svw
     abc qrt svw xyz # wsort
 
+Can you figure out what `tsort` does?  :)
+
+    #:ruby tsort
+    abc*(a-b+c+d-a+b-d-c)*xyz
+    abc*(+a-a+b-b+c-c+d-d)*xyz # tsort
+
 ## digest
 
 The digest method appends the RMD160 digest of the current line.
@@ -200,14 +207,14 @@ The vim-ruby script only does the intial creation of the Array files.
 After that, if you want to modify the array, you should edit the Array file.
 The modified Array will be available in a new vim session.
 
-## def_load and def_dump
+## load and dump
 
-The `def_dump` method will save the current state of your definitions
+The `dump` method will save the current state of your definitions
 into a file in the data directory,
 `~/.local/share/ascii_mathematical_notation/definitions.json` for most `Linux` systems.
 You can also specify the file to save to by giving it the filename.
 
-The `def_load` method will read definitions, again from
+The `load` method will read definitions, again from
 `~/.local/share/ascii_mathematical_notation/definitions.json`.
 You can also specify the file to read from by giving it the filename.
 The current definitions will be overwritten with those in the file.
@@ -215,6 +222,13 @@ The current definitions will be overwritten with those in the file.
 Note that when `tr` is given a key name (a Symbol),
 it checks first if its in the definitions before checking the Arrays.
 So don't define :greek unless you don't need the :greek Array, for example.
+
+## show
+
+The `show` method will append the current definition of the given key:
+
+    #:ruby show :cadd0
+    cadd0: \((\w)\+(\w)\) --> (\11+\21,\12+\22) # show
 
 ## More?
 

@@ -1,6 +1,6 @@
 module ASCII_MATHEMATICAL_NOTATION
   module Methods
-    def def_load(fn=ASCII_MATHEMATICAL_NOTATION.definitions)
+    def load(fn=ASCII_MATHEMATICAL_NOTATION.definitions)
       if File.exist?(fn)
         JSON.parse(File.read(fn)).each{|k,v| DEFINITIONS[k.to_sym]=v}
       else
@@ -8,7 +8,7 @@ module ASCII_MATHEMATICAL_NOTATION
       end
     end
 
-    def def_dump(fn=ASCII_MATHEMATICAL_NOTATION.definitions)
+    def dump(fn=ASCII_MATHEMATICAL_NOTATION.definitions)
       raise "Empty definitions" if DEFINITIONS.empty?
       File.open(fn, 'w'){|fh| fh.puts JSON.pretty_generate(DEFINITIONS)}
     end
@@ -43,6 +43,14 @@ module ASCII_MATHEMATICAL_NOTATION
       end
     end
 
+    def show(key)
+      CurrentLine.new do
+        a,b = DEFINITIONS[key]
+        raise "#{key} not defined." unless a and b
+        "#{key}: #{a} --> #{b}"
+      end
+    end
+
     def define_array(key, *keys)
       raise "Array size must be more than just 2!" unless keys.length > 2
       raise "Array name and components must be Symbols." if [key,*keys].detect{|k| k.class!=Symbol}
@@ -71,6 +79,18 @@ module ASCII_MATHEMATICAL_NOTATION
 
     def wsort(p=/\s+/, s=' ')
       CurrentLine.new{|line| line.split(p).sort.join(s)}
+    end
+
+    def tsort(p=/\s+/, s=' ')
+      # rruvxx+rsuvxy+rsvvxx+ssvvxy-rruuxy-rsuuyy-rsuvxy-ssuvyy+rsuuxx+ssuuxy+ ...
+      CurrentLine.new do |line|
+        if md = /\(((\s*[+\-]?\s*\w+)+)\)/.match(line)
+          terms = md[1].gsub(/([+\-]?)\s*(\w+)/){|m|  ($1=='')? $2+'+ ' : $2+$1+' '}
+          terms = terms.strip.split(/\s+/).sort.map{|w| w[-1]+w[0..-2]}.join
+          line = md.pre_match+'('+terms+')'+md.post_match
+        end
+        line
+      end
     end
 
     def csort(type=/^\w/)
