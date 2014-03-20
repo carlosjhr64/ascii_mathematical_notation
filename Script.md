@@ -60,7 +60,7 @@ The `gsub` method will probably be your most used.
 
 ### tr String usage
 
-The `tr` method works a lot like the linux command in it simplest form:
+The `tr` method works a lot like the linux command in its simplest form:
 
     #:ruby tr 'C', 'c'
     Chocolate
@@ -153,7 +153,7 @@ This can help in determining if two lines are equal:
 
 The `define` method takes a key name, a pattern, and a substitution from the current line.
 This way one can define a `gsub` by a given key name.
-The key become available for the `tr` method to use.
+The key becomes available for the `tr` method to use.
 `define` will essentially echo back the new definition.
 
     #:ruby define
@@ -192,7 +192,7 @@ all in one step:
     A₀ = √ π r² # all
 
 Once you have defined an Array, it will be available in subsequent vim sessions.
-In most `Linux` systems, you should be able to see the Array file for :all in:
+In most `Linux` systems, you should be able to see the Array file for `:all` in:
 
     ~/.local/share/ascii_mathematical_notation/all.json
 
