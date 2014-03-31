@@ -145,5 +145,6 @@ Q{c1,c2}
       A+B+C=A*B*C
       (a^b)+(b^c)+(c^a)=(a^b)*(b^c)*(c^a) 
       ###################################
+```
 
 [See Notation](../Notation.md)
