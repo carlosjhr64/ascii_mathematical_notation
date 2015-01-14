@@ -230,8 +230,13 @@ The `show` method will append the current definition of the given key:
     #:ruby show :cadd0
     cadd0: \((\w)\+(\w)\) --> (\11+\21,\12+\22) # show
 
-## More?
+## Preloaded definitions
 
+Preloaded in the definitions are transforms I find useful.
+I've have them defined in [examples/Definitions.md](examples/Definitions.md)
+
+
+## More?
 
 At times this documentation may not be up to the latest changes.
 To check all methods available and subtleties of their implementations,
