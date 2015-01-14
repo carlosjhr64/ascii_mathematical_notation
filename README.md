@@ -1,15 +1,14 @@
-# Mathematical Notation in ASCII
+# ASCII Mathematical Notation
+[![Gem Version](https://badge.fury.io/rb/ascii_mathematical_notation.svg)](http://badge.fury.io/rb/ascii_mathematical_notation)
 
-* github   https://www.github.com/carlosjhr64/ascii_mathematical_notation
-* rubygems https://rubygems.org/gems/ascii_mathematical_notation
-
-TODO: I have not published the gem yet, but it'll be there eventually.
+* [github](https://www.github.com/carlosjhr64/ascii_mathematical_notation)
+* [rubygems](https://rubygems.org/gems/ascii_mathematical_notation)
 
 ## Description
 
 Write your math using plain ASCII text files with Vim-Ruby.
 
-## Dual projects
+### Dual projects
 
 This project as essentially become two.
 One is to figure out how to easily type out mathematics in a regular keyboard as
@@ -19,14 +18,19 @@ The other is to write a vim-ruby script to support writting such texts.
 * [Notation, current version](Notation.md)
 * [Vim-Ruby Script](Script.md)
 
+## Synposis
+
+As a command in the _vim_ editor:
+
+    :ruby require 'ascii_mathematical_notation'
+
 ## Install
 
     sudo gem install ascii_mathematical_notation
 
 ## Motivation
 
-This is a continuation of the work I started in
-[YNot2Day's NOTATION](http://web.archive.org/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY/NOTATION),
+This is a continuation of the work I started in [YNot2Day's NOTATION](http://web.archive.org/web/20050101044904/http://ynot2day.com/TEMPLATES/PROJECTS/MATHEMATICS/THEORY/NOTATION),
 the last snapshot found in the Internet Archive Wayback Machine copied here as Notation.html.
 
 Consider [Weierstrass](http://en.wikipedia.org/wiki/Karl_Weierstrass)
@@ -56,4 +60,4 @@ which is read as:
     For all positive (and hence non-zero) integers z,
     there is no positive integer n such that 0*n is z.
 
-See also [ASCIIMathML](http://www1.chapman.edu/~jipsen/mathml/asciimath.html).
+See also [acsciimath.org](http://asciimath.org/).
