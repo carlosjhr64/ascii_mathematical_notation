@@ -1,9 +1,9 @@
-module ASCII_MATHEMATICAL_NOTATION
+module AsciiMathematicalNotation
   def self.filename(key)
     File.join(USERSPACE.datadir, key.to_s)+'.json'
   end
   def self.definitions
-    ASCII_MATHEMATICAL_NOTATION.filename(:definitions)
+    AsciiMathematicalNotation.filename(:definitions)
   end
   DEFINITIONS ||= {}
   ARRAYS      ||= {}

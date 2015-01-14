@@ -1,6 +1,6 @@
-module ASCII_MATHEMATICAL_NOTATION
+module AsciiMathematicalNotation
   module Methods
-    def load(fn=ASCII_MATHEMATICAL_NOTATION.definitions)
+    def load(fn=AsciiMathematicalNotation.definitions)
       if File.exist?(fn)
         JSON.parse(File.read(fn)).each{|k,v| DEFINITIONS[k.to_sym]=v}
       else
@@ -8,7 +8,7 @@ module ASCII_MATHEMATICAL_NOTATION
       end
     end
 
-    def dump(fn=ASCII_MATHEMATICAL_NOTATION.definitions)
+    def dump(fn=AsciiMathematicalNotation.definitions)
       raise "Empty definitions" if DEFINITIONS.empty?
       File.open(fn, 'w'){|fh| fh.puts JSON.pretty_generate(DEFINITIONS)}
     end
@@ -18,7 +18,7 @@ module ASCII_MATHEMATICAL_NOTATION
       if map1.class == Symbol
         comment = map1.to_s
         unless array = DEFINITIONS[map1] or array = ARRAYS[map1]
-          fn = ASCII_MATHEMATICAL_NOTATION.filename(map1)
+          fn = AsciiMathematicalNotation.filename(map1)
           raise "#{map1} not found." unless File.exist?(fn)
           array = JSON.parse File.read fn
           DEFINITIONS[map1] = array
@@ -55,7 +55,7 @@ module ASCII_MATHEMATICAL_NOTATION
       raise "Array size must be more than just 2!" unless keys.length > 2
       raise "Array name and components must be Symbols." if [key,*keys].detect{|k| k.class!=Symbol}
       keys.each{|k| raise "#{k} not defined." unless DEFINITIONS[k]}
-      fn = ASCII_MATHEMATICAL_NOTATION.filename(key)
+      fn = AsciiMathematicalNotation.filename(key)
       #raise "Array #{key} file exists!" if File.exist?(fn)
       raise "#{fn} file exists!" if File.exist?(fn)
       array = keys.inject([]) do |a,k|

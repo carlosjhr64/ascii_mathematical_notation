@@ -1,4 +1,4 @@
-module ASCII_MATHEMATICAL_NOTATION
+module AsciiMathematicalNotation
   class CurrentLine
     def append(line='')
       $curbuf.append(@line_number, @indentation+line+@comment)
@@ -6,6 +6,7 @@ module ASCII_MATHEMATICAL_NOTATION
       @comment = ''
     end
 
+    # TODO: caller has been improved
     def initialize(comment=caller[1][/`.*'/][1..-2])
       @comment     = (comment)? ' # ' + comment : ''
       @line_number = $curbuf.line_number

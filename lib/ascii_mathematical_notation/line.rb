@@ -1,4 +1,4 @@
-module ASCII_MATHEMATICAL_NOTATION
+module AsciiMathematicalNotation
   class Line < String
     def initialize(*args)
       super(*args)
