@@ -1,3 +1,3 @@
-module ASCII_MATHEMATICAL_NOTATION
-  VERSION = '0.0.0'
+module AsciiMathematicalNotation
+  VERSION = '1.0.0'
 end
