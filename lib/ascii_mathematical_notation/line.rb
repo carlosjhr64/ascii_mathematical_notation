@@ -1,16 +1,14 @@
 module AsciiMathematicalNotation
-  class Line < String
+module Line
 
-    GSUBS = [
-      [/^\|/,    '\(\('],
-      [/\|$/,    '\)\)'],
-      [/\(\.\)/, '(\w|\([^()]+\))'  ],
-      [/\(@\)/,  '([^\s\w(){}\[\]])'],
-    ]
+  GSUBS = [
+    [/^\|/,    '\(\('],
+    [/\|$/,    '\)\)'],
+    [/\(\.\)/, '(\w|\([^()]+\))'  ],
+    [/\(@\)/,  '([^\s\w(){}\[\]])'],
+  ]
 
-    def initialize(*args)
-      super(*args)
-    end
+  refine String do # Start refinements
 
     def grgx!(pat, sub)
       GSUBS.each{|x,s|pat=pat.gsub(x,s)}
@@ -40,5 +38,8 @@ module AsciiMathematicalNotation
       end
       self
     end
-  end
+
+  end # End refinements
+
+end
 end

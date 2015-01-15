@@ -10,7 +10,7 @@ module AsciiMathematicalNotation
       @comment     = (comment)? ' # ' + comment : ''
       @line_number = $curbuf.line_number
   
-      line1       = Line.new($curbuf[@line_number])
+      line1        = String.new($curbuf[@line_number])
       @indentation = /^\s*/.match(line1)[0]
 
       if block_given?

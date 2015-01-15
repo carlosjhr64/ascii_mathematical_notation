@@ -1,5 +1,6 @@
 module AsciiMathematicalNotation
   module Methods
+
     def load(fn=AsciiMathematicalNotation.definitions)
       if File.exist?(fn)
         YAML.load(File.read(fn)).each{|k,v| DEFINITIONS[k.to_sym]=v}
@@ -11,27 +12,6 @@ module AsciiMathematicalNotation
     def dump(fn=AsciiMathematicalNotation.definitions)
       raise "Empty definitions" if DEFINITIONS.empty?
       File.open(fn, 'w'){|fh| fh.puts YAML.dump(DEFINITIONS)}
-    end
-
-    def tr(map1, map2='')
-      comment = nil
-      if map1.class == Symbol
-        comment = map1.to_s
-        unless array = DEFINITIONS[map1] or array = ARRAYS[map1]
-          fn = AsciiMathematicalNotation.filename(map1)
-          raise "#{map1} not found." unless File.exist?(fn)
-          array = YAML.load File.read fn
-          DEFINITIONS[map1] = array
-        end
-        map1 = array
-      else
-        if map1.class == String
-          comment = "tr '#{map1}' '#{map2}'"
-        else
-          comment = "tr #{map1}"
-        end
-      end
-      CurrentLine.new(comment){|line| line.transform!(map1, map2)}
     end
 
     def define(sep=/\s+/)
@@ -105,5 +85,28 @@ module AsciiMathematicalNotation
         line.method(m).call(*args)
       end
     end
+
+    using Line
+    def tr(map1, map2='')
+      comment = nil
+      if map1.class == Symbol
+        comment = map1.to_s
+        unless array = DEFINITIONS[map1] or array = ARRAYS[map1]
+          fn = AsciiMathematicalNotation.filename(map1)
+          raise "#{map1} not found." unless File.exist?(fn)
+          array = YAML.load File.read fn
+          DEFINITIONS[map1] = array
+        end
+        map1 = array
+      else
+        if map1.class == String
+          comment = "tr '#{map1}' '#{map2}'"
+        else
+          comment = "tr #{map1}"
+        end
+      end
+      CurrentLine.new(comment){|line| line.transform!(map1, map2)}
+    end
+
   end
 end
