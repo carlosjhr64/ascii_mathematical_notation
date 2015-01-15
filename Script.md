@@ -14,7 +14,7 @@ In vim, the command to run my script is:
 
 ## Methods
 
-With my script, all the the `String` methods are available to act on the current line.
+With my script, all the `String` methods are available to act on the current line.
 In addition, my script has the following methods:
 
 * tr
@@ -234,7 +234,7 @@ all in one step:
 Once you have defined an Array, it will be available in subsequent vim sessions.
 In most `Linux` systems, you should be able to see the Array file for `:all` in:
 
-    ~/.local/share/ascii_mathematical_notation/all.json
+    ~/.local/share/ascii_mathematical_notation/all.yml
 
 The vim-ruby script only does the intial creation of the Array files.
 After that, if you want to modify the array, you should edit the Array file.
@@ -244,11 +244,11 @@ The modified Array will be available in a new vim session.
 
 The `dump` method will save the current state of your definitions
 into a file in the data directory,
-`~/.local/share/ascii_mathematical_notation/definitions.json` for most `Linux` systems.
+`~/.local/share/ascii_mathematical_notation/definitions.yml` for most `Linux` systems.
 You can also specify the file to save to by giving it the filename.
 
 The `load` method will read definitions, again from
-`~/.local/share/ascii_mathematical_notation/definitions.json`.
+`~/.local/share/ascii_mathematical_notation/definitions.yml`.
 You can also specify the file to read from by giving it the filename.
 The current definitions will be overwritten with those in the file.
 
@@ -282,7 +282,7 @@ see the files in the data directory:
 
 * [data](data)
 
-The `definitions.json` file contains the definitions, of course.
+The `definitions.yml` file contains the definitions, of course.
 The `VERSION` file just contains the current version of the software.
 The rest should all be Array files.
 
