@@ -1,0 +1,7 @@
+^(
+ (\.)|
+ (test\/)|
+ (TODO\.)|
+ (ascii_mathematical_notation.gemspec)|
+ (History\.)
+)
