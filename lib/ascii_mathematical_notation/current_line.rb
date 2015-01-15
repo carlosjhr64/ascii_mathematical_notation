@@ -6,8 +6,7 @@ module AsciiMathematicalNotation
       @comment = ''
     end
 
-    # TODO: caller has been improved
-    def initialize(comment=caller[1][/`.*'/][1..-2])
+    def initialize(comment=caller_locations[1].label)
       @comment     = (comment)? ' # ' + comment : ''
       @line_number = $curbuf.line_number
   
