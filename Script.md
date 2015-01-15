@@ -164,13 +164,46 @@ The key becomes available for the `tr` method to use.
 `define` will essentially echo back the new definition.
 
     #:ruby define
-    commute \((\w)\*(\w)\) (\2*\1)
-    commute: \((\w)\*(\w)\) --> (\2*\1) # define
+    commutative (\w)\*(\w) \2*\1
+    commutative: (\w)\*(\w) --> \2*\1 # define
 
-    # Now :commute is available to tr
-    #:ruby tr :commute
-    A*(B*C)*D
-    A*(C*B)*D # commute
+    # Now :commutative is available to tr
+    #:ruby tr :commutative
+    a*b
+    b*a # commutative
+
+That was a too simple cummutative transformation.
+In general I'll need a more generalized form.
+And a way to mark the part of the string to transform.
+I'll use double parenthesis:
+
+    #:ruby define
+    commutative \(\((\w|\([^()]+\))([+*])(\w|\([^()]+\))\)\) (\3\2\1)
+    commutative: \(\((\w|\([^()]+\))([+*])(\w|\([^()]+\))\)\) --> (\3\2\1) # define
+
+    #:ruby tr :commutative
+    A*((B*C))*D
+    A*(C*B)*D # commutative
+    A*(((i+j)*(k+l)))*D
+    A*((k+l)*(i+j))*D # commutative
+
+As you can see, the regular expression is a bit messy.
+Normally '(.)' matches any one character, but
+AsciiMathematicalNotation changes it's meaning to '(\w|\([^()]+\))'.
+And changes '(@)' to '([^\s\w(){}\[\]])'
+And changes '|' at the begining to '\(\('.
+And changes '|' at the end to '\(\('.
+We can change the above to the following form:
+
+    #:ruby define
+    commutative |(.)(@)(.)| (\3\2\1)
+    commutative: |(.)(@)(.)| --> (\3\2\1) # define
+
+    #:ruby tr :commutative
+    A*((B*C))*D
+    A*(C*B)*D # commutative
+    A*(((i+j)*(k+l)))*D
+    A*((k+l)*(i+j))*D # commutative
 
 ## define_array
 
