@@ -1,6 +1,6 @@
 # Standard Library
 require 'digest/rmd160'
-require 'json'
+require 'yaml'
 
 # Gems
 require 'user_space'

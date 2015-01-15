@@ -2,7 +2,7 @@ module AsciiMathematicalNotation
   module Methods
     def load(fn=AsciiMathematicalNotation.definitions)
       if File.exist?(fn)
-        JSON.parse(File.read(fn)).each{|k,v| DEFINITIONS[k.to_sym]=v}
+        YAML.load(File.read(fn)).each{|k,v| DEFINITIONS[k.to_sym]=v}
       else
         raise "Does not exist: #{fn}"
       end
@@ -10,7 +10,7 @@ module AsciiMathematicalNotation
 
     def dump(fn=AsciiMathematicalNotation.definitions)
       raise "Empty definitions" if DEFINITIONS.empty?
-      File.open(fn, 'w'){|fh| fh.puts JSON.pretty_generate(DEFINITIONS)}
+      File.open(fn, 'w'){|fh| fh.puts YAML.dump(DEFINITIONS)}
     end
 
     def tr(map1, map2='')
@@ -20,7 +20,7 @@ module AsciiMathematicalNotation
         unless array = DEFINITIONS[map1] or array = ARRAYS[map1]
           fn = AsciiMathematicalNotation.filename(map1)
           raise "#{map1} not found." unless File.exist?(fn)
-          array = JSON.parse File.read fn
+          array = YAML.load File.read fn
           DEFINITIONS[map1] = array
         end
         map1 = array
@@ -68,7 +68,7 @@ module AsciiMathematicalNotation
         end
         a
       end
-      File.open(fn,'w'){|fh| fh.puts JSON.pretty_generate(array)}
+      File.open(fn,'w'){|fh| fh.puts YAML.dump(array)}
       ARRAYS[key] = array
       CurrentLine.new("define_array(:#{key}, :#{keys.join(', :')})").append
     end
