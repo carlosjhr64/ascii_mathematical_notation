@@ -1,11 +1,20 @@
 module AsciiMathematicalNotation
   class Line < String
+
+    GSUBS = [
+      [/^\|/,    '\(\('],
+      [/\|$/,    '\)\)'],
+      [/\(\.\)/, '(\w|\([^()]+\))'  ],
+      [/\(@\)/,  '([^\s\w(){}\[\]])'],
+    ]
+
     def initialize(*args)
       super(*args)
     end
 
     def grgx!(pat, sub)
-      rgx = Regexp.new(pat)
+      GSUBS.each{|x,s|pat=pat.gsub(x,s)}
+      rgx = Regexp.new(pat, Regexp::EXTENDED)
       self.gsub!(rgx, sub)
     end
 
