@@ -162,6 +162,7 @@ But does it make sense?  Yes?  No?  And why?
 
 * [The Logic Game](examples/LogicGame.md)
 * [Definitions](examples/Definitions.md)
+* [TQF](examples/TQF.md)
 * [Complex Numbers](examples/ComplexNumbers.md)
 * [Space Vectors](examples/SpaceVectors.md)
 * [Quaternions](examples/Quaternions.md)
