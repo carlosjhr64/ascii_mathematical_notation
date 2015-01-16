@@ -2,7 +2,7 @@
 
 {<img src="https://badge.fury.io/rb/ascii_mathematical_notation.svg" alt="Gem Version" />}[http://badge.fury.io/rb/ascii_mathematical_notation]
 
-* github[https://github.com/carlosjhr64/ascii_mathematical_notation/blob/master/README.md]
+* github[https://github.com/carlosjhr64/ascii_mathematical_notation]
 * rubygems[https://rubygems.org/gems/ascii_mathematical_notation]
 
 == DESCRIPTION:
