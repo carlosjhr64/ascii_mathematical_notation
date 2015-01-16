@@ -22,7 +22,7 @@ Thus 3A1B2 means 3*(A1)*(B2).
 
 Given three points on a line:
 ```
-Rat{a1,a2,a3}
+:Rat{a1,a2,a3}
 A1 :: [a1]
 A2 :: [a2]
 A3 :: [a3]
@@ -90,3 +90,33 @@ Proof:
 
 OK, so let's plug someone's [book](http://www.amazon.com/Divine-Proportions-Rational-Trigonometry-Universal/dp/097574920X).
 :smile:
+
+Exer 124.1: Show that TQF can be expressed as a quadratic equation in one of its terms:
+```
+:Archimedes(A,B,C) = 0
+(A+B+C)^2 - 2(AA+BB+CC) = 0                      # Using symetric form
+(A+B+C)(A+B+C) - 2(AA+BB+CC) = 0
+   # Here I have what I would call a ppxpp transform.
+   ppxpp |\((.)\+(.)\+(.)\)\((.)\+(.)\+(.)\)| (\1\4+\2\5+\3\6+\1\5+\2\6+\3\4+\1\6+\2\4+\3\6) # show
+   (((a+b+c)(x+y+z)))                            # For example
+   (ax+by+cz+ay+bz+cx+az+bx+cy)                  # ppxpp
+(((A+B+C)(A+B+C))) - 2(AA+BB+CC) = 0             # Setup for ppxpp
+(AA+BB+CC+AB+BC+CA+AC+BA+CB) - 2(AA+BB+CC) = 0   # ppxpp
+AA+BB+CC+AB+BC+CA+AC+BA+CB - 2AA-2BB-2CC = 0
+         AB+BC+CA+AC+BA+CB -  AA- BB- CC = 0     # Cancellations
+         AB+BC+CA+AC+BA+CB-AA-BB-CC=0            # going to csort, commutative terms.
+         AB+BC+AC+AC+AB+BC-AA-BB-CC=0            # csort
++AB +BC +AC +AC +AB +BC -AA -BB -CC =0
++AB +AB +AC +AC +BC +BC -AA -BB -CC =0           # wsort
+    2AB +   2AC +   2BC -AA -BB -CC =0           # Collecting terms
+   -2AB -   2AC -   2BC +AA +BB +CC =0           # Reverse sign
+    # Going to choose A for the quadratic equation.
+AA - 2AB - 2AC + BB - 2BC + CC = 0               # Rearranged
+A^2 - 2(B+C)A + (B-C)^2 = 0                      # Collecting terms, rearrange and TADA!
+```
+I chose to work with A, B, and C instead of Q1, Q2, and Q3 as shown in the video for compactness.
+Note that the three terms are completely symmetric, and
+if A,B,C is Q3,Q1,Q2, then as in the video you get the equation:
+```
+Q3^2 - 2(Q1+Q2)Q3 + (Q1-Q2)^2 = 0
+```
