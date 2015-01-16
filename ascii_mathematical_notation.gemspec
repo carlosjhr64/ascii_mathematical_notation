@@ -43,5 +43,7 @@ lib/ascii_mathematical_notation/version.rb
   )
 
   s.add_runtime_dependency 'user_space', '~> 2.0', '>= 2.0.1'
+  s.requirements << 'ruby: ruby 2.1.5p273 (2014-11-13 revision 48405) [x86_64-linux]'
+  s.requirements << 'vim: VIM - Vi IMproved 7.4 (2013 Aug 10, compiled Jan 13 2015 16:45:26)'
 
 end
