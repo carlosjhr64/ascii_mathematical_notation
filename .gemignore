@@ -1,7 +1,9 @@
 ^(
  (\.)|
+ (\w+\.((html)|(md))\/)|
  (test\/)|
- (TODO\.)|
+ (examples\/)|
  (ascii_mathematical_notation.gemspec)|
+ (TODO\.)|
  (History\.)
 )
