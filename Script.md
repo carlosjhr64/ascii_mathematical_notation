@@ -7,10 +7,7 @@ one needs to have vim compiled to use ruby.
 See [Extending Vim with Ruby](http://www.linux-mag.com/id/1027/).
 In vim, the command to run my script is:
 
-    # TODO
     :ruby require 'ascii_mathematical_notation'
-    # Currently,
-    :ruby load './lib/ascii_mathematical_notation.rb'
 
 ## Methods
 
