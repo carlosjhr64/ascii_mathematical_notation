@@ -2,16 +2,20 @@ module AsciiMathematicalNotation
   module Methods
 
     def load(fn=AsciiMathematicalNotation.definitions)
+      fn = File.expand_path fn
       if File.exist?(fn)
         YAML.load(File.read(fn)).each{|k,v| DEFINITIONS[k.to_sym]=v}
       else
         raise "Does not exist: #{fn}"
       end
+      print "load: #{fn.sub(ENV['HOME'],'~')}"
     end
 
     def dump(fn=AsciiMathematicalNotation.definitions)
       raise "Empty definitions" if DEFINITIONS.empty?
+      fn = File.expand_path fn
       File.open(fn, 'w'){|fh| fh.puts YAML.dump(DEFINITIONS)}
+      print "dump: #{fn.sub(ENV['HOME'],'~')}"
     end
 
     def define(sep=/\s+/)
@@ -19,7 +23,7 @@ module AsciiMathematicalNotation
         key, pat, sub, nope = line.split(sep).map{|s| s.strip}
         raise "Need key, pat, and sub" unless key and pat and sub and !nope
         DEFINITIONS[key.to_sym] = [pat, sub]
-        "#{key.to_s}: #{pat} --> #{sub}"
+        "#{key.to_s} #{pat} #{sub}"
       end
     end
 
@@ -27,7 +31,7 @@ module AsciiMathematicalNotation
       CurrentLine.new do
         a,b = DEFINITIONS[key]
         raise "#{key} not defined." unless a and b
-        "#{key}: #{a} --> #{b}"
+        "#{key} #{a} #{b}"
       end
     end
 
