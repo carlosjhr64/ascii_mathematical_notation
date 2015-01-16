@@ -26,8 +26,8 @@ One is to figure out how to easily type out mathematics in a regular keyboard as
 ASCII plain text.
 The other is to write a vim-ruby script to support writting such texts.
 
-* Notation[Notation.md]
-* Script[Script.md]
+* Notation[link:Notation.md]
+* Script[link:Script.md]
 
 == MOTIVATION
 
