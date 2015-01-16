@@ -120,3 +120,6 @@ if A,B,C is Q3,Q1,Q2, then as in the video you get the equation:
 ```
 Q3^2 - 2(Q1+Q2)Q3 + (Q1-Q2)^2 = 0
 ```
+And maybe I'll finnish the rest of the video later.
+As nothing to do with the next problem looking a bit harder.
+:stuck_out_tongue_closed_eyes:
