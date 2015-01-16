@@ -1,6 +1,6 @@
 # Definitions
 
-I'll try to list all my definitions here.
+Here are some definitions one can try.
 
 ## Addition of Fractions
 
