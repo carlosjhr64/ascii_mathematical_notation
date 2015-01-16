@@ -20,3 +20,8 @@ USERSPACE.install unless USERSPACE.version == AsciiMathematicalNotation::VERSION
 
 extend AsciiMathematicalNotation::Methods
 load # We start with the default definitions file loaded!
+
+# Requires:
+#`ruby`
+#`vim`
+

@@ -1,6 +1,6 @@
 ^(
  (\.)|
- (\w+\.((html)|(md))\/)|
+ (\w+\.((html)|(md)))|
  (test\/)|
  (examples\/)|
  (ascii_mathematical_notation.gemspec)|
