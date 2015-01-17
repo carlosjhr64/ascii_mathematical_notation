@@ -51,7 +51,7 @@ so I'll write it as:
 
     Continous{f(x=x0)} :: {e>0}({d>0}: f{x}(|x-x0|<d ==> |f(x)-f(x0)|<e)
 
-The :: is logically equivalent to <==>, but
+The "::" is logically equivalent to <==>, but
 with the added semantic that this is to be treated as a definition.
 Here's is one for Arithmetic:
 
