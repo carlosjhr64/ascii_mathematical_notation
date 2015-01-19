@@ -97,7 +97,7 @@ Exer 124.1: Show that TQF can be expressed as a quadratic equation in one of its
 (A+B+C)^2 - 2(AA+BB+CC) = 0                      # Using symetric form
 (A+B+C)(A+B+C) - 2(AA+BB+CC) = 0
    # Here I have what I would call a ppxpp transform.
-   ppxpp |\((.)\+(.)\+(.)\)\((.)\+(.)\+(.)\)| (\1\4+\2\5+\3\6+\1\5+\2\6+\3\4+\1\6+\2\4+\3\6) # show
+   ppxpp |\((.)(@)(.)\2(.)\)\((.)\2(.)\2(.)\)| (\1\5\2\3\6\2\4\7\2\1\6\2\3\7\2\4\5\2\1\7\2\3\5\2\4\6) # show
    (((a+b+c)(x+y+z)))                            # For example
    (ax+by+cz+ay+bz+cx+az+bx+cy)                  # ppxpp
 (((A+B+C)(A+B+C))) - 2(AA+BB+CC) = 0             # Setup for ppxpp
@@ -120,6 +120,25 @@ if A,B,C is Q3,Q1,Q2, then as in the video you get the equation:
 ```
 Q3^2 - 2(Q1+Q2)Q3 + (Q1-Q2)^2 = 0
 ```
-And maybe I'll finnish the rest of the video later.
-As nothing to do with the next problem looking a bit harder.
-:stuck_out_tongue_closed_eyes:
+
+Quadratic Compatibility Theorem (Did I look ahead? Maybe.) :smirk:
+Exer 124.2:  Show when two coupled quadratics has a solution:
+```
+(x-a)^2=A,(x-b)^2=B <=?=> :Archimedes(A,B,(a-b)^2)=0 # Prove this
+(x-a)^2=A,(x-b)^2=B                                  # Given
+(((x-a)^2))=A,(((x-b)^2))=B                          # Prepping
+(x^2-2xa+a^2)=A,(x^2-2xb+b^2)=B                      # mx2
+x^2-2xa+a^2-A=0,x^2-2xb+b^2-B=0
+x^2-2xa+a^2-A=x^2-2xb+b^2-B
+   -2xa+a^2-A=   -2xb+b^2-B
+   -2xa+a^2-A=   -2xb+b^2-     -B
+            0=2xa-2xb+b^2-a^2+A-B
+            2xa-2xb=a^2-b^2+B-A
+            2x(a-b)=a^2-b^2+B-A
+            2x=(a^2-b^2+B-A)/(a-b)
+            2x=(((a^2-b^2))+B-A)/(a-b)
+            2x=(((a+b)(a-b))+B-A)/(a-b)              # difference of squares
+            2x=(a+b)+(B-A)/(a-b)
+            x=(1/2)((a+b)+(B-A)/(a-b))
+x = ½(a+b) + ½(B-A)/(a-b)
+```
