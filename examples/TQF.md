@@ -121,7 +121,7 @@ if A,B,C is Q3,Q1,Q2, then as in the video you get the equation:
 Q3^2 - 2(Q1+Q2)Q3 + (Q1-Q2)^2 = 0
 ```
 
-Quadratic Compatibility Theorem (Did I look ahead? Maybe.) :smirk:
+Quadratic Compatibility Theorem (Did I look ahead? Maybe.:smirk:)
 Exer 124.2:  Show when two coupled quadratics has a solution:
 ```
 (x-a)^2=A,(x-b)^2=B <=?=> :Archimedes(A,B,(a-b)^2)=0 # Prove this
