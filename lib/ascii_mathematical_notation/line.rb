@@ -1,17 +1,21 @@
 module AsciiMathematicalNotation
 module Line
 
-  GSUBS = [
-    [/^\|/,    '\(\('],
-    [/\|$/,    '\)\)'],
-    [/\(\.\)/, '(\w|\([^()]+\))'  ],
-    [/\(@\)/,  '([^\s\w(){}\[\]])'],
-  ]
+  GSUBS = YAML.load File.read File.join USERSPACE.datadir, 'GSUBS'
+  #GSUBS = [
+  #  [/\(/,  '\('                   ],
+  #  [/\)/,  '\)'                   ],
+  #  [/[+]/,  '[+]'                 ],
+  #  [/o/,   '([^\s\w\{\}\(\)\[\]])'],
+  #  [/a/,   '(\w|\([^\(\)]+\))'    ],
+  #  [/^\[/, '\['                   ],
+  #  [/\]$/, '\]'                   ],
+  #]
 
   refine String do # Start refinements
 
     def grgx!(pat, sub)
-      GSUBS.each{|x,s|pat=pat.gsub(x,s)}
+      GSUBS.each{|x,s|pat=pat.gsub(x,s)} if pat[0]=='[' and pat[-1]==']'
       rgx = Regexp.new(pat, Regexp::EXTENDED)
       self.gsub!(rgx, sub)
     end

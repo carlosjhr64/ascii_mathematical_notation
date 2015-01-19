@@ -1,0 +1,15 @@
+---
+- - !ruby/regexp /\(/
+  - "\\("
+- - !ruby/regexp /\)/
+  - "\\)"
+- - !ruby/regexp /[+]/
+  - "[+]"
+- - !ruby/regexp /o/
+  - "([^\\s\\w\\{\\}\\(\\)\\[\\]])"
+- - !ruby/regexp /a/
+  - "(\\w|\\([^\\(\\)]+\\))"
+- - !ruby/regexp /^\[/
+  - "\\["
+- - !ruby/regexp /\]$/
+  - "\\]"
