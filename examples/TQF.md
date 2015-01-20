@@ -163,3 +163,30 @@ u²+2u(A-B)+(A-B)²=4Au
 
 # I don't see a shorter path to this result, ouch!
 ```
+
+### Heron's formula
+For triangle with lengths a,b,c:
+```
+s:=(1/2)(a+b+c)
+s:=½(a+b+c) # fractions
+:Area = :Sqrt(s(s-a)(s-b)(s-c))
+:Area = :√(s(s-a)(s-b)(s-c)) # math
+```
+Example:
+```
+:Area(4,5,7)
+  s=(4+5+7)/2
+  s=(8/1)                             # rational
+  √((8/1)((8/1)-4)((8/1)-5)((8/1)-7))
+  √((8/1)(4/1)(3/1)(1/1))             # compute
+  √((8/1)*(4/1)*(3/1)*(1/1))          # gsub('(?-mix:\)\()', ')*(')
+  √(96/1)                             # compute
+  √(((2^5)*(3))/(1))                  # prime_division
+  4√6                                 # b/c I'm smart? No, well alright...
+  √(2^5*3)
+  √(2^4*2*3)
+  √((2^2)*(2^2)*2*3)
+  √(4*4*2*3)
+  4√(2*3)
+  4"√6"
+```
