@@ -1,5 +1,5 @@
 # MathFoundations124:
-## Heron's formal, Archimedes' function, and the TQF
+## Heron's formula, Archimedes' function, and the TQF
 
 Notes on njwildberger's [video](https://www.youtube.com/watch?v=iMWEiPuFhBQ).
 
