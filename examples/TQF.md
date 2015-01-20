@@ -29,12 +29,12 @@ Given three points on a line:
   Qc :: Q(A,B)
 ```
 
-Triple Quad Formula(TQF):
+### Triple Quad Formula(TQF)
 ```
 (Qa+Qb+Qc)=2(Qa^2+Qb^2+Qc^2)
 ```
 
-Archimedes' function:
+### Archimedes' function
 ```
 :Archimedes(Qa,Qb,Qc) :: (Qa+Qb+Qc)^2-2(Qa^2+Qb^2+Qc^2) = 4QaQb-(Qa+Qb-Qc)^2
 ```
@@ -58,6 +58,7 @@ A+B-C=-2ab            # Collecting like terms on each side
 :Achimides(A,B,C)=0
 ```
 
+### Archimedes' formula
 Theorem:
 ```
 :Rat{a,b,c},A:=a^2,B:=b^2,C:=c^2
@@ -85,6 +86,7 @@ Proof:
 OK, so let's plug someone's [book](http://www.amazon.com/Divine-Proportions-Rational-Trigonometry-Universal/dp/097574920X).
 :smile:
 
+### TQF quadratic equation
 Exer 124.1: Show that TQF can be expressed as a quadratic equation in one of its terms:
 ```
 :Archimedes(A,B,C)=0
@@ -113,32 +115,32 @@ Q3² - 2(Q1+Q2)Q3 + (Q1-Q2)² = 0 # superscript
 Q₃² - 2(Q₁+Q₂)Q₃ + (Q₁-Q₂)² = 0 # subscript
 ```
 
-Quadratic Compatibility Theorem.
+### Quadratic Compatibility Theorem
 Did I look ahead?  Maybe.  :smirk:
 Exer 124.2:  Show when two coupled quadratics has a solution:
 ```
-(x-a)^2=A,(x-b)^2=B <=?=> :Archimedes(A,B,(a-b)^2)=0   # Prove this
+(x-a)^2=A,(x-b)^2=B <=?=> :Archimedes(A,B,(a-b)^2)=0 # Prove this
 
-[(x-a)^2]=A,[(x-b)^2]=B                                # Given
-[x^2-2xa+a^2]=A,[x^2-2xb+b^2]=B                        # binomial2
-[x²-2xa+a²]=A,[x²-2xb+b²]=B                            # superscript
+[(x-a)^2]=A,[(x-b)^2]=B                   # Given
+[x^2-2xa+a^2]=A,[x^2-2xb+b^2]=B           # binomial2
+[x²-2xa+a²]=A,[x²-2xb+b²]=B               # superscript
 x²-2xa+a²-A=0,x²-2xb+b²-B=0
 x²-2xa+a²-A=x²-2xb+b²-B
   -2xa+a²-A=  -2xb+b²-B
   -2xa+a²-A   +2xb-b²+B = 0
-+2xb -2xa +a² -b² +B -A =0                             # rearranged
-(+2xb-2xa)+(a²-b²)+(B-A)=0                             # Grouped
-(+2xb-2xa)+(a-b)(a+b)+(B-A)=0                          # Difference of squares
-2(b-a)x+(a-b)(a+b)+(B-A)=0                             # Factoring
--2(a-b)x+(a-b)(a+b)-(A-B)=0                            # Sorting terms
--2x+(a+b)-(A-B)/(a-b)=0                                # Divide by a-b
++2xb -2xa +a² -b² +B -A =0                # rearranged
+(+2xb-2xa)+(a²-b²)+(B-A)=0                # Grouped
+(+2xb-2xa)+(a-b)(a+b)+(B-A)=0             # Difference of squares
+2(b-a)x+(a-b)(a+b)+(B-A)=0                # Factoring
+-2(a-b)x+(a-b)(a+b)-(A-B)=0               # Sorting terms
+-2x+(a+b)-(A-B)/(a-b)=0                   # Divide by a-b
 2x=(a+b)-(A-B)/(a-b)
 
-x = ½(a+b) - ½(A-B)/(a-b)                              # OK, this matches MF124 video.
+x = ½(a+b) - ½(A-B)/(a-b)                 # OK, this matches MF124 video.
 
-(x-a)²=A                                               # One of the givens
-((½(a+b)-½(A-B)/(a-b))-a)²=A                           # Plug previous result back in
-(½b-½a-½(A-B)/(a-b))²=A                                # (1/2)a - a
+(x-a)²=A                                  # One of the givens
+((½(a+b)-½(A-B)/(a-b))-a)²=A              # Plug previous result back in
+(½b-½a-½(A-B)/(a-b))²=A                   # (1/2)a - a
 ¼(b-a-(A-B)/(a-b))²=A
 (b-a-(A-B)/(a-b))²=4A
 (-(a-b)-(A-B)/(a-b))²=4A
@@ -146,18 +148,18 @@ x = ½(a+b) - ½(A-B)/(a-b)                              # OK, this matches MF12
 u:=(a-b)²,v:=(A-B)
 (-u-v)²=4Au
 ((-u)(-u)+(-u)(-v)+(-v)(-u)+(-v)(-v))=4Au
-u²+2uv+v²=4Au                                          # ...was a bit perplexed by the square of a negative. :))
+u²+2uv+v²=4Au                             # ...perplexed by the square of a negative. :laughing:
 u²+2u(A-B)+(A-B)²=4Au
 +u² +2u(A-B) -4Au +(A-B)² =0
 +u² +2uA-2uB -4Au +(A-B)² =0
 +u² -2uA-2uB      +(A-B)² =0
 +u² -2u(A+B)      +(A-B)² =0
 +u² -2u(A+B)   +A²-2AB+B² =0
-+u² -2u(A+B)   +A²+2AB+B² =4AB                         # Wow, only b/c I know where I'm going!
++u² -2u(A+B)   +A²+2AB+B² =4AB            # Wow, only b/c I know where I'm going!
 +u² -2u(A+B)   +(A+B)²    =4AB
 (u-(A+B))²=4AB
 
-((a-b)²-(A+B))²=4AB                                    # Substitute "u" back in and done!
+((a-b)²-(A+B))²=4AB                       # Substitute "u" back in and done!
 
 # I don't see a shorter path to this result, ouch!
 ```
