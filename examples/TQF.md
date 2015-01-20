@@ -136,6 +136,28 @@ x²-2xa+a²-A=x²-2xb+b²-B
 
 x = ½(a+b) - ½(A-B)/(a-b)                              # OK, this matches MF124 video.
 
-# TODO: Plug this back in?
-(x-a)^2=A
+(x-a)²=A                                               # One of the givens
+((½(a+b)-½(A-B)/(a-b))-a)²=A                           # Plug previous result back in
+(½b-½a-½(A-B)/(a-b))²=A                                # (1/2)a - a
+¼(b-a-(A-B)/(a-b))²=A
+(b-a-(A-B)/(a-b))²=4A
+(-(a-b)-(A-B)/(a-b))²=4A
+(-(a-b)²-(A-B))²=4A(a-b)²
+u:=(a-b)²,v:=(A-B)
+(-u-v)²=4Au
+((-u)(-u)+(-u)(-v)+(-v)(-u)+(-v)(-v))=4Au
+u²+2uv+v²=4Au                                          # ...was a bit perplexed by the square of a negative. :))
+u²+2u(A-B)+(A-B)²=4Au
++u² +2u(A-B) -4Au +(A-B)² =0
++u² +2uA-2uB -4Au +(A-B)² =0
++u² -2uA-2uB      +(A-B)² =0
++u² -2u(A+B)      +(A-B)² =0
++u² -2u(A+B)   +A²-2AB+B² =0
++u² -2u(A+B)   +A²+2AB+B² =4AB                         # Wow, only b/c I know where I'm going!
++u² -2u(A+B)   +(A+B)²    =4AB
+(u-(A+B))²=4AB
+
+((a-b)²-(A+B))²=4AB                                    # Substitute "u" back in and done!
+
+# I don't see a shorter path to this result, ouch!
 ```
