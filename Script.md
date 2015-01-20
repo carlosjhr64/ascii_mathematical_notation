@@ -162,7 +162,7 @@ The key becomes available for the `tr` method to use.
 
     #:ruby define
     commutative (\w)\*(\w) \2*\1
-    commutative: (\w)\*(\w) --> \2*\1 # define
+    commutative (\w)\*(\w) \2*\1 # define
 
     # Now :commutative is available to tr
     #:ruby tr :commutative
@@ -172,35 +172,46 @@ The key becomes available for the `tr` method to use.
 That was a too simple cummutative transformation.
 In general I'll need a more generalized form.
 And a way to mark the part of the string to transform.
-I'll use double parenthesis:
+I'll use square brackets to mark:
 
     #:ruby define
-    commutative \(\((\w|\([^()]+\))([+*])(\w|\([^()]+\))\)\) (\3\2\1)
-    commutative: \(\((\w|\([^()]+\))([+*])(\w|\([^()]+\))\)\) --> (\3\2\1) # define
+    commutative \[(\w|\([^()]+\))([+*])(\w|\([^()]+\))\] (\3\2\1)
+    commutative \[(\w|\([^()]+\))([+*])(\w|\([^()]+\))\] (\3\2\1) # define
 
     #:ruby tr :commutative
-    A*((B*C))*D
+    A*[B*C]*D
     A*(C*B)*D # commutative
-    A*(((i+j)*(k+l)))*D
+    A*[(i+j)*(k+l)]*D
     A*((k+l)*(i+j))*D # commutative
 
 As you can see, the regular expression is a bit messy.
-Normally '(.)' matches any one character, but
-AsciiMathematicalNotation changes it's meaning to '(\w|\([^()]+\))'.
-And changes '(@)' to '([^\s\w(){}\[\]])'
-And changes '|' at the begining to '\(\('.
-And changes '|' at the end to '\(\('.
-We can change the above to the following form:
+`AsciiMathematicalNotation` can make it easier to enter simple patterns.
+If you start and end the pattern with square brackets,
+the pattern will be gsub'ed:
+
+    pat.gsub!(/\(/, '\(') # Don't have to escape parenthesis.
+    pat.gsub!(/\)/, '\)') # ...
+    pat.gsub!(/[+]/, '\+') # Don't have to escape plus sign.
+    pat.gsub!(/o/, '([^\s\w\{\}\(\)\[\]])') # 'o' captures the operator
+    pat.gsub!(/a/, '(\w|\([^\(\)]+\))') # 'a' captures the operand
+    pat.gsub!(/^\[/, '\[') # Don't have to escape begining square bracket.
+    pat.gsub!(/\]$/, '\]') # Don't have to escape ending square bracket.
+
+Again, this only takes affect if you start and end the pattern with square brackets, so
+for more complicated constructs you can still use raw regular expressions.
+For the above example, :commutative, the pattern can simplify as follows:
 
     #:ruby define
-    commutative |(.)(@)(.)| (\3\2\1)
-    commutative: |(.)(@)(.)| --> (\3\2\1) # define
+    commutative [ao?a] (\3\2\1)
+    commutative [ao?a] (\3\2\1) # define
 
     #:ruby tr :commutative
-    A*((B*C))*D
+    A*[B*C]*D
     A*(C*B)*D # commutative
-    A*(((i+j)*(k+l)))*D
+    A*[(i+j)*(k+l)]*D
     A*((k+l)*(i+j))*D # commutative
+    A[BC]D
+    A(CB)D # commutative
 
 ## define_array
 
@@ -283,3 +294,6 @@ The `definitions.yml` file contains the definitions, of course.
 The `VERSION` file just contains the current version of the software.
 The rest should all be Array files.
 
+Lastly, maybe you can think of a better way to preprocess your patterns to make them simpler.
+If so, you can edit the gsubs in
+`~/.local/share/ascii_mathematical_notation/GSUBS`.
