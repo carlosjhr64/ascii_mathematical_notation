@@ -148,7 +148,7 @@ x = ½(a+b) - ½(A-B)/(a-b)                 # OK, this matches MF124 video.
 u:=(a-b)²,v:=(A-B)
 (-u-v)²=4Au
 ((-u)(-u)+(-u)(-v)+(-v)(-u)+(-v)(-v))=4Au
-u²+2uv+v²=4Au                             # ...perplexed by the square of a negative. :laughing:
+u²+2uv+v²=4Au                             # ...perplexed by the square of a negative. :))
 u²+2u(A-B)+(A-B)²=4Au
 +u² +2u(A-B) -4Au +(A-B)² =0
 +u² +2uA-2uB -4Au +(A-B)² =0
