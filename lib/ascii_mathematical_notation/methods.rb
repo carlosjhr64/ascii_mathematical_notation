@@ -152,7 +152,7 @@ module AsciiMathematicalNotation
 
     def run
       CurrentLine.new do |line|
-        eval(line).to_s
+        BINDING.eval(line).to_s
       end
     end
 
