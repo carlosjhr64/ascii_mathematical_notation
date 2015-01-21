@@ -1,5 +1,3 @@
 == File List
 
-TODO:	Plug this back in?
-	examples/TQF.md, #139
 
