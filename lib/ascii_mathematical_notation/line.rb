@@ -8,7 +8,7 @@ module Line
     def grgx!(pat, sub)
       GSUBS.each{|x,s|pat=pat.gsub(x,s)} if pat[0]=='[' and pat[-1]==']'
       rgx = Regexp.new(pat, Regexp::EXTENDED)
-      self.gsub!(rgx, sub)
+      self.gsub!(rgx, sub.force_encoding(ENCODING))
     end
 
     def transform!(map1, map2)

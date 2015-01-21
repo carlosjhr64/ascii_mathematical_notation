@@ -104,7 +104,7 @@ module AsciiMathematicalNotation
     end
 
     def compute
-      expression = '((BD)|(R))(O((R)|(DF)))+'
+      expression = '((BSD)|(R))(O((R)|(DF)))+'
       rational   = 'R'
       [expression,rational].each do |pat|
         pat.gsub!(/R/, '\((SD)/(SD)\)')

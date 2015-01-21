@@ -165,6 +165,7 @@ u²+2u(A-B)+(A-B)²=4Au
 ```
 
 ### Heron's formula
+#### Triangle defined by lengths
 For triangle with lengths a,b,c:
 ```
 s:=(1/2)(a+b+c)
@@ -189,4 +190,85 @@ Example:
   √(4*4*2*3)
   4√(2*3)
   4"√6"
+```
+#### Triangle defined by vertices
+```
+:Quadrance([a,b],[c,d])::(a-c)^2+(c-d)^2
+:Length(X,Y):::Sqrt(:Quadrance(X,Y))
+```
+A short digression here.
+Notice we have `x:::Function(y)`.
+We need to ensure that the language does not rely on "Look Aheads".
+That is, word(token) recognition stops once we have a valid word recognized.
+We should not have to look ahead to the next character to disambiguate.
+I have allowed an exception for `:` as in `:word` which has a regex of `:\w+`.
+This is needed because at times we'll need to use more than one letter for a word.
+So for `x:::Function(y)`, we read `x` recognized, `:` check ahead,
+`::` recognized as `defined as`,
+`:` check ahead, `:F`, `:Fu`,... `:Function\b`, `:Function` token recognized...
+So ':::' can never be valid word, else the above becomes ambiguous.
+
+When obvious from the immediately preceeding context,
+we'll allow `F(x):::Fuction(x)` implicitly.
+
+Consider a triangle of vertices A, B, C:
+```
+A:=[0,0],B:=[2,3],C:=[4,1]
+  a:=L(B,C)=:Sqrt((2-3)^2+(4-1)^2)
+            √((2-4)²+(3-1)²)
+            √((-2)²+(2)²)
+            √(4+4)
+            √(8)
+            √((2*2)*2) # from prime division
+            2√2
+  b:=L(A,C)=:Sqrt((0-4)^2+(0-1)^2)
+            √((0-4)²+(0-1)²)
+            √((4)²+(-1)²)
+            √(16+1)
+            √17
+  c:=L(A,B)=:Sqrt((0-2)^2+(0-3)^2)
+            √(2²+3²)
+            √(4+9)
+            √13
+  a, b, c = 2√2, √17, √13
+```
+The last line is a "Ruby-ism".
+Area of this example by Heron's formula:
+```
+A(2√2,√17,√13)
+s:=½(2√2+√17+√13)
+√(s(s-2√2)(s-√17)(s-√13))
+# gsub('s', '½(2√2+√17+√13)')
+√(½(2√2+√17+√13)(½(2√2+√17+√13)-2√2)(½(2√2+√17+√13)-√17)(½(2√2+√17+√13)-√13)) # :-O!
+√(½(2√2+√17+√13)(½(-2√2+√17+√13))(½(2√2-√17+√13))(½(2√2+√17-√13)))
+# its going to be a bit of work...
+¼√((2√2+√17+√13)(-2√2+√17+√13)(2√2-√17+√13)(2√2+√17-√13))
+¼√((√8+√17+√13)(-√8+√17+√13)(√8-√17+√13)(√8+√17-√13))
+a, b, c := √8, √17, √13
+u, v, w := -a, -b, -c
+¼√([(a+b+c)(u+b+c)][(a+v+c)(a+b+w)])
+¼√([au+bb+cc+ab+bc+cu+ac+bu+cb][aa+vb+cw+ab+vw+ca+aw+va+cb]) # :ppxpp
+¼√([au+bb+cc+ab+bc+cu+ac+bu+cb][aa+vb+cw+ab+vw+ca+aw+va+cb]) # :ppxpp
+¼√([+au+bb+cc+ab+bc+cu+ac+bu+cb][+aa+vb+cw+ab+vw+ca+aw+va+cb])
+¼√([+ua+bb+cc+ab+bc+uc+ac+ub+cb][+aa+vb+cw+ab+vw+ca+aw+va+cb]) # gsub('(?-mix:(\w)u)', 'u\1')
+¼√([+ua+bb+cc+ab+bc+uc+ac+ub+cb][+aa+vb+cw+ab+vw+ca+aw+va+cb]) # gsub('(?-mix:(\w)v)', 'v\1')
+¼√([+ua+bb+cc+ab+bc+uc+ac+ub+cb][+aa+vb+wc+ab+wv+ca+wa+va+cb]) # gsub('(?-mix:(\w)w)', 'w\1')
+¼√([-aa+bb+cc+ab+bc-ac+ac-ab+cb][+aa+vb+wc+ab+wv+ca+wa+va+cb]) # gsub('(?-mix:\+u)', '-a')
+¼√([-aa+bb+cc+ab+bc-ac+ac-ab+cb][+aa-bb+wc+ab+wv+ca+wa-ba+cb]) # gsub('(?-mix:\+v)', '-b')
+¼√([-aa+bb+cc+ab+bc-ac+ac-ab+cb][+aa-bb-cc+ab-cv+ca-ca-ba+cb]) # gsub('(?-mix:\+w)', '-c')
+# notice that from wv we have -cv.
+¼√([-aa+bb+cc+ab+bc-ac+ac-ab+cb][+aa-bb-cc+ab+cb+ca-ca-ba+cb]) # -cv => +cb
+α, β, κ := aa, bb, cc # just for compactness for now
+¼√([-α+bb+cc+ab+bc-ac+ac-ab+cb][+α-bb-cc+ab+cb+ca-ca-ba+cb]) # gsub('(?-mix:aa)', 'α')
+¼√([-α+β+cc+ab+bc-ac+ac-ab+cb][+α-β-cc+ab+cb+ca-ca-ba+cb]) # gsub('(?-mix:bb)', 'β')
+¼√([-α+β+κ+ab+bc-ac+ac-ab+cb][+α-β-κ+ab+cb+ca-ca-ba+cb]) # gsub('(?-mix:cc)', 'κ')
+¼√([-α+β+κ+ab+bc-ac+ac-ab+bc][+α-β-κ+ab+bc+ac-ac-ab+bc]) # csort
+¼√(((-α+β+κ)+(ab+bc-ac+ac-ab+bc))((+α-β-κ)+(ab+bc+ac-ac-ab+bc))) # grouping
+¼√(((-α+β+κ)+( +ab -ab +bc +ac -ac +bc))((+α-β-κ)+( +ab -ab +ac -ac +bc +bc))) # w-sorting
+¼√(((-α+β+κ)+(         +bc         +bc))((+α-β-κ)+(                 +bc +bc))) # cancelations
+¼√(((-α+β+κ)+2bc)((+α-β-κ)+2bc))
+γ := +α-β-κ
+¼√[(-γ+(2bc))(γ+(2bc))]
+¼√[((2bc)-γ)((2bc)+γ)]
+¼√[(2bc)²+γ²]
 ```
