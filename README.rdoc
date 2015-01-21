@@ -17,7 +17,13 @@ As a command in the _vim_ editor:
 
 == INSTALL:
 
-   sudo gem install ascii_mathematical_notation
+    sudo gem install ascii_mathematical_notation
+
+=== Note:
+
+If you've been using a prior version, your existing definitions file will be moved to:
+
+    ~/.local/share/ascii_mathematical_notation/definitions.yml.bak
 
 == DUAL PROJECTS
 

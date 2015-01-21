@@ -2,15 +2,6 @@ module AsciiMathematicalNotation
 module Line
 
   GSUBS = YAML.load File.read File.join USERSPACE.datadir, 'GSUBS'
-  #GSUBS = [
-  #  [/\(/,  '\('                   ],
-  #  [/\)/,  '\)'                   ],
-  #  [/[+]/,  '[+]'                 ],
-  #  [/o/,   '([^\s\w\{\}\(\)\[\]])'],
-  #  [/a/,   '(\w|\([^\(\)]+\))'    ],
-  #  [/^\[/, '\['                   ],
-  #  [/\]$/, '\]'                   ],
-  #]
 
   refine String do # Start refinements
 

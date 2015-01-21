@@ -83,6 +83,79 @@ module AsciiMathematicalNotation
       }
     end
 
+    def rational
+      pat = '(G|D)/(G|SD)'
+      pat.gsub!(/G/, '\(SD(OD)*\)')
+      pat.gsub!(/S/, '[+\-]?')
+      pat.gsub!(/O/, '[+\-*]')
+      pat.gsub!(/D/, '\d+')
+      rx = Regexp.new pat
+      CurrentLine.new do |line|
+        post_match, line = line, ''
+        while md=rx.match(post_match)
+          line << md.pre_match
+          rational = eval("Rational #{md[0].sub(/\//,',')}")
+          line << "(#{rational})"
+          post_match = md.post_match
+        end
+        line << post_match
+        line
+      end
+    end
+
+    def compute
+      expression = '((BD)|(R))(O((R)|(DF)))+'
+      rational   = 'R'
+      [expression,rational].each do |pat|
+        pat.gsub!(/R/, '\((SD)/(SD)\)')
+        pat.gsub!(/B/, '(?<![/])')
+        pat.gsub!(/F/, '(?![/])')
+        pat.gsub!(/O/, '[+\-*]')
+        pat.gsub!(/S/, '[+\-]?')
+        pat.gsub!(/D/, '\d+')
+      end
+      rx = Regexp.new expression
+      rt = Regexp.new rational
+      CurrentLine.new do |line|
+        post_match, line = line, ''
+        while md=rx.match(post_match)
+          line << md.pre_match
+          exp = md[0].gsub(rt, 'Rational(\1,\2)')
+          line << "(#{eval(exp)})"
+          post_match = md.post_match
+        end
+        line << post_match
+        line
+      end
+    end
+
+    def prime_division(m='*',p='^',o='(',c=')')
+      pat = '\((SD)/(SD)\)'
+      pat.gsub!(/D/, '\d+')
+      pat.gsub!(/S/, '[+\-]?')
+      rx = Regexp.new pat
+      CurrentLine.new do |line|
+        post_match, line = line, ''
+        while md=rx.match(post_match)
+          line << md.pre_match
+          a = md[1].to_i.prime_division.map{|n,e|(e>1)? [o,n,p,e,c].join : [o,n,c].join}.join(m)
+          a = '1' if a==''
+          b = md[2].to_i.prime_division.map{|n,e|(e>1)? [o,n,p,e,c].join : [o,n,c].join}.join(m)
+          b = '1' if b==''
+          line << "((#{a})/(#{b}))"
+          post_match = md.post_match
+        end
+        line << post_match
+        line
+      end
+    end
+
+    def run
+      CurrentLine.new do |line|
+        eval(line).to_s
+      end
+    end
+
     def method_missing(m, *args)
       CurrentLine.new("#{m}('#{args.join("', '")}')") do |line|
         raise "method missing: #{m}" unless line.respond_to?(m)
@@ -94,7 +167,7 @@ module AsciiMathematicalNotation
     def tr(map1, map2='')
       comment = nil
       if map1.class == Symbol
-        comment = map1.to_s
+        comment = ":#{map1}"
         unless array = DEFINITIONS[map1] or array = ARRAYS[map1]
           fn = AsciiMathematicalNotation.filename(map1)
           raise "#{map1} not found." unless File.exist?(fn)

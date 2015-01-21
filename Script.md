@@ -15,11 +15,15 @@ With my script, all the `String` methods are available to act on the current lin
 In addition, my script has the following methods:
 
 * tr
+* compute
 * csort, wsort, and tsort
 * digest
 * define
 * define_array
 * load and dump
+* prime_division
+* rational
+* run
 * show
 
 One can run a method as follows:
@@ -103,7 +107,7 @@ For convevience, I packaged some predefined transforms I think are generally use
     a := x² + y² # superscript
     a ≜ x² + y² # math
 
-## tr Array usage
+### tr Array usage
 
 `tr` can also take an Array as an argument,
 in which case it expects each element to contain a pattern, substitution pair.
@@ -118,6 +122,20 @@ The Array can also just be a pattern, substitution pair.
     #:ruby tr ['(\w)(\d)','\2\1']
     a3  b57
     3a  5b7 # tr ["(\\w)(\\d)", "\\2\\1"]
+
+### compute
+
+`compute` uses Ruby's Rational class to do simple rational computations.
+
+    #:ruby compute
+    I compute 1+3*(4/2)+(12/4)*2 OK
+    I compute (13/1) OK # compute
+
+    I compute 1 + 3*(4/2) + (12/4)*2 OK
+    I compute 1 + (6/1) + (6/1) OK # compute
+
+    I compute 1+(6/1)+(6/1) OK
+    I compute (13/1) OK # compute
 
 ### csort and wsort
 
@@ -137,7 +155,7 @@ Can you figure out what `tsort` does?  :)
     abc*(a-b+c+d-a+b-d-c)*xyz
     abc*(+a-a+b-b+c-c+d-d)*xyz # tsort
 
-## digest
+### digest
 
 The digest method appends the RMD160 digest of the current line.
 This can help in determining if two lines are equal:
@@ -153,7 +171,7 @@ This can help in determining if two lines are equal:
     dafjkJA fjaskjAF Iasjsdgfjlkjlafri AFJJFF
     Jxgi2de/YQF4t6EPW2B+NfgJzRM= # digest
 
-## define
+### define
 
 The `define` method takes a key name, a pattern, and a substitution from the current line.
 This way one can define a `gsub` by a given key name.
@@ -213,7 +231,7 @@ For the above example, :commutative, the pattern can simplify as follows:
     A[BC]D
     A(CB)D # commutative
 
-## define_array
+### define_array
 
 The `define_array` method takes a key name and a series of key names.
 For example, say you want to use :greek, :subscripts, :superscript, and :math
@@ -248,7 +266,7 @@ The vim-ruby script only does the intial creation of the Array files.
 After that, if you want to modify the array, you should edit the Array file.
 The modified Array will be available in a new vim session.
 
-## load and dump
+### load and dump
 
 The `dump` method will save the current state of your definitions
 into a file in the data directory,
@@ -264,7 +282,47 @@ Note that when `tr` is given a key name (a Symbol),
 it checks first if its in the definitions before checking the Arrays.
 So don't define :greek unless you don't need the :greek Array, for example.
 
-## show
+### prime_division
+
+The `prime_division` method uses Ruby's Prime#prime_division
+to find the prime factors of a rational number.
+
+    #:ruby prime_division
+    (31/55) (1/7) (4/21)
+    (((31))/((5)*(11))) ((1)/((7))) (((2^2))/((3)*(7))) # prime_division
+
+    #:ruby prime_division '*','^','',''
+    (31/55) (1/7) (4/21)
+    ((31)/(5*11)) ((1)/(7)) ((2^2)/(3*7)) # prime_division
+
+    #:ruby prime_division '','^','[',']'
+    (31/55) (1/7) (4/21)
+    (([31])/([5][11])) ((1)/([7])) (([2^2])/([3][7])) # prime_division
+
+### rational
+
+The rational method uses Ruby's Rational class to reduce numbers of the form `(a/b)`, where
+`a` and `b` are integers or sums and products of integers.
+
+    #:ruby rational
+    (1+2+3)/(4+5+6)
+    (2/5) # rational
+    6/15
+    (2/5) # rational
+    (1+2+3+4)/(1*2*3*4)
+    (5/12) # rational
+
+### run
+
+`run` just sends the line to Ruby's eval and returns the generated string.
+
+    #:ruby run
+    Time.now
+    2015-01-20 16:35:59 -0800 # run
+    60*60*24*365.25
+    31557600.0 # run
+
+### show
 
 The `show` method will append the current definition of the given key:
 
@@ -274,7 +332,7 @@ The `show` method will append the current definition of the given key:
 ## Preloaded definitions
 
 Preloaded in the definitions are transforms I find useful.
-I've have them defined in [examples/Definitions.md](examples/Definitions.md)
+Many are defined in [examples/Definitions.md](examples/Definitions.md)
 
 
 ## More?
