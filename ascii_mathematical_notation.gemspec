@@ -1,14 +1,14 @@
 Gem::Specification.new do |s|
 
   s.name     = 'ascii_mathematical_notation'
-  s.version  = '2.2.0'
+  s.version  = '2.2.1'
 
   s.homepage = 'https://github.com/carlosjhr64/ascii_mathematical_notation'
 
   s.author   = 'carlosjhr64'
   s.email    = 'carlosjhr64@gmail.com'
 
-  s.date     = '2015-01-21'
+  s.date     = '2015-01-22'
   s.licenses = ['MIT']
 
   s.description = <<DESCRIPTION
