@@ -11,16 +11,19 @@ Except for some change of variables, it closely follows the video.
 The Quadrance between two points on a line:
 ```
 :Rat{a,b},A::[a],B::[b]
-  Q(A,B)::a^2+b^2
+  Q(A,B)::(b-a)^2
 ```
-
+Note that in two dimensions, this extends to:
+```
+:Rat{a1,a2,b1,b2},A::[a1,a2],B::[b1,b2]
+  Q(A,B)::(b1-a1)^2+(b2-a2)
+```
 I'll use a convention that when a number follows a letter,
 the number is just an enumeration label.
 Thus:
 ```
 3A1B2 :: 3*(A1)*(B2)
 ```
-
 Given three points on a line:
 ```
 :Rat{a,b,c},A::[a],B::[b],C::[c]
@@ -28,17 +31,14 @@ Given three points on a line:
   Qb :: Q(A,C)
   Qc :: Q(A,B)
 ```
-
 ### Triple Quad Formula(TQF)
 ```
 (Qa+Qb+Qc)=2(Qa^2+Qb^2+Qc^2)
 ```
-
 ### Archimedes' function
 ```
 :Archimedes(Qa,Qb,Qc) :: (Qa+Qb+Qc)^2-2(Qa^2+Qb^2+Qc^2) = 4QaQb-(Qa+Qb-Qc)^2
 ```
-
 Theorem:
 ```
 :Rat{a,b,c}:a+b=c,A:=a^2,B:=b^2,C:=c^2==>:Archimedes(A,B,C)=0
@@ -57,7 +57,6 @@ A+B-C=-2ab            # Collecting like terms on each side
 4AB-(A+B-C)^2=0       # Rearragement of terms, this is Archimedes asymetric form.
 :Achimides(A,B,C)=0
 ```
-
 ### Archimedes' formula
 Theorem:
 ```
@@ -82,10 +81,8 @@ Proof:
 (a+b+c)(a+b-c)(c+a-b)(c-a+b)          # Rearraged groupings
 (+a+b+c)(+a+b-c)(+a-b+c)(-a+b+c)      # Sorted variables in groups and explicit signs
 ```
-
 OK, so let's plug someone's [book](http://www.amazon.com/Divine-Proportions-Rational-Trigonometry-Universal/dp/097574920X).
 :smile:
-
 ### TQF quadratic equation
 Exer 124.1: Show that TQF can be expressed as a quadratic equation in one of its terms:
 ```
@@ -114,7 +111,6 @@ Q3^2 - 2(Q1+Q2)Q3 + (Q1-Q2)^2 = 0
 Q3² - 2(Q1+Q2)Q3 + (Q1-Q2)² = 0 # superscript
 Q₃² - 2(Q₁+Q₂)Q₃ + (Q₁-Q₂)² = 0 # subscript
 ```
-
 ### Quadratic Compatibility Theorem
 Did I look ahead?  Maybe.  :smirk:
 Exer 124.2:  Show when two coupled quadratics has a solution:
@@ -163,7 +159,6 @@ u²+2u(A-B)+(A-B)²=4Au
 
 # I don't see a shorter path to this result, ouch!
 ```
-
 ### Heron's formula
 #### Triangle defined by lengths
 For triangle with lengths a,b,c:
