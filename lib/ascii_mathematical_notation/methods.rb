@@ -68,11 +68,15 @@ module AsciiMathematicalNotation
     def tsort(p=/\s+/, s=' ')
       # rruvxx+rsuvxy+rsvvxx+ssvvxy-rruuxy-rsuuyy-rsuvxy-ssuvyy+rsuuxx+ssuuxy+ ...
       CurrentLine.new do |line|
-        if md = /\(((\s*[+\-]?\s*\w+)+)\)/.match(line)
+        post_match, line = line, ''
+        while md = /\(((\s*[+\-]?\s*\w+)+)\)/.match(post_match)
+          line << md.pre_match
           terms = md[1].gsub(/([+\-]?)\s*(\w+)/){|m|  ($1=='')? $2+'+ ' : $2+$1+' '}
           terms = terms.strip.split(/\s+/).sort.map{|w| w[-1]+w[0..-2]}.join
-          line = md.pre_match+'('+terms+')'+md.post_match
+          line << '('+terms+')'
+          post_match = md.post_match
         end
+        line << post_match
         line
       end
     end

@@ -236,12 +236,14 @@ The last line is a "Ruby-ism".
 Area of this example by Heron's formula:
 ```
 A(2√2,√17,√13)
-s:=½(2√2+√17+√13)
-√(s(s-2√2)(s-√17)(s-√13))
-# gsub('s', '½(2√2+√17+√13)')
-√(½(2√2+√17+√13)(½(2√2+√17+√13)-2√2)(½(2√2+√17+√13)-√17)(½(2√2+√17+√13)-√13)) # :-O!
-
-
+A(√8,√17,√13)
+s:=½(√8+√17+√13)
+√(s(s-√8)(s-√17)(s-√13)) # Heron's formula
+√(½(√8+√17+√13)(½(√8+√17+√13)-√8)(½(√8+√17+√13)-√17)(½(√8+√17+√13)-√13)) # gsub('(?-mix:s)', '½(√8+√17+√13)')
+√(½(√8+√17+√13)½(-√8+√17+√13)½(√8-√17+√13)½(√8+√17-√13))
+```
+The above matches the video prior to the aproximately 5 computation.  Lets confirm:
+```
 a = Math.sqrt(8)
 2.8284271247461903 # run
 b = Math.sqrt(17)
@@ -252,20 +254,33 @@ s = (a+b+c)/2.0
 5.2785420129139204 # run
 Math.sqrt(s*(s-a)*(s-b)*(s-c))
 5.000000000000003 # run
-self
-main # run
-
-
-
-
-√(½(2√2+√17+√13)(½(-2√2+√17+√13))(½(2√2-√17+√13))(½(2√2+√17-√13)))
-# its going to be a bit of work...
-¼√((2√2+√17+√13)(-2√2+√17+√13)(2√2-√17+√13)(2√2+√17-√13))
-¼√((√8+√17+√13)(-√8+√17+√13)(√8-√17+√13)(√8+√17-√13))
-a, b, c := √8, √17, √13
-u, v, w := -a, -b, -c
+```
+With calculators and computers this process has become easy, but
+lets see what this used to look like when it was done "by hand":
+```
+a, b, c = 2.83, 4.12, 3.61 # Maybe we were happy with 3 significant figures
+sum = a+b+c = 10.56 # We carry an extra figure for calculations
+s = sum/2.0 = 5.28
+s-a = 2.45
+s-b = 1.16
+s-c = 1.67
+5.28*2.45*1.16*1.67 =~ 25.06
+Math.sqrt(25.06) =~ 5.01 # We might suspect it's really five
+```
+From a practical point of view, I think this is fine.
+In the field, that's what measurements look like.
+The video is actually very funny because it totally sets up this very practical formula into being ridiculous by
+tricking us into doing something like calculating (√2)(√2) to be aproximately 2 maybe.
+But as the video goes on to explain, Heron's formula is the wrong tool for the problem.
+Nonetheless, I'll show you can still calculate the area for this problem using Heron's formula exactly.
+It's just a horrendous amount of work!
+```
+√(½(√8+√17+√13)½(-√8+√17+√13)½(√8-√17+√13)½(√8+√17-√13)) # result when we surrendered it to a calculator above
+√(½(a+b+c)½(-a+b+c)½(a-b+c)½(a+b-c))                     # substituting a,b,c back in
+¼√((a+b+c)(-a+b+c)(a-b+c)(a+b-c))
+u,v,w:=-a,-b,-c
+¼√((a+b+c)(u+b+c)(a+v+c)(a+b+w))
 ¼√([(a+b+c)(u+b+c)][(a+v+c)(a+b+w)])
-¼√([au+bb+cc+ab+bc+cu+ac+bu+cb][aa+vb+cw+ab+vw+ca+aw+va+cb]) # :ppxpp
 ¼√([au+bb+cc+ab+bc+cu+ac+bu+cb][aa+vb+cw+ab+vw+ca+aw+va+cb]) # :ppxpp
 ¼√([+au+bb+cc+ab+bc+cu+ac+bu+cb][+aa+vb+cw+ab+vw+ca+aw+va+cb])
 ¼√([+ua+bb+cc+ab+bc+uc+ac+ub+cb][+aa+vb+cw+ab+vw+ca+aw+va+cb]) # gsub('(?-mix:(\w)u)', 'u\1')
@@ -274,19 +289,26 @@ u, v, w := -a, -b, -c
 ¼√([-aa+bb+cc+ab+bc-ac+ac-ab+cb][+aa+vb+wc+ab+wv+ca+wa+va+cb]) # gsub('(?-mix:\+u)', '-a')
 ¼√([-aa+bb+cc+ab+bc-ac+ac-ab+cb][+aa-bb+wc+ab+wv+ca+wa-ba+cb]) # gsub('(?-mix:\+v)', '-b')
 ¼√([-aa+bb+cc+ab+bc-ac+ac-ab+cb][+aa-bb-cc+ab-cv+ca-ca-ba+cb]) # gsub('(?-mix:\+w)', '-c')
-# notice that from wv we have -cv.
 ¼√([-aa+bb+cc+ab+bc-ac+ac-ab+cb][+aa-bb-cc+ab+cb+ca-ca-ba+cb]) # -cv => +cb
-α, β, κ := aa, bb, cc # just for compactness for now
-¼√([-α+bb+cc+ab+bc-ac+ac-ab+cb][+α-bb-cc+ab+cb+ca-ca-ba+cb]) # gsub('(?-mix:aa)', 'α')
-¼√([-α+β+cc+ab+bc-ac+ac-ab+cb][+α-β-cc+ab+cb+ca-ca-ba+cb]) # gsub('(?-mix:bb)', 'β')
-¼√([-α+β+κ+ab+bc-ac+ac-ab+cb][+α-β-κ+ab+cb+ca-ca-ba+cb]) # gsub('(?-mix:cc)', 'κ')
-¼√([-α+β+κ+ab+bc-ac+ac-ab+bc][+α-β-κ+ab+bc+ac-ac-ab+bc]) # csort
-¼√(((-α+β+κ)+(ab+bc-ac+ac-ab+bc))((+α-β-κ)+(ab+bc+ac-ac-ab+bc))) # grouping
-¼√(((-α+β+κ)+( +ab -ab +bc +ac -ac +bc))((+α-β-κ)+( +ab -ab +ac -ac +bc +bc))) # w-sorting
-¼√(((-α+β+κ)+(         +bc         +bc))((+α-β-κ)+(                 +bc +bc))) # cancelations
-¼√(((-α+β+κ)+2bc)((+α-β-κ)+2bc))
-γ := +α-β-κ
-¼√[(-γ+(2bc))(γ+(2bc))]
-¼√[((2bc)-γ)((2bc)+γ)]
-¼√[(2bc)²+γ²]
+¼√([-aa+bb+cc+ab+bc-ac+ac-ab+bc][+aa-bb-cc+ab+bc+ac-ac-ab+bc]) # csort
+¼√((-aa+bb+cc+ab+bc-ac+ac-ab+bc)(+aa-bb-cc+ab+bc+ac-ac-ab+bc))
+¼√((-aa+ab-ab+ac-ac+bb+bc+bc+cc)(+aa+ab-ab+ac-ac-bb+bc+bc-cc)) # tsort
+¼√((-aa+0+0+bb+bc+bc+cc)(+aa+0+0-bb+bc+bc-cc)) # :pm
+¼√((-aa+bb+bc+bc+cc)(+aa-bb+bc+bc-cc))
+¼√((-aa+bb+  2bc+cc)(+aa-bb+  2bc-cc))
+¼√((-8 +17+  2bc+13)(+8 -17+  2bc-13))
+¼√(( -8+17+13  +2bc)( +8-17-13  +2bc))
+¼√(( (22)  +2bc)( (-22)  +2bc)) # compute
+¼√( ((2bc)+(22))((2bc)-(22)) )
+¼√( (2bc)² - (22)² ) # difference of squares
+¼√( (4b²c² - (22)² )
+¼√( 4*17*13 - 22*22 )
+¼√( (884) - (484) ) # compute
+¼√( 884-484 )
+¼√( (400) ) # compute
+√( (400/16) )
+√( ((25/1)) ) # rational (for a while... I was worried)
+√( ((((5^2))/(1))) ) # prime_division
+√(5^2)
+5 # Exactly! :)
 ```
