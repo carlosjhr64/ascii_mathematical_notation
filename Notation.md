@@ -58,7 +58,7 @@ The rest, I believe should be user definable.
 | #      |        | Comment                    | L     | Y           |
 | \n     |        | End of completed statement | L     | Y           |
 | ;      |        | End of statement           | L     | ?           |
-| ::     | ≜      | Definition                 | B     | ?           |
+| ::     | ≐      | Definition                 | B     | ?           |
 | !      |        | Not                        | R     | ?           |
 | =      |        | Equal                      | B     | ?           |
 | !=     | ≠      | Not equal                  | B     | ?           |
