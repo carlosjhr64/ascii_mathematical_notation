@@ -386,7 +386,7 @@ area2 = (diff/16.0).round(3)
 area = Math.sqrt(area2).round(3)
 5.006 # run
 ```
-Although Wilderberger has clearly demonstrated his case for theory in the affine plane,
+Although Wildberger has clearly demonstrated his case for theory in the affine plane,
 it's not obvious we have an improved practical formula yet.
 Let's write out the two methods in Ruby code to see if the case can be made clearer.
 ```
@@ -409,3 +409,7 @@ Archimedes' method has three lines of code (one with multiple assignments),
 
 So in practice, given three measured lengths for the side of a triangle, with pencil and paper...
 you'd still want to use Heron's formula.
+
+I don't share Wildberger's disdain for Real numbers, but
+his videos are excellent.  I definitely recomend checking out his channel:
+    https://www.youtube.com/user/njwildberger
