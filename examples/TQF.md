@@ -361,7 +361,7 @@ I'm using Heron's formula!
 
 No, wait...
 ```
-16α²=Α[Q₁,Q₂,Q₃]=4(Q₁,Q₂)-(Q₁+Q₂-Q₃)
+16α² = Α[Q₁,Q₂,Q₃] = 4Q₁Q₂-(Q₁+Q₂-Q₃)²
 ```
 OK, we can use this form.
 :relieved:
