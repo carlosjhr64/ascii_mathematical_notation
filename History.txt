@@ -6,3 +6,5 @@ b07328068486ce95c1b1522fcfe21a0c  pkg/ascii_mathematical_notation-1.0.0.gem
 6afc3eb39517f4d01037e1fdba02ae70  pkg/ascii_mathematical_notation-2.1.0.gem
 === 2.2.0 / 2015-01-21 16:47:16 -0800
 120b5703bf3833e99171ffc27cd6c9a3  pkg/ascii_mathematical_notation-2.2.0.gem
+=== 2.2.1 / 2015-01-22 13:35:29 -0800
+f9c99027645eb80ec579a85c0a684630  pkg/ascii_mathematical_notation-2.2.1.gem
