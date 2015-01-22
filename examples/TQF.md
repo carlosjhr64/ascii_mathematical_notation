@@ -358,3 +358,10 @@ So there's a big triangle in my back yard whose area I want to know
 because I'm filling it with concrete.
 I'm using Heron's formula!
 :laughing:
+
+No, wait...
+```
+16α²=Α[Q₁,Q₂,Q₃]=4(Q₁,Q₂)-(Q₁+Q₂-Q₃)
+```
+OK, we can use this form.
+:relieved:
