@@ -312,3 +312,49 @@ u,v,w:=-a,-b,-c
 √(5^2)
 5 # Exactly! :)
 ```
+### Quadrance in the affine plane
+```
+A1::[a1,b1],A2::[a2,b2]==>:Quadrance(A1,A2)::(a2-a1)^2+(b2-b1)^2
+A₁≐[a₁,b₁],A₂≐[a₂,b₂]⇒Q(A₁,A₂)≐(a₂-a₁)²+(b₂-b₁)² # :math
+```
+In the video, Wildberger makes the case that, to paraphrase in a programmers way,
+the following is poor refactoring:
+```
+:Distance(A1,A2):::Sqrt((a2-a1)^2)+(b2-b1)%2))
+:Quadrance(A1,A2):::Distance[A1,A2]^2
+```
+It's clear that from this point of view, the affine plane A², the proper sequence is:
+```
+:Quadrance(A1,A2)::(a2-a1)^2+(b2-b1)^2
+:Distance(A1,A2):::Sqrt(:Quadrance(A1,A2))
+
+Q[A₁,A₂] ≐ (a₂-a₁)²+(b₂-b₁)²
+D[A₁,A₂] ≐ √[Q[A₁,A₂]]
+# For now, I'll prefer square brackets to group the object acted on by "operators".
+# I'll see how that goes.
+```
+But in practice things don't look this way.
+It's just me with a tape measure and maybe a compass.
+And without a compass, it's definitely going to be
+Heron's formula with numbers of finite precission... right?
+### Archimedes' Theorem
+Area of a triangle with quadrances Q₁, Q₂, Q₃:
+```
+16(:area)^2=:Archimedes[Q1,Q2,Q3]
+16α²=Α[Q₁,Q₂,Q₃]
+# Proof:
+:area=:Sqrt[s(s-d1)(s-d2)(s-d3)],s=(1/2)(d1+d2+d3)             # Heron's formula in regular ASCII
+α=√[s(s-d₁)(s-d₂)(s-d₃)],s=½(d₁+d₂+d₃)                         # using extended ascii
+α²=s(s-d₁)(s-d₂)(s-d₃)
+α²=½(d₁+d₂+d₃)(½(d₁+d₂+d₃)-d₁)(½(d₁+d₂+d₃)-d₂)(½(d₁+d₂+d₃)-d₃) # gsub('(?-mix:s)', '½(d₁+d₂+d₃)')
+α²=½½½½(d₁+d₂+d₃)(d₂+d₃-d₁)(d₁+d₃-d₂)(d₁+d₂-d₃)
+α²=¼²(d₁+d₂+d₃)(d₂+d₃-d₁)(d₁+d₃-d₂)(d₁+d₂-d₃)                  # This matches Archimedes' formula
+α²=¼²Α[d₁²,d₂²,d₃²]
+16α²=Α[d₁²,d₂²,d₃²]
+16α²=Α[Q₁,Q₂,Q₃]                                               # b/c in the Real world, Q is d² :))
+```
+No denying this this is a very nice theoritical result.
+So there's a big triangle in my back yard whose area I want to know
+because I'm filling it with concrete.
+I'm using Heron's formula!
+:laughing:
