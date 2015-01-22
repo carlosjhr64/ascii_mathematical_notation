@@ -365,3 +365,47 @@ No, wait...
 ```
 OK, we can use this form.
 :relieved:
+
+It's a bit sly to use simple integers to show off this way,
+so I'll rework the original problem instead:
+```
+a, b, c = 2.83, 4.12, 3.61
+[2.83, 4.12, 3.61] # run
+aa, bb, cc = (a*a).round(3),  (b*b).round(3), (c*c).round(3)
+[8.009, 16.974, 13.032] # run
+alpha = (4*aa*bb).round(3)
+543.779 # run
+beta =  (aa+bb-cc).round(3)
+11.951 # run
+beta2 = (beta*beta).round(3)
+142.826 # run
+diff = (alpha - beta2).round(3)
+400.953 # run
+area2 = (diff/16.0).round(3)
+25.06 # run
+area = Math.sqrt(area2).round(3)
+5.006 # run
+```
+Although Wilderberger has clearly demonstrated his case for theory in the affine plane,
+it's not obvious we have an improved practical formula yet.
+Let's write out the two methods in Ruby code to see if the case can be made clearer.
+```
+def herons_area(a,b,c)
+  s = (a+b+c)/2.0
+  Math.sqrt(s*(s-a)*(s-b)*(s-c))
+end
+
+def archimedes_area(a,b,c)
+  q1, q2, q3 = a*a, b*b, c*c
+  x = q1+q2-q3
+  Math.sqrt( (4.0*q1*q2-(x*x))/16.0 )
+end
+```
+Heron's method has two lines of code,
+1 root, 1 division, 3 multiplications, 3 subtractions, and 2 additions.
+
+Archimedes' method has three lines of code (one with multiple assignments),
+1 root, 1 division, 6 multiplications, 2 subtractions, and 1 addition.
+
+So in practice, given three measured lengths for the side of a triangle, with pencil and paper...
+you'd still want to use Heron's formula.
