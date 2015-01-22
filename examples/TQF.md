@@ -353,7 +353,7 @@ Area of a triangle with quadrances Q₁, Q₂, Q₃:
 16α²=Α[d₁²,d₂²,d₃²]
 16α²=Α[Q₁,Q₂,Q₃]                                               # b/c in the Real world, Q is d² :))
 ```
-No denying this this is a very nice theoritical result.
+No denying this this is a very nice theoretical result.
 So there's a big triangle in my back yard whose area I want to know
 because I'm filling it with concrete.
 I'm using Heron's formula!
