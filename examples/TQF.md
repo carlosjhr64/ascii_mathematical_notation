@@ -187,6 +187,7 @@ Example:
   4"√6"
 ```
 #### Triangle defined by vertices
+##### By Heron's formula
 ```
 :Quadrance([a,b],[c,d])::(a-c)^2+(c-d)^2
 :Length(X,Y):::Sqrt(:Quadrance(X,Y))
@@ -306,6 +307,18 @@ u,v,w:=-a,-b,-c
 √( ((((5^2))/(1))) ) # prime_division
 √(5^2)
 5 # Exactly! :)
+```
+##### Area by determinant(?)
+Here we get into my issues of the way math is done and has nothing to do with Real numbers.
+Tables and pictographs are are not a proper language.
+So let's write this out CORRECTLY!
+:angry:
+```
+A:=[0,0],B:=[2,3],C:=[4,1]
+# still need to workout exactly how to write this, but for now...
+v1 = B-A = <2,3>
+v2 = C-A = <4,1>
+:area = (1/2)|<2,3>x<4,1>| = |((2*1)-(3*4))/2| = |(2-12)/2| = |-10/2| = |-5| = 5
 ```
 ### Quadrance in the affine plane
 ```
