@@ -316,9 +316,9 @@ So let's write this out CORRECTLY!
 ```
 A:=[0,0],B:=[2,3],C:=[4,1]
 # still need to workout exactly how to write this, but for now...
-v1 = B-A = <2,3>
-v2 = C-A = <4,1>
-:area = (1/2)|<2,3><4,1>| = |((2*1)-(3*4))/2| = |(2-12)/2| = |-10/2| = |-5| = 5
+v1 = B-A = |2,3>
+v2 = C-A = |4,1>
+:area = (1/2)|2,3><4,1| = |((2*1)-(3*4))/2| = |(2-12)/2| = |-10/2| = |-5| = 5
 ```
 ##### Area by geometry
 I realize the following still uses determinants(?):
@@ -331,7 +331,7 @@ D:=[4,3] # diagonal
 |X><Y| = |4*3-0*0| = 12 # area of big box
 (1/2)|X><C| = |(4*1-4*0)/2| = 2 # area of base triangle our triangle is sitting on
 (1/2)|Y><B| = |(0*3-3*2)/2| = 3 # triangle on the left
-(1/2)<D-B><D-C> = (1/2)<4-2,3-3><4-4,3-1> = (1/2)<2,0><0,2> = |(2*2)/2| = 2 # on the right
+(1/2)|D-B><D-C| = (1/2)|4-2,3-3><4-4,3-1| = (1/2)|2,0><0,2| = |(2*2)/2| = 2 # on the right
 # So our triangle must be
 12 - (2+3+2) = 12 - 7 = 5
 ```
